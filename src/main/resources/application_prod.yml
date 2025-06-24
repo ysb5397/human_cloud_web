@@ -4,4 +4,4 @@ server:
       charset: utf-8
       force: true
 
-  port: 5500
+  port: 5000

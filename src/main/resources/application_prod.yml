@@ -1,7 +1,12 @@
 server:
   servlet:
     encoding:
-      charset: utf-8
+      charset: UTF-8
       force: true
 
   port: 5000
+
+logging:
+  level:
+    root: WARN
+    com.tenco.blog: INFO           # 운영 시 중요한 로그만

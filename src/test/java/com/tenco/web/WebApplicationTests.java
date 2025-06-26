@@ -1,10 +1,10 @@
-package com.tenco.blog;
+package com.tenco.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BlogApplicationTests {
+class WebApplicationTests {
 
 	@Test
 	void contextLoads() {

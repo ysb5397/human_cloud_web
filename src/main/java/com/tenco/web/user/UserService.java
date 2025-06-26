@@ -1,4 +1,4 @@
-package com.tenco.web.user
+package com.tenco.web.user;
 
 public class UserService {
 

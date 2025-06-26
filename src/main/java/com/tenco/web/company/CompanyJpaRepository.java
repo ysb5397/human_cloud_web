@@ -1,4 +1,4 @@
-package com.tenco.web.company
+package com.tenco.web.company;
 
 public class CompanyJpaRepository {
 

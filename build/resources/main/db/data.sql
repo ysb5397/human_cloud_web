@@ -6,7 +6,7 @@ INSERT INTO user_tb (username, password, email, address, created_at) VALUES
 ('admin', 'admin123', 'admin@mysite.com', '광주시 서구 상무대로', NOW());
 
 INSERT INTO company_tb (company_name, password, address, business_registration_number, email, created_at) VALUES
-('네이버', '1234', '경기도 성남시 분당구 불정로 6', '129-86-31394', 'naver@naver.com', NOW()),
+('네이버', '1234', '경기도 성남시 분당구 불정로 61', '129-86-31394', 'naver@naver.com', NOW()),
 ('카카오', '1234', '제주특별자치도 제주시 첨단로 242', '120-81-47521', 'kakao@kakao.com', NOW()),
 ('라인', '1234', '경기도 성남시 분당구 황새울로240번길', '129-87-00203', 'line@lineplus.com', NOW()),
 ('쿠팡', '1234', '서울특별시 송파구 송파대로 570', '120-88-00767', 'coupang@coupang.com', NOW()),

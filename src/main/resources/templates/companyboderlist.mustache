@@ -1,0 +1,25 @@
+{{> layout/header}}
+
+<body class="bg-gray-50 text-gray-900">
+<div class="container mx-auto px-4 py-8 max-w-3xl">
+
+    {{#boardList}}
+        <div class="bg-white shadow-md rounded-xl p-6 mb-6 hover:shadow-lg transition-shadow">
+            <h4 class="text-xl font-semibold mb-2">{{title}}</h4>
+            <p class="text-sm text-gray-500 mb-4">{{time}}</p>
+            <a href="/board/{{id}}" class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500">
+                상세보기
+            </a>
+        </div>
+    {{/boardList}}
+
+    <!-- 페이지네이션 -->
+    <div class="flex justify-center space-x-2 mt-8">
+        <button class="px-4 py-2 text-sm text-gray-400 bg-gray-200 rounded cursor-not-allowed">Previous</button>
+        <button class="px-4 py-2 text-sm text-indigo-600 bg-indigo-100 rounded hover:bg-indigo-200">Next</button>
+    </div>
+
+</div>
+</body>
+
+{{> layout/footer}}

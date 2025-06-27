@@ -19,13 +19,10 @@ public class User {
     @Column(nullable = false)
     private int id;
 
-    @Column(nullable = false)
     private String username;
-
-    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
 
     private String address;

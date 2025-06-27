@@ -1,1 +1,4 @@
-spring.application.name=blog
+spring:
+  profiles:
+    active:
+      - dev

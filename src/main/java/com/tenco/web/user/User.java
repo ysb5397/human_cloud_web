@@ -16,23 +16,30 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false)
+    private int id;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    private String address;
 
     @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public User(Long id, String username, String password, String email, Timestamp createdAt) {
+    public User(int id, String username, String password, String email, String address, Timestamp createdAt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.address = address;
         this.createdAt = createdAt;
     }
 }

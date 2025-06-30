@@ -1,5 +1,6 @@
 package com.tenco.web.company;
 
+import com.tenco.web.utis.Define;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class CompanyRequest {
     public static class JoinDTO{
         private String companyName;
         private String password;
+        private String repeatPW;
         private String address;
         private String businessRegistrationNumber;
         private String email;
@@ -32,27 +34,43 @@ public class CompanyRequest {
         }
 
         // 회원가입시 유효성 검증 메서드
-        public void validate() {
+        public String validate() {
             if (companyName == null || companyName.trim().isEmpty()) {
-                throw new IllegalArgumentException("회사 명은 필수입니다");
+                return Define.ErrorMessage.REQUIRED_COMPANYNAME;
             }
 
             if (password == null || password.trim().isEmpty()) {
-                throw new IllegalArgumentException("비밀번호는 필수입니다.");
+                return Define.ErrorMessage.REQUIRED_PASSWORD;
+            }
+
+            if(password.length() < 4){
+                return Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD;
+            }
+
+            if(repeatPW == null || repeatPW.trim().isEmpty()) {
+                return Define.ErrorMessage.REQUIRED_REPEAT_PW;
+            }
+
+            if(!password.equals(repeatPW)) {
+                return Define.ErrorMessage.NOT_MATCH_REPEAT_PW;
             }
 
             if (address == null || address.trim().isEmpty()) {
-                throw new IllegalArgumentException("주소를 입력해주세요.");
+                return Define.ErrorMessage.REQUIRED_ADDRESS;
             }
 
             if (businessRegistrationNumber == null || businessRegistrationNumber.trim().isEmpty()) {
-                throw new IllegalArgumentException("사업자번호는 필수입니다.");
+                return Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO;
+            }
+
+            if(email == null || email.trim().isEmpty()) {
+                return Define.ErrorMessage.REQUIRED_EMAIL;
             }
 
             if (!email.contains("@")) {
-                throw new IllegalArgumentException("잘못된 이메일 형식입니다");
+                return Define.ErrorMessage.ILLEGAL_FORMAT_EMAIL;
             }
-
+            return null;
         }
     }
 
@@ -66,14 +84,15 @@ public class CompanyRequest {
         private String password;
 
         // 유효성 검사
-        public void validate() {
+        public String validate() {
             if (businessRegistrationNumber == null || businessRegistrationNumber.trim().isEmpty()) {
-                throw new IllegalArgumentException("사업자번호는 필수입니다.");
+                return Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO;
             }
 
             if (password == null || password.trim().isEmpty()) {
-                throw new IllegalArgumentException("비밀번호는 필수입니다.");
+                return Define.ErrorMessage.REQUIRED_PASSWORD;
             }
+            return null;
         }
     }
 

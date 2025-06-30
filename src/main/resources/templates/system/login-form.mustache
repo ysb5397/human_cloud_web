@@ -58,16 +58,16 @@
     </form>
 
     <!-- 기업회원 로그인 폼 -->
-    <form id="companyForm" action="#" method="POST" class="mx-auto mt-10 max-w-xl hidden">
+    <form id="companyForm" action="/company/login" method="POST" class="mx-auto mt-10 max-w-xl hidden">
         <div class="grid grid-cols-1 gap-y-6">
             <div>
-                <label for="biznum" class="block text-sm font-semibold text-gray-900">사업자 번호</label>
-                <input type="text" name="biznum" id="biznum"
+                <label for="businessRegistrationNumber" class="block text-sm font-semibold text-gray-900">사업자 번호</label>
+                <input type="text" name="businessRegistrationNumber" id="businessRegistrationNumber"
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
             <div>
                 <label for="bizpass" class="block text-sm font-semibold text-gray-900">비밀번호</label>
-                <input type="password" name="bizpass" id="bizpass"
+                <input type="password" name="password" id="bizpass"
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
         </div>

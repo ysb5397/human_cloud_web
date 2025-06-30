@@ -23,7 +23,7 @@ public class CompanyController {
 
     @PostMapping("/company/signup")
     public String signUp(CompanyRequest.JoinDTO joinDTO) {
-
+        log.info("회원가입 시도");
         joinDTO.validate();
         companyService.join(joinDTO);
         return "redirect:/login-form";
@@ -32,7 +32,7 @@ public class CompanyController {
     @GetMapping("/company/login-form")
     public String loginForm() {
         log.info("로그인 요청 폼");
-        return "company/login-form";
+        return "system/login-form";
     }
 
     @PostMapping("/company/login")
@@ -49,5 +49,4 @@ public class CompanyController {
         session.invalidate();
         return "redirect:/";
     }
-
 }

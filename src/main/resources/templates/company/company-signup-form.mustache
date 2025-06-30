@@ -14,7 +14,7 @@
         <p class="mt-2 text-lg text-gray-600">회원가입을 해주세요.</p>
     </div>
 
-    <form id="userForm" action="#" method="POST" class="mx-auto mt-10 max-w-xl">
+    <form id="companyForm" action="/company/signup" method="POST" class="mx-auto mt-10 max-w-xl">
         <div class="grid grid-cols-1 gap-y-6">
             <div>
                 <label for="id" class="block text-sm font-semibold text-gray-900">아이디</label>
@@ -22,8 +22,8 @@
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
             <div>
-                <label for="password" class="block text-sm font-semibold text-gray-900">회사명</label>
-                <input type="text" name="name" id="name" autocomplete="name"
+                <label for="companyName" class="block text-sm font-semibold text-gray-900">회사명</label>
+                <input type="text" name="companyName" id="companyName" autocomplete="companyName"
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
             <div>
@@ -32,17 +32,22 @@
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
             <div>
-                <label for="password" class="block text-sm font-semibold text-gray-900">주소</label>
+                <label for="repeatPW" class="block text-sm font-semibold text-gray-900">비밀번호 확인</label>
+                <input type="password" name="repeatPW" id="repeatPW"
+                       class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
+            </div>
+            <div>
+                <label for="address" class="block text-sm font-semibold text-gray-900">주소</label>
                 <input type="text" name="address" id="address" autocomplete="address"
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
             <div>
-                <label for="biznum" class="block text-sm font-semibold text-gray-900">사업자 번호</label>
-                <input type="text" name="biznum" id="biznum"
+                <label for="businessRegistrationNumber" class="block text-sm font-semibold text-gray-900">사업자 번호</label>
+                <input type="text" name="businessRegistrationNumber" id="businessRegistrationNumber"
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
             <div>
-                <label for="password" class="block text-sm font-semibold text-gray-900">이메일</label>
+                <label for="email" class="block text-sm font-semibold text-gray-900">이메일</label>
                 <input type="text" name="email" id="email" autocomplete="email"
                        class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
             </div>
@@ -54,7 +59,7 @@
             </button>
         </div>
         <div class="mt-4 text-center">
-            <p class="text-base text-gray-600">기업 회원이 아니신가요?<a href="/user/siginup-form" class="ml-2 text-indigo-600 underline">개인회원 가입하기</a></p>
+            <p class="text-base text-gray-600">기업 회원이 아니신가요?<a href="/user/signup-form" class="ml-2 text-indigo-600 underline">개인회원 가입하기</a></p>
         </div>
         <div class="mt-4 text-center">
             <p class="text-base text-gray-600">이미 계정이 있으신가요?<a href="/user/login-form" class="ml-2 text-indigo-600 underline">로그인 하기</a></p>

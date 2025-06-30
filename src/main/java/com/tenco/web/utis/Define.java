@@ -16,6 +16,9 @@ public class Define {
         public static final String REQUIRED_ADDRESS = "주소는 필수입니다.";
 
         // 회사
+        // 회사이름 사업자번호
+        public static final String REQUIRED_COMPANYNAME = "회사명은 필수 입니다.";
+        public static final String REQUIRED_BUSINESSREGISTRATION_NO = " 사업자 번호는 필수입니다.";
     }
 
     // 기타 메시지 담당하는 내부 클래스

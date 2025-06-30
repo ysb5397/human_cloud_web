@@ -35,7 +35,7 @@ public class UserController {
     @GetMapping("/user/login-form")
     public String loginForm() {
         log.info("로그인 요청 폼");
-        return "user/login-form";
+        return "system/login-form";
     }
 
     @PostMapping("/user/login")

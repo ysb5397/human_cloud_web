@@ -29,7 +29,7 @@ public class CompanyService {
 
         // 2. 회사명 중복 체크(굳이 User 객체를 받을 필요가 없으므로 ifPresent 메서드가 더 적절하다.)
         companyJpaRepository.findByCompanyName(joinDTO.getCompanyName())
-                .ifPresent(company -> {
+                .ifPresent(company1 -> {
                     throw new Exception400("이미 존재하는 회사 명입니다.");
                 });
 

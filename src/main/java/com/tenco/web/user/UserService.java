@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
@@ -44,11 +46,8 @@ public class UserService {
      * @return User
      */
     public User login(UserRequest.LoginDTO loginDTO) {
-        return userJpaRepository
-                .findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword())
-                .orElseThrow(() -> {
-                    return new Exception400("이름 또는 비밀번호가 일치하지 않습니다.");
-                });
+        Optional<User> user = userJpaRepository.findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
+        return user.isPresent() ? user.get() : null;
     }
 
     /**

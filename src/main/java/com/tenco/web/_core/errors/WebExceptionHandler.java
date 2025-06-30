@@ -93,16 +93,4 @@ public class WebExceptionHandler {
         request.setAttribute("msg", e.getMessage());
         return "err/500";
     }
-
-    @ExceptionHandler(RuntimeException.class)
-    public String handleRuntimeException(RuntimeException e, HttpServletRequest request) {
-
-        log.warn("=== 예기치 못한 오류 발생 ===");
-        log.warn("요청 url : {}", request.getRequestURI());
-        log.warn("인증 오류 : {}", e.getMessage());
-        log.warn("User-Agent : {}", request.getHeader("User-Agent"));
-
-        request.setAttribute("msg", "시스템 오류 발생, 관리자에게 문의 하세요");
-        return "err/500";
-    }
 }

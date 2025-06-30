@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.ui.Model;
 
 public class UserRequest {
 
@@ -77,15 +78,18 @@ public class UserRequest {
         private String password;
 
         // 유효성 검사
-        public String validate() {
+        public void validate(Model model) {
+            String errMsg = null;
+
             if (username == null || username.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_USERNAME;
+                errMsg = Define.ErrorMessage.REQUIRED_USERNAME;
             }
 
             if (password == null || password.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_PASSWORD;
+                errMsg = Define.ErrorMessage.REQUIRED_PASSWORD;
             }
-            return null;
+
+            model.addAttribute("errMsg", errMsg);
         }
     }
 

@@ -16,13 +16,13 @@ public class UserController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
-    @GetMapping("/signup-form")
+    @GetMapping("/user/signup-form")
     public String signUpForm() {
         log.info("회원가입 요청 폼");
         return "user/user-signup-form";
     }
 
-    @PostMapping("/signUp")
+    @PostMapping("/user/signup")
     public String signUp(UserRequest.JoinDTO joinDTO) {
 
         joinDTO.validate();
@@ -30,13 +30,13 @@ public class UserController {
         return "redirect:/login-form";
     }
 
-    @GetMapping("/login-form")
+    @GetMapping("/user/login-form")
     public String loginForm() {
         log.info("로그인 요청 폼");
         return "user/login-form";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public String login(UserRequest.LoginDTO loginDTO, HttpSession session) {
         loginDTO.validate();
         User user = userService.login(loginDTO);

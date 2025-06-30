@@ -45,9 +45,9 @@ public class UserService {
      */
     public User login(UserRequest.LoginDTO loginDTO) {
         return userJpaRepository
-                .findByUsernameAndPassword(loginDTO.getEmail(), loginDTO.getPassword())
+                .findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword())
                 .orElseThrow(() -> {
-                    return new Exception400("이메일 또는 비밀번호가 일치하지 않습니다.");
+                    return new Exception400("이름 또는 비밀번호가 일치하지 않습니다.");
                 });
     }
 

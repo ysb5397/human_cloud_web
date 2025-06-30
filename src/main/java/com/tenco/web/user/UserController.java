@@ -16,14 +16,14 @@ public class UserController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
-    @GetMapping("/join-form")
-    public String joinForm() {
+    @GetMapping("/signup-form")
+    public String signUpForm() {
         log.info("회원가입 요청 폼");
-        return "user/join-form";
+        return "user/user-signup-form";
     }
 
-    @PostMapping("/join")
-    public String join(UserRequest.JoinDTO joinDTO) {
+    @PostMapping("/signUp")
+    public String signUp(UserRequest.JoinDTO joinDTO) {
 
         joinDTO.validate();
         userService.join(joinDTO);

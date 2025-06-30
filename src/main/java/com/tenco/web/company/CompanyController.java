@@ -26,7 +26,7 @@ public class CompanyController {
         log.info("회원가입 시도");
         joinDTO.validate();
         companyService.join(joinDTO);
-        return "redirect:/login-form";
+        return "redirect:/company/login-form";
     }
 
     @GetMapping("/company/login-form")

@@ -23,11 +23,13 @@ public class UserController {
     }
 
     @PostMapping("/user/signup")
-    public String signUp(UserRequest.JoinDTO joinDTO) {
-
-        joinDTO.validate();
+    public String signUp(UserRequest.JoinDTO joinDTO, Model model) {
+        log.info("회원가입 시도...");
+        String errMsg = joinDTO.validate();
+        model.addAttribute("errMsg", errMsg);
         userService.join(joinDTO);
-        return "redirect:/login-form";
+        log.info("회원가입 완료!");
+        return errMsg == null ? "user/login-form" : "user/signup-form";
     }
 
     @GetMapping("/user/login-form")
@@ -37,17 +39,20 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public String login(UserRequest.LoginDTO loginDTO, HttpSession session) {
-        loginDTO.validate();
+    public String login(UserRequest.LoginDTO loginDTO, HttpSession session, Model model) {
+        log.info("로그인 시도...");
+        String errMsg = loginDTO.validate();
+        model.addAttribute("errMsg", errMsg);
         User user = userService.login(loginDTO);
         session.setAttribute(Define.DefineMessage.SESSION_USER, user);
-        return "redirect:/";
+        log.info("로그인 완료!");
+        return errMsg == null ? "redirect:/" : "user/login-form";
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/user/logout")
     public String logout(HttpSession session) {
-        log.info("로그아웃 시도");
         session.invalidate();
+        log.info("로그아웃 완료");
         return "redirect:/";
     }
 
@@ -62,13 +67,14 @@ public class UserController {
     }
 
     @PostMapping("/user/update")
-    public String update(UserRequest.UpdateDTO updateDTO, HttpSession session) {
+    public String update(UserRequest.UpdateDTO updateDTO, HttpSession session, Model model) {
 
-        updateDTO.validate();
+        String errMsg = updateDTO.validate();
+        model.addAttribute("errMsg", errMsg);
         User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         User updateUser = userService.updateById(sessionUser.getId(), updateDTO);
         session.setAttribute(Define.DefineMessage.SESSION_USER, updateUser);
 
-        return "redirect:/user/update-form";
+        return errMsg == null ? "redirect:/user/mypage-form" : "user/update-form";
     }
 }

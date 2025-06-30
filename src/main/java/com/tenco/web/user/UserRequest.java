@@ -1,5 +1,6 @@
 package com.tenco.web.user;
 
+import com.tenco.web.utis.Define;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class UserRequest {
     public static class JoinDTO {
         private String username;
         private String password;
+        private String repeatPW;
         private String email;
         private String address;
 
@@ -29,22 +31,39 @@ public class UserRequest {
         }
 
         // 회원가입시 유효성 검증 메서드
-        public void validate() {
+        public String validate() {
             if (username == null || username.trim().isEmpty()) {
-                throw new IllegalArgumentException("사용자 명은 필수입니다");
+                return Define.ErrorMessage.REQUIRED_USERNAME;
             }
 
             if (password == null || password.trim().isEmpty()) {
-                throw new IllegalArgumentException("비밀번호는 필수입니다.");
+                return Define.ErrorMessage.REQUIRED_PASSWORD;
+            }
+
+            if (password.length() < 4) {
+                return Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD;
+            }
+
+            if (repeatPW == null || repeatPW.trim().isEmpty()) {
+                return Define.ErrorMessage.REQUIRED_REPEAT_PW;
+            }
+
+            if (!password.equals(repeatPW)) {
+                return Define.ErrorMessage.NOT_MATCH_REPEAT_PW;
+            }
+
+            if (email == null || email.trim().isEmpty()) {
+                return Define.ErrorMessage.REQUIRED_EMAIL;
             }
 
             if (!email.contains("@")) {
-                throw new IllegalArgumentException("잘못된 이메일 형식입니다");
+                return Define.ErrorMessage.ILLEGAL_FORMAT_EMAIL;
             }
 
             if (address == null || address.trim().isEmpty()) {
-                throw new IllegalArgumentException("주소를 입력해주세요.");
+                return Define.ErrorMessage.REQUIRED_ADDRESS;
             }
+            return null;
         }
     }
 
@@ -54,18 +73,19 @@ public class UserRequest {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class LoginDTO {
-        private String email;
+        private String username;
         private String password;
 
         // 유효성 검사
-        public void validate() {
-            if (!email.contains("@")) {
-                throw new IllegalArgumentException("잘못된 이메일 형식입니다");
+        public String validate() {
+            if (username == null || username.trim().isEmpty()) {
+                return Define.ErrorMessage.REQUIRED_USERNAME;
             }
 
             if (password == null || password.trim().isEmpty()) {
-                throw new IllegalArgumentException("비밀번호는 필수입니다.");
+                return Define.ErrorMessage.REQUIRED_PASSWORD;
             }
+            return null;
         }
     }
 
@@ -75,22 +95,23 @@ public class UserRequest {
         private String password;
         private String address;
 
-        public void validate() {
+        public String validate() {
             if (!email.contains("@")) {
-                throw new IllegalArgumentException("잘못된 이메일 형식입니다");
+                return Define.ErrorMessage.ILLEGAL_FORMAT_EMAIL;
             }
 
             if (password == null || password.trim().isEmpty()) {
-                throw new IllegalArgumentException("비밀번호는 필수입니다.");
+                return Define.ErrorMessage.REQUIRED_PASSWORD;
             }
 
             if (password.length() < 4) {
-                throw new IllegalArgumentException("비밀번호는 4글자 이상으로 입력해주세요.");
+                return Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD;
             }
 
             if (address == null || address.trim().isEmpty()) {
-                throw new IllegalArgumentException("주소를 입력해주세요.");
+                return Define.ErrorMessage.REQUIRED_ADDRESS;
             }
+            return null;
         }
     }
 }

@@ -38,7 +38,7 @@ public class Announce {
     private Timestamp endDate;
     private int interestCount;
 
-    public String getTime() {
+    public String getStartDate() {
         return DateUtil.timestampFormat(startDate);
     }
 

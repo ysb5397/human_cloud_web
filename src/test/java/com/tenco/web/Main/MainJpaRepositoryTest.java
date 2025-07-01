@@ -25,4 +25,6 @@ public class MainJpaRepositoryTest {
         List<Announce> announceList = mainJpaRepository.findAll();
         Assertions.assertThat(announceList.size()).isEqualTo(5);
     }
+
+
 }

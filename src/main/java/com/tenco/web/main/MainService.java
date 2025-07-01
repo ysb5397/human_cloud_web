@@ -1,6 +1,8 @@
 package com.tenco.web.main;
 
+import com.sun.tools.javac.Main;
 import com.tenco.web.announce.Announce;
+import com.tenco.web.company.Company;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,4 +26,10 @@ public class MainService {
         log.info("메인 페이지 불러오기 완료");
         return announceList;
     }
+
+    public List<Announce> findAllList() {
+        List<Announce> announceList = mainJpaRepository.findAll();
+        return announceList;
+    }
+
 }

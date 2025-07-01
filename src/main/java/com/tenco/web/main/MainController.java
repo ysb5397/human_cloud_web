@@ -22,4 +22,12 @@ public class MainController {
         model.addAttribute("announceList", announceList);
         return "index";
     }
+
+    @GetMapping("/announceborderlist")
+    public String setAnnounceBorderList (Model model) {
+        List <Announce> announceList = mainService.findAll();
+        model.addAttribute("announceList", announceList);
+        return "announce/announceborderlist";
+
+    }
 }

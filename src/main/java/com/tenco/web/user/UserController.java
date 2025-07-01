@@ -73,4 +73,13 @@ public class UserController {
 
         return "redirect:/user/mypage-form";
     }
+
+    @GetMapping("/user/resume-update")
+    public String resumeUpdate(HttpSession session){
+        User sessionUser = (User)session.getAttribute(Define.DefineMessage.SESSION_USER);
+        if(sessionUser == null) {
+            return "redirect:/login-form";
+        }
+        return "user/resume-update";
+    }
 }

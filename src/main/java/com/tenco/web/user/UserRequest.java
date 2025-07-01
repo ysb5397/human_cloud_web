@@ -1,8 +1,9 @@
 package com.tenco.web.user;
 
 import com.tenco.web._core.errors.exception.LoginException;
-import com.tenco.web._core.errors.exception.UserJoinException;
 import com.tenco.web.utis.Define;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +16,20 @@ public class UserRequest {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class JoinDTO {
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_USERNAME)
         private String username;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_PASSWORD)
+        @Size(min = 4, message = Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD)
         private String password;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_REPEAT_PW)
         private String repeatPW;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_EMAIL)
         private String email;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_ADDRESS)
         private String address;
 
         // JoinDTO를 user object로 변환 하는 메서드 추가
@@ -30,41 +41,6 @@ public class UserRequest {
                     .email(this.email)
                     .address(this.address)
                     .build();
-        }
-
-        // 회원가입시 유효성 검증 메서드
-        public void validate() {
-            if (username == null || username.trim().isEmpty()) {
-                throw new UserJoinException(Define.ErrorMessage.REQUIRED_USERNAME);
-            }
-
-            if (password == null || password.trim().isEmpty()) {
-                throw new UserJoinException(Define.ErrorMessage.REQUIRED_PASSWORD);
-            }
-
-            if (password.length() < 4) {
-                throw new UserJoinException(Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD);
-            }
-
-            if (repeatPW == null || repeatPW.trim().isEmpty()) {
-                throw new UserJoinException(Define.ErrorMessage.REQUIRED_REPEAT_PW);
-            }
-
-            if (!password.equals(repeatPW)) {
-                throw new UserJoinException(Define.ErrorMessage.NOT_MATCH_REPEAT_PW);
-            }
-
-            if (email == null || email.trim().isEmpty()) {
-                throw new UserJoinException(Define.ErrorMessage.REQUIRED_EMAIL);
-            }
-
-            if (!email.contains("@")) {
-                throw new UserJoinException(Define.ErrorMessage.ILLEGAL_FORMAT_EMAIL);
-            }
-
-            if (address == null || address.trim().isEmpty()) {
-                throw new UserJoinException(Define.ErrorMessage.REQUIRED_ADDRESS);
-            }
         }
     }
 

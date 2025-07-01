@@ -94,17 +94,4 @@ public class WebExceptionHandler {
 
         return "system/login-form";
     }
-
-    // 회원가입 오류
-    @ExceptionHandler(UserJoinException.class)
-    public String JoinEx(UserJoinException e, HttpServletRequest request, Model model) {
-        log.warn("=== 로그인 오류 발생 ===");
-        log.warn("요청 url : {}", request.getRequestURI());
-        log.warn("인증 오류 : {}", e.getMessage());
-        log.warn("User-Agent : {}", request.getHeader("User-Agent"));
-
-        model.addAttribute("errMsg", e.getMessage());
-
-        return "user/login-form";
-    }
 }

@@ -2,6 +2,8 @@ package com.tenco.web.user;
 
 import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception404;
+import com.tenco.web._core.errors.exception.LoginException;
+import com.tenco.web.utis.Define;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +49,11 @@ public class UserService {
      */
     public User login(UserRequest.LoginDTO loginDTO) {
         Optional<User> user = userJpaRepository.findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
-        return user.isPresent() ? user.get() : null;
+        return userJpaRepository
+                .findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword())
+                .orElseThrow(() -> {
+                    return new LoginException(Define.ErrorMessage.NOT_MATCH_USERNAME_OR_PASSWORD);
+                });
     }
 
     /**

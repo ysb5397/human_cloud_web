@@ -18,10 +18,10 @@ public class MainService {
     private final MainJpaRepository mainJpaRepository;
 
     public List<Announce> findAll() {
-        log.info("공고 불러오는 중");
+        log.info("메인 페이지 불러오는 중");
         List<Announce> announceList = mainJpaRepository.findAll();
 
-        log.info("공고 불러오기 완료");
+        log.info("메인 페이지 불러오기 완료");
         return announceList;
     }
 }

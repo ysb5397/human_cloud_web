@@ -1,11 +1,11 @@
 package com.tenco.web.user;
 
+import com.tenco.web._core.errors.exception.LoginException;
 import com.tenco.web.utis.Define;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.ui.Model;
 
 public class UserRequest {
 
@@ -78,18 +78,14 @@ public class UserRequest {
         private String password;
 
         // 유효성 검사
-        public void validate(Model model) {
-            String errMsg = null;
-
+        public void validate() {
             if (username == null || username.trim().isEmpty()) {
-                errMsg = Define.ErrorMessage.REQUIRED_USERNAME;
+                throw new LoginException(Define.ErrorMessage.REQUIRED_USERNAME);
             }
 
             if (password == null || password.trim().isEmpty()) {
-                errMsg = Define.ErrorMessage.REQUIRED_PASSWORD;
+                throw new LoginException(Define.ErrorMessage.REQUIRED_PASSWORD);
             }
-
-            model.addAttribute("errMsg", errMsg);
         }
     }
 

@@ -7,15 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@ControllerAdvice // 에러 페이지로 연결 처리
-// @RestControllerAdvice 데이터를 반환 할 때
+@ControllerAdvice
 public class WebExceptionHandler {
 
-    // slf4j 로거 생성 - 로깅 사용 시 System.out.println() 대신 사용
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandler.class);
 
     @ExceptionHandler(Exception400.class)
@@ -29,18 +28,6 @@ public class WebExceptionHandler {
         request.setAttribute("msg", e.getMessage());
         return "err/400";
     }
-
-//    @ExceptionHandler(Exception401.class)
-//    public String ex401(Exception401 e, HttpServletRequest request) {
-//
-//        log.warn("=== 401 Unauthorized Error 발생 ===");
-//        log.warn("요청 url : {}", request.getRequestURI());
-//        log.warn("인증 오류 : {}", e.getMessage());
-//        log.warn("User-Agent : {}", request.getHeader("User-Agent"));
-//
-//        request.setAttribute("msg", e.getMessage());
-//        return "err/401";
-//    }
 
     @ExceptionHandler(Exception401.class)
     @ResponseBody
@@ -92,5 +79,18 @@ public class WebExceptionHandler {
 
         request.setAttribute("msg", e.getMessage());
         return "err/500";
+    }
+
+    // 아래 부터는 작은 예외 처리(로그인 실패 등등)
+    @ExceptionHandler(LoginException.class)
+    public String LoginEx(LoginException e, HttpServletRequest request, Model model) {
+        log.warn("=== 로그인 오류 발생 ===");
+        log.warn("요청 url : {}", request.getRequestURI());
+        log.warn("인증 오류 : {}", e.getMessage());
+        log.warn("User-Agent : {}", request.getHeader("User-Agent"));
+
+        model.addAttribute("errMsg", e.getMessage());
+
+        return "system/login-form";
     }
 }

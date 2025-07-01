@@ -38,9 +38,9 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public String login(UserRequest.LoginDTO loginDTO, HttpSession session, Model model) {
+    public String login(UserRequest.LoginDTO loginDTO, HttpSession session) {
         log.info("로그인 시도...");
-        loginDTO.validate(model);
+        loginDTO.validate();
         User user = userService.login(loginDTO);
         session.setAttribute(Define.DefineMessage.SESSION_USER, user);
         return "redirect:/";

@@ -14,6 +14,7 @@ public class Define {
         public static final String REQUIRED_EMAIL = "이메일은 필수입니다.";
         public static final String ILLEGAL_FORMAT_EMAIL = "이메일을 똑바로 입력해주세요.";
         public static final String REQUIRED_ADDRESS = "주소는 필수입니다.";
+        public static final String EXIST_USER = "이미 존재하는 유저입니다.";
 
         // 회사
         // 회사이름 사업자번호

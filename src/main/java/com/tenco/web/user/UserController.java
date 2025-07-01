@@ -25,7 +25,7 @@ public class UserController {
     @PostMapping("/user/signup")
     public String signUp(UserRequest.JoinDTO joinDTO, Model model) {
         log.info("회원가입 시도...");
-        String errMsg = joinDTO.validate();
+        joinDTO.validate();
         userService.join(joinDTO);
         log.info("회원가입 완료!");
         return "system/login-form";

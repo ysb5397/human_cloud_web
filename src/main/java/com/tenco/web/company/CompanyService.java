@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
@@ -63,5 +65,13 @@ public class CompanyService {
             log.warn("회사 조회 실패 - ID : {}", id);
             return new Exception404("회사를 찾을 수 없습니다.");
         });
+    }
+
+    /**
+     * 회사 리스트 조회
+     */
+    public List<Company> findAll() {
+        List<Company> companyList = companyJpaRepository.findAll();
+        return companyList;
     }
 }

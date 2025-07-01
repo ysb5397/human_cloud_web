@@ -1,13 +1,17 @@
 package com.tenco.web.company;
 
+import com.tenco.web.announce.Announce;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,4 +53,12 @@ public class CompanyController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @GetMapping({"/companyinfo"})
+    public String companyInfo(Model model) {
+        List<Company> companyList = companyService.findAll();
+        model.addAttribute("companyList",companyList);
+        return "company/companyinfo";
+    }
+
 }

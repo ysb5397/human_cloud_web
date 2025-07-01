@@ -1,8 +1,8 @@
 package com.tenco.web.user;
 
-import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web._core.errors.exception.LoginException;
+import com.tenco.web._core.errors.exception.UserJoinException;
 import com.tenco.web.utis.Define;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class UserService {
         // 2. 사용자명 중복 체크(굳이 User 객체를 받을 필요가 없으므로 ifPresent 메서드가 더 적절하다.)
         userJpaRepository.findByUsername(joinDTO.getUsername())
                 .ifPresent(user1 -> {
-                    throw new Exception400("이미 존재하는 사용자 명입니다.");
+                    throw new UserJoinException(Define.ErrorMessage.EXIST_USER);
                 });
 
         log.info("회원가입 서비스 완료");

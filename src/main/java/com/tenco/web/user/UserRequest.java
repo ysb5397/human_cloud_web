@@ -1,6 +1,7 @@
 package com.tenco.web.user;
 
 import com.tenco.web._core.errors.exception.LoginException;
+import com.tenco.web._core.errors.exception.UserJoinException;
 import com.tenco.web.utis.Define;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,39 +33,38 @@ public class UserRequest {
         }
 
         // 회원가입시 유효성 검증 메서드
-        public String validate() {
+        public void validate() {
             if (username == null || username.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_USERNAME;
+                throw new UserJoinException(Define.ErrorMessage.REQUIRED_USERNAME);
             }
 
             if (password == null || password.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_PASSWORD;
+                throw new UserJoinException(Define.ErrorMessage.REQUIRED_PASSWORD);
             }
 
             if (password.length() < 4) {
-                return Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD;
+                throw new UserJoinException(Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD);
             }
 
             if (repeatPW == null || repeatPW.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_REPEAT_PW;
+                throw new UserJoinException(Define.ErrorMessage.REQUIRED_REPEAT_PW);
             }
 
             if (!password.equals(repeatPW)) {
-                return Define.ErrorMessage.NOT_MATCH_REPEAT_PW;
+                throw new UserJoinException(Define.ErrorMessage.NOT_MATCH_REPEAT_PW);
             }
 
             if (email == null || email.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_EMAIL;
+                throw new UserJoinException(Define.ErrorMessage.REQUIRED_EMAIL);
             }
 
             if (!email.contains("@")) {
-                return Define.ErrorMessage.ILLEGAL_FORMAT_EMAIL;
+                throw new UserJoinException(Define.ErrorMessage.ILLEGAL_FORMAT_EMAIL);
             }
 
             if (address == null || address.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_ADDRESS;
+                throw new UserJoinException(Define.ErrorMessage.REQUIRED_ADDRESS);
             }
-            return null;
         }
     }
 

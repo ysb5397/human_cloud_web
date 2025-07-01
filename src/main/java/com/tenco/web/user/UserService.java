@@ -2,7 +2,6 @@ package com.tenco.web.user;
 
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web._core.errors.exception.LoginException;
-import com.tenco.web._core.errors.exception.UserJoinException;
 import com.tenco.web.utis.Define;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -20,21 +19,23 @@ public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserJpaRepository userJpaRepository;
 
+
+    public User findByUsername(UserRequest.JoinDTO joinDTO) {
+        return userJpaRepository.findByUsername(joinDTO.getUsername()).orElse(null);
+    }
+
     /**
      * 회원 가입 처리
      *
      * @param joinDTO
      * @return User
      */
-    @Transactional // 메서드 레벨에서 쓰기 전용 트랜잭션 활성화
+    @Transactional
     public User join(UserRequest.JoinDTO joinDTO) {
-        // 1. 로그 기록
         log.info("회원가입 서비스 시작");
-
-        // 2. 사용자명 중복 체크(굳이 User 객체를 받을 필요가 없으므로 ifPresent 메서드가 더 적절하다.)
         userJpaRepository.findByUsername(joinDTO.getUsername())
                 .ifPresent(user1 -> {
-                    throw new UserJoinException(Define.ErrorMessage.EXIST_USER);
+                    throw new Exception404("a");
                 });
 
         log.info("회원가입 서비스 완료");
@@ -69,15 +70,11 @@ public class UserService {
         });
     }
 
-    // 회원 정보 수정 요청(더티 체킹)
     @Transactional
     public User updateById(int id, UserRequest.UpdateDTO updateDTO) {
         User user = findById(id);
 
-        // TODO 추가
-//        user.update(updateDTO);
-
         user.setPassword(updateDTO.getPassword());
-        return user; // 세션 동기화 때문에 반환 필요
+        return user;
     }
 }

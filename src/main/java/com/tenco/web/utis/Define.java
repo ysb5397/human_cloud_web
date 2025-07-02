@@ -41,6 +41,7 @@ public class Define {
         public static final String SESSION_USER = "sessionUser";
         public static final String JOIN_DTO = "joinDTO";
         public static final String LOGIN_DTO = "loginDTO";
+        public static final String SAVE_DTO = "saveDTO";
         public static final String UPDATE_DTO = "updateDTO";
         public static final String MESSAGE_USERNAME_CHECK = "message.usernameCheck";
         public static final String MESSAGE_USERNAME = "message.username";

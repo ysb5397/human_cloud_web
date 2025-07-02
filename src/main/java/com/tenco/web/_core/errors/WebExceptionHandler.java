@@ -83,8 +83,8 @@ public class WebExceptionHandler {
 
     // 아래 부터는 작은 예외 처리(로그인 실패 등등)
     // 로그인 오류
-    @ExceptionHandler(LoginException.class)
-    public String LoginEx(LoginException e, HttpServletRequest request, Model model) {
+    @ExceptionHandler(UserLoginException.class)
+    public String UserLoginEx(UserLoginException e, HttpServletRequest request, Model model) {
         log.warn("=== 로그인 오류 발생 ===");
         log.warn("요청 url : {}", request.getRequestURI());
         log.warn("인증 오류 : {}", e.getMessage());
@@ -92,6 +92,18 @@ public class WebExceptionHandler {
 
         model.addAttribute("errMsg", e.getMessage());
 
-        return "system/login-form";
+        return "user/login-form";
+    }
+
+    @ExceptionHandler(CompanyLoginException.class)
+    public String CompanyLoginEx(CompanyLoginException e, HttpServletRequest request, Model model) {
+        log.warn("=== 로그인 오류 발생 ===");
+        log.warn("요청 url : {}", request.getRequestURI());
+        log.warn("인증 오류 : {}", e.getMessage());
+        log.warn("User-Agent : {}", request.getHeader("User-Agent"));
+
+        model.addAttribute("errMsg", e.getMessage());
+
+        return "company/login-form";
     }
 }

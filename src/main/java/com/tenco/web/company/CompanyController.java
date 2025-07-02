@@ -49,8 +49,10 @@ public class CompanyController {
 
         if (result.hasErrors()) {
             for (FieldError error : result.getFieldErrors()) {
-//                errorMap.put(error.getField(), error)
+                errorMap.put(error.getField(), error.getDefaultMessage());
             }
+            model.addAttribute("message", errorMap);
+            return "company/company-signup-form";
         }
 
         companyService.join(joinDTO);
@@ -60,7 +62,7 @@ public class CompanyController {
     @GetMapping("/company/login-form")
     public String loginForm() {
         log.info("로그인 요청 폼");
-        return "system/login-form";
+        return "company/login-form";
     }
 
     @PostMapping("/company/login")

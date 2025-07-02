@@ -1,6 +1,5 @@
 package com.tenco.web.resume;
 
-import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.validation.constraints.NotBlank;

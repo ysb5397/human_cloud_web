@@ -30,7 +30,7 @@ public class Resume {
     @Column(nullable = false)
     private String selfIntroduction;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private Boolean isPublic;
 
     @Column(name = "created_at")

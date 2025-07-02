@@ -1,13 +1,16 @@
 package com.tenco.web.company;
 
+import com.tenco.web.announce.Announce;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
+@Slf4j
 @NoArgsConstructor
 @Data
 @Table(name = "company_tb")
@@ -41,4 +44,5 @@ public class Company {
             this.businessRegistrationNumber = businessRegistrationNumber;
             this.createdAt = createdAt;
         }
+
 }

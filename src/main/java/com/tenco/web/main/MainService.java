@@ -33,7 +33,7 @@ public class MainService {
     }
 
     public Announce findById(Long id) {
-        Announce announce = mainJpaRepository.findByJobList(1L)
+        Announce announce = mainJpaRepository.findByJobList(id)
                 .orElseThrow(() -> new IllegalArgumentException("공고 없음: id=" + id));;
         return announce;
     }

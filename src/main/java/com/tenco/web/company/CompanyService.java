@@ -2,6 +2,9 @@ package com.tenco.web.company;
 
 import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception404;
+import com.tenco.web.announce.Announce;
+import jakarta.persistence.TypedQuery;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,4 +77,5 @@ public class CompanyService {
         List<Company> companyList = companyJpaRepository.findAll();
         return companyList;
     }
+
 }

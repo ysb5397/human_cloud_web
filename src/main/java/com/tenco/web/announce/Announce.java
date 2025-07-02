@@ -7,11 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
 
+@Slf4j
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,15 +36,21 @@ public class Announce {
 
     @CreationTimestamp
     private Timestamp startDate;
-
     private Timestamp endDate;
+
     private int interestCount;
 
     public String getStartDate() {
         return DateUtil.timestampFormat(startDate);
     }
+    public String getEndDate() {
+        return DateUtil.timestampFormat(endDate);
+    }
 
-    public boolean isOwner(int checkCompanyId) {
+    // 게시글 소유자 확인하는 기능
+    public boolean isCOwner(int checkCompanyId) {
+        log.info("게시글 소유자 확인 요청 - 작성자 : {}", checkCompanyId);
         return this.company.getId() == checkCompanyId;
     }
+
 }

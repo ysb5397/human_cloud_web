@@ -32,16 +32,16 @@ public class UserController {
     @PostMapping("/user/signup")
     public String signUp(@Valid UserRequest.JoinDTO joinDTO, BindingResult result, Model model) {
         log.info("회원가입 시도...");
-        model.addAttribute("joinDTO", joinDTO);
+        model.addAttribute(Define.DefineMessage.JOIN_DTO, joinDTO);
 
         Validate.UserValidate.checkPassword(joinDTO, result);
 
         Map<String, String> errorMap = new HashMap<>();
         User user = userService.findByUsername(joinDTO);
         if (joinDTO.getUsername() != null && !joinDTO.getUsername().trim().isEmpty() && user == null) {
-            model.addAttribute("message.usernameCheck", Define.NormalMessage.NOT_EXIST_USER);
+            model.addAttribute(Define.DefineMessage.MESSAGE_USERNAME_CHECK, Define.NormalMessage.NOT_EXIST_USER);
         } else if (joinDTO.getUsername() != null && !joinDTO.getUsername().trim().isEmpty() && user != null) {
-            model.addAttribute("message.username", Define.ErrorMessage.EXIST_USER);
+            model.addAttribute(Define.DefineMessage.MESSAGE_USERNAME, Define.ErrorMessage.EXIST_USER);
             return "user/user-signup-form";
         }
 

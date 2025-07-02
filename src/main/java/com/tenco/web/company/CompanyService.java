@@ -1,6 +1,5 @@
 package com.tenco.web.company;
 
-import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception404;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -30,11 +29,7 @@ public class CompanyService {
         log.info("회원가입 서비스 시작");
 
         // 2. 회사명 중복 체크(굳이 User 객체를 받을 필요가 없으므로 ifPresent 메서드가 더 적절하다.)
-        companyJpaRepository.findByCompanyName(joinDTO.getCompanyName())
-                .ifPresent(company1 -> {
-                    throw new Exception400("이미 존재하는 회사 명입니다.");
-                });
-
+        companyJpaRepository.findByCompanyName(joinDTO.getCompanyName());
 
         log.info("회원가입 서비스 완료");
         return companyJpaRepository.save(joinDTO.toEntity());
@@ -48,10 +43,7 @@ public class CompanyService {
      */
     public Company login(CompanyRequest.LoginDTO loginDTO) {
         return companyJpaRepository
-                .findByBusinessRegistrationNumberAndPassword(loginDTO.getBusinessRegistrationNumber(), loginDTO.getPassword())
-                .orElseThrow(() -> {
-                    return new Exception400("사업자 번호 또는 비밀번호가 일치하지 않습니다.");
-                });
+                .findByBusinessRegistrationNumberAndPassword(loginDTO.getBusinessRegistrationNumber(), loginDTO.getPassword());
     }
 
     /**
@@ -73,5 +65,10 @@ public class CompanyService {
     public List<Company> findAll() {
         List<Company> companyList = companyJpaRepository.findAll();
         return companyList;
+    }
+
+    public Company findByCompanyName(CompanyRequest.JoinDTO joinDTO) {
+        Company company = companyJpaRepository.findByCompanyName(joinDTO.getCompanyName());
+        return company;
     }
 }

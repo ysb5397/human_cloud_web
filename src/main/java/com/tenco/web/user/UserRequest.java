@@ -2,7 +2,9 @@ package com.tenco.web.user;
 
 import com.tenco.web._core.errors.exception.LoginException;
 import com.tenco.web.utis.Define;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +29,8 @@ public class UserRequest {
         private String repeatPW;
 
         @NotBlank(message = Define.ErrorMessage.REQUIRED_EMAIL)
+        @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+                flags = Pattern.Flag.CASE_INSENSITIVE)
         private String email;
 
         @NotBlank(message = Define.ErrorMessage.REQUIRED_ADDRESS)

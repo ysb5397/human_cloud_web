@@ -1,6 +1,10 @@
 package com.tenco.web.company;
 
 import com.tenco.web.utis.Define;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +18,25 @@ public class CompanyRequest {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class JoinDTO{
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_COMPANYNAME)
         private String companyName;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_PASSWORD)
+        @Size(min = 4, message = Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD)
         private String password;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_REPEAT_PW)
         private String repeatPW;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_ADDRESS)
         private String address;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO)
         private String businessRegistrationNumber;
+
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_EMAIL)
+        @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+                flags = Pattern.Flag.CASE_INSENSITIVE)
         private String email;
 
         // JoinDTO를 company object로 변환 하는 메서드 추가
@@ -31,46 +49,6 @@ public class CompanyRequest {
                     .businessRegistrationNumber(this.businessRegistrationNumber)
                     .email(this.email)
                     .build();
-        }
-
-        // 회원가입시 유효성 검증 메서드
-        public String validate() {
-            if (companyName == null || companyName.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_COMPANYNAME;
-            }
-
-            if (password == null || password.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_PASSWORD;
-            }
-
-            if(password.length() < 4){
-                return Define.ErrorMessage.UNDER_FOUR_LENGTH_PASSWORD;
-            }
-
-            if(repeatPW == null || repeatPW.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_REPEAT_PW;
-            }
-
-            if(!password.equals(repeatPW)) {
-                return Define.ErrorMessage.NOT_MATCH_REPEAT_PW;
-            }
-
-            if (address == null || address.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_ADDRESS;
-            }
-
-            if (businessRegistrationNumber == null || businessRegistrationNumber.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO;
-            }
-
-            if(email == null || email.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_EMAIL;
-            }
-
-            if (!email.contains("@")) {
-                return Define.ErrorMessage.ILLEGAL_FORMAT_EMAIL;
-            }
-            return null;
         }
     }
 

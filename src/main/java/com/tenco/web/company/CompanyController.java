@@ -1,17 +1,22 @@
 package com.tenco.web.company;
 
-import com.tenco.web.announce.Announce;
 import com.tenco.web.utis.Define;
+import com.tenco.web.utis.Validate;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,9 +31,28 @@ public class CompanyController {
     }
 
     @PostMapping("/company/signup")
-    public String signUp(CompanyRequest.JoinDTO joinDTO) {
+    public String signUp(@Valid CompanyRequest.JoinDTO joinDTO, BindingResult result, Model model) {
         log.info("회원가입 시도");
-        joinDTO.validate();
+        model.addAttribute(Define.DefineMessage.JOIN_DTO, joinDTO);
+
+        Validate.CompanyValidate.checkPassword(joinDTO, result);
+
+        Map<String, String> errorMap = new HashMap<>();
+        Company company = companyService.findByCompanyName(joinDTO);
+
+        if (joinDTO.getCompanyName() != null && !joinDTO.getCompanyName().trim().isEmpty() && company == null) {
+            model.addAttribute(Define.DefineMessage.MESSAGE_COMPANY_NAME_CHECK, Define.NormalMessage.NOT_EXIST_COMPANY);
+        } else if (joinDTO.getCompanyName() != null && !joinDTO.getCompanyName().trim().isEmpty() && company != null) {
+            model.addAttribute(Define.DefineMessage.MESSAGE_COMPANY_NAME, Define.ErrorMessage.EXIST_COMPANY);
+            return "company/company-signup-form";
+        }
+
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+//                errorMap.put(error.getField(), error)
+            }
+        }
+
         companyService.join(joinDTO);
         return "redirect:/company/login-form";
     }

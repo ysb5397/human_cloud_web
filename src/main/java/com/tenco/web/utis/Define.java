@@ -22,6 +22,7 @@ public class Define {
         // 회사이름 사업자번호
         public static final String REQUIRED_COMPANYNAME = "회사명은 필수 입니다.";
         public static final String REQUIRED_BUSINESSREGISTRATION_NO = " 사업자 번호는 필수입니다.";
+        public static final String NOT_MATCH_BUSINESSREGISTRATION_NO_OR_PASSWORD = "사업자 번호 또는 비밀번호가 일치하지 않습니다.";
         public static final String EXIST_COMPANY = "이미 존재하는 회사입니다.";
 
         // 이력서

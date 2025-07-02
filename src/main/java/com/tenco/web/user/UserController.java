@@ -56,13 +56,13 @@ public class UserController {
 
         userService.join(joinDTO);
         log.info("회원가입 완료!");
-        return "system/login-form";
+        return "user/login-form";
     }
 
     @GetMapping("/user/login-form")
     public String loginForm() {
         log.info("로그인 요청 폼");
-        return "system/login-form";
+        return "user/login-form";
     }
 
     @PostMapping("/user/login")

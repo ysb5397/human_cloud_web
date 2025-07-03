@@ -6,10 +6,12 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
+@Slf4j
 @NoArgsConstructor
 @Data
 @Table(name = "resume_tb")
@@ -27,7 +29,7 @@ public class Resume {
     private String title;
     private String portfolioUrl;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String selfIntroduction;
 
     // @Column(nullable = false)
@@ -38,7 +40,7 @@ public class Resume {
     private Timestamp createdAt;
 
     @Builder
-    public Resume(int id, User user, String title, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createsAt) {
+    public Resume(int id, User user, String title, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.title = title;
@@ -46,5 +48,10 @@ public class Resume {
         this.selfIntroduction = selfIntroduction;
         this.isPublic = isPublic;
         this.createdAt = createdAt;
+    }
+
+    public boolean isOwner(int checkUserId) {
+        log.info("이력서 소유자 확인 요청 - 작성자 : {}", checkUserId);
+        return this.user.getId() == checkUserId;
     }
 }

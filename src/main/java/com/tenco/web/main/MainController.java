@@ -1,7 +1,6 @@
 package com.tenco.web.main;
 
 import com.tenco.web.announce.Announce;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.List;
 
@@ -42,4 +40,8 @@ public class MainController {
         return "announce/announcedetail";
     }
 
+    @GetMapping("/community/job-seekers")
+    public String jobSeekersCommunity() {
+        return "community/job-seeker";
+    }
 }

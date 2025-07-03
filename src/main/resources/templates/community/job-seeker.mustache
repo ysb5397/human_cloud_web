@@ -1,0 +1,188 @@
+{{> layout/header}}
+
+<section>
+    <!-- component -->
+    <div class="flex flex-col items-center justify-center min-h-screen p-8 space-y-8">
+        <div class="relative bg-white p-6 rounded-xl shadow-lg w-full max-w-2xl cursor-pointer">
+            <div class="flex flex-col space-y-4">
+
+                <div class="flex justify-between items-center text-sm text-gray-500">
+                    <div class="flex items-center space-x-4">
+                        <p>2025년 7월 3일</p>
+                    </div>
+                    <div class="bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-md">
+                        IT 정보
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <h2 class="text-2xl font-bold text-gray-800 hover:text-gray-600 transition-colors">
+                        <a href="#">삼원광과 삼원색의 요소</a>
+                    </h2>
+                    <p class="mt-2 text-gray-600 leading-relaxed">
+                        삼원광은 빨간색, 초록색, 파란색이며, 삼원색은 마젠타, 시안, 노란색으로 이루어져있다. 삼원광은 빛이 섞일수록 하얗게 되며, 삼원색은 그 반대이다.
+                    </p>
+                </div>
+                <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                    <div class="flex items-center space-x-5">
+                        <button onclick="likePost(this)" class="interest flex items-center text-gray-500 hover:text-pink-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="interest--count ml-1 text-sm font-semibold">0</span>
+                        </button>
+                        <div class="flex items-center text-gray-500 hover:text-blue-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <span class="ml-1 text-sm font-semibold">0</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="profile image" class="h-8 w-8 rounded-full object-cover" />
+                        <span class="text-sm font-semibold text-gray-800">김철수</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative bg-white p-6 rounded-xl shadow-lg w-full max-w-2xl cursor-pointer">
+            <div class="flex flex-col space-y-4">
+
+                <div class="flex justify-between items-center text-sm text-gray-500">
+                    <div class="flex items-center space-x-4">
+                        <p>2025년 7월 3일</p>
+                    </div>
+                    <div class="bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-md">
+                        IT 정보
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <h2 class="text-2xl font-bold text-gray-800 hover:text-gray-600 transition-colors">
+                        <a href="#">삼원광과 삼원색의 요소</a>
+                    </h2>
+                    <p class="mt-2 text-gray-600 leading-relaxed">
+                        삼원광은 빨간색, 초록색, 파란색이며, 삼원색은 마젠타, 시안, 노란색으로 이루어져있다. 삼원광은 빛이 섞일수록 하얗게 되며, 삼원색은 그 반대이다.
+                    </p>
+                </div>
+                <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                    <div class="flex items-center space-x-5">
+                        <button onclick="likePost(this)" class="interest flex items-center text-gray-500 hover:text-pink-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="interest--count ml-1 text-sm font-semibold">0</span>
+                        </button>
+                        <div class="flex items-center text-gray-500 hover:text-blue-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <span class="ml-1 text-sm font-semibold">0</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="profile image" class="h-8 w-8 rounded-full object-cover" />
+                        <span class="text-sm font-semibold text-gray-800">김철수</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative bg-white p-6 rounded-xl shadow-lg w-full max-w-2xl cursor-pointer">
+            <div class="flex flex-col space-y-4">
+
+                <div class="flex justify-between items-center text-sm text-gray-500">
+                    <div class="flex items-center space-x-4">
+                        <p>2025년 7월 3일</p>
+                    </div>
+                    <div class="bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-md">
+                        IT 정보
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <h2 class="text-2xl font-bold text-gray-800 hover:text-gray-600 transition-colors">
+                        <a href="#">삼원광과 삼원색의 요소</a>
+                    </h2>
+                    <p class="mt-2 text-gray-600 leading-relaxed">
+                        삼원광은 빨간색, 초록색, 파란색이며, 삼원색은 마젠타, 시안, 노란색으로 이루어져있다. 삼원광은 빛이 섞일수록 하얗게 되며, 삼원색은 그 반대이다.
+                    </p>
+                </div>
+                <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                    <div class="flex items-center space-x-5">
+                        <button onclick="likePost(this)" class="interest flex items-center text-gray-500 hover:text-pink-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="interest--count ml-1 text-sm font-semibold">0</span>
+                        </button>
+                        <div class="flex items-center text-gray-500 hover:text-blue-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <span class="ml-1 text-sm font-semibold">0</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="profile image" class="h-8 w-8 rounded-full object-cover" />
+                        <span class="text-sm font-semibold text-gray-800">김철수</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="flex items-center justify-center border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center">
+            <div>
+                <nav class="isolate inline-flex -space-x-px rounded-md shadow-xs" aria-label="Pagination">
+                    <a href="#" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                        <span class="sr-only">Previous</span>
+                        <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
+                    <a href="#" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">1</a>
+                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">2</a>
+                    <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
+                    <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-gray-300 ring-inset focus:outline-offset-0">...</span>
+                    <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">8</a>
+                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">9</a>
+                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">10</a>
+                    <a href="#" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                        <span class="sr-only">Next</span>
+                        <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function likePost(selectedPost) {
+        // 1. 클릭된 요소(<button>) 안에서 카운트를 표시하는 span을 찾습니다.
+        const interestCountElement = selectedPost.querySelector('.interest--count');
+
+        // 2. 현재 카운트 숫자를 가져옵니다.
+        let interestCount = parseInt(interestCountElement.textContent);
+
+        // 3. 'checked' 클래스가 있는지 확인하여 "좋아요" 상태를 판단합니다.
+        if (selectedPost.classList.contains('checked')) {
+            // 이미 좋아요를 누른 상태일 경우 (취소)
+            interestCount--; // 카운트 1 감소
+            selectedPost.classList.remove('checked', 'text-pink-500'); // 'checked' 클래스와 분홍색 클래스 제거
+        } else {
+            // 좋아요를 누르지 않은 상태일 경우
+            interestCount++; // 카운트 1 증가
+            selectedPost.classList.add('checked', 'text-pink-500'); // 'checked' 클래스와 분홍색 클래스 추가
+        }
+
+        // 4. 변경된 카운트 숫자를 다시 화면에 표시합니다.
+        interestCountElement.textContent = interestCount;
+    }
+</script>
+
+{{> layout/footer}}

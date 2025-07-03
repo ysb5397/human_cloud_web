@@ -25,7 +25,14 @@
             <div class="hidden lg:flex lg:gap-x-12 z-1">
                 <a href="/announceborderlist" class="text-lg/6 font-semibold text-gray-900">공고정보</a>
                 <a href="/companyinfo" class="text-lg/6 font-semibold text-gray-900">기업정보</a>
-                <a href="/community" class="text-lg/6 font-semibold text-gray-900">커뮤니티</a>
+                <a href="#" onclick="document.querySelector('.community--dropdown').classList.toggle('hidden')" class="text-lg/6 font-semibold text-gray-900">커뮤니티</a>
+                <div class="community--dropdown absolute top-18 right-165 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
+                        <a href="/community/job-seekers" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0" methods="GET">구직자</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">직장인</a>
+                    </div>
+                </div>
             </div>
             {{^sessionUser}}
             <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-x-4 z-1">

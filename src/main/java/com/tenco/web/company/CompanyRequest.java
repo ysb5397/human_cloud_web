@@ -1,5 +1,6 @@
 package com.tenco.web.company;
 
+import com.tenco.web._core.errors.exception.CompanyLoginException;
 import com.tenco.web.utis.Define;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -62,16 +63,14 @@ public class CompanyRequest {
         private String password;
 
         // 유효성 검사
-        public String validate() {
+        public void validate() {
             if (businessRegistrationNumber == null || businessRegistrationNumber.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO;
+                throw new CompanyLoginException(Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO);
             }
 
             if (password == null || password.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_PASSWORD;
+                throw new CompanyLoginException(Define.ErrorMessage.REQUIRED_PASSWORD);
             }
-            return null;
         }
     }
-
 }

@@ -18,12 +18,12 @@
     <div class="flex justify-center gap-6 mt-12">
         <input onclick="errMsgToggle()" type="radio" name="tab" id="userTab" class="hidden" checked>
         <label for="userTab" class="cursor-pointer font-semibold text-indigo-600 border-b-2 border-indigo-600">
-            개인회원
+            <a href="/user/login-form">개인회원</a>
         </label>
 
         <input onclick="errMsgToggle()" type="radio" name="tab" id="companyTab" class="hidden">
         <label for="companyTab" class="cursor-pointer font-semibold text-gray-400">
-            기업회원
+            <a href="/company/login-form">기업회원</a>
         </label>
     </div>
 
@@ -63,76 +63,16 @@
             <p class="text-base text-gray-600">계정이 없으신가요?<a href="/user/signup-form" class="ml-2 text-indigo-600 underline">계정 가입하기</a></p>
         </div>
     </form>
-
-    <!-- 기업회원 로그인 폼 -->
-    <form id="companyForm" action="/company/login" method="POST" class="mx-auto mt-10 max-w-xl hidden">
-        <div class="grid grid-cols-1 gap-y-6">
-            <div>
-                <label for="businessRegistrationNumber" class="block text-sm font-semibold text-gray-900">사업자 번호</label>
-                <input type="text" name="businessRegistrationNumber" id="businessRegistrationNumber"
-                       class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
-            </div>
-            <div>
-                <label for="bizpass" class="block text-sm font-semibold text-gray-900">비밀번호</label>
-                <input type="password" name="password" id="bizpass"
-                       class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
-            </div>
-            {{#errMsg}}
-                <div class="errMsg company mt-4 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
-                    <div class="flex items-center gap-x-3">
-                        <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                        </svg>
-                        <p class="text-sm font-medium text-red-700">
-                            {{errMsg}}
-                        </p>
-                    </div>
-                </div>
-            {{/errMsg}}
-        </div>
-        <div class="mt-10">
-            <button onclick="document.querySelector('.errMsg').classList.remove('hidden')" type="submit"
-                    class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                기업 로그인
-            </button>
-        </div>
-        <div class="mt-4 text-center">
-            <p class="text-base text-gray-600">기업 계정이 없으신가요?<a href="/company/signup-form" class="ml-2 text-indigo-600 underline">회원가입</a></p>
-        </div>
-    </form>
 </div>
 
 <!-- 탭 전환 JavaScript -->
 <script>
-    const userTab = document.getElementById("userTab");
-    const companyTab = document.getElementById("companyTab");
-    const userForm = document.getElementById("userForm");
-    const companyForm = document.getElementById("companyForm");
-
-    const userLabel = document.querySelector("label[for='userTab']");
-    const companyLabel = document.querySelector("label[for='companyTab']");
-
-    userTab.addEventListener("click", () => {
-      userForm.classList.remove("hidden");
-      companyForm.classList.add("hidden");
-
-      userLabel.classList.add("text-indigo-600", "border-b-2", "border-indigo-600");
-      companyLabel.classList.remove("text-indigo-600", "border-b-2", "border-indigo-600");
-      companyLabel.classList.add("text-gray-400");
-    });
-
-    companyTab.addEventListener("click", () => {
-      companyForm.classList.remove("hidden");
-      userForm.classList.add("hidden");
-
-      companyLabel.classList.add("text-indigo-600", "border-b-2", "border-indigo-600");
-      userLabel.classList.remove("text-indigo-600", "border-b-2", "border-indigo-600");
-      userLabel.classList.add("text-gray-400");
-    });
-
     function errMsgToggle() {
-        document.querySelector('.errMsg.company').classList.add('hidden');
-        document.querySelector('.errMsg.user').classList.add('hidden');
+        const companyErr = document.querySelector('.errMsg.company');
+        const userErr = document.querySelector('.errMsg.user');
+
+        if (companyErr) companyErr.classList.add('hidden');
+        if (userErr) userErr.classList.add('hidden');
     }
 </script>
 </body>

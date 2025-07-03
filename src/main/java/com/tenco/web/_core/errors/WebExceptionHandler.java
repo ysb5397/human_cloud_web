@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @ControllerAdvice
 public class WebExceptionHandler {
@@ -36,7 +36,7 @@ public class WebExceptionHandler {
                 "alert('" +
                 e.getMessage() +
                 "'); " +
-                "location.href='/login-form'; " +
+                "location.href='err/401'; " +
                 "</script>";
 
         return ResponseEntity
@@ -84,26 +84,26 @@ public class WebExceptionHandler {
     // 아래 부터는 작은 예외 처리(로그인 실패 등등)
     // 로그인 오류
     @ExceptionHandler(UserLoginException.class)
-    public String UserLoginEx(UserLoginException e, HttpServletRequest request, Model model) {
+    public String UserLoginEx(UserLoginException e, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         log.warn("=== 로그인 오류 발생 ===");
         log.warn("요청 url : {}", request.getRequestURI());
         log.warn("인증 오류 : {}", e.getMessage());
         log.warn("User-Agent : {}", request.getHeader("User-Agent"));
 
-        model.addAttribute("errMsg", e.getMessage());
+        redirectAttributes.addFlashAttribute("errMsg", e.getMessage());
 
-        return "user/login-form";
+        return "redirect:/user/login-form";
     }
 
     @ExceptionHandler(CompanyLoginException.class)
-    public String CompanyLoginEx(CompanyLoginException e, HttpServletRequest request, Model model) {
+    public String CompanyLoginEx(CompanyLoginException e, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         log.warn("=== 로그인 오류 발생 ===");
         log.warn("요청 url : {}", request.getRequestURI());
         log.warn("인증 오류 : {}", e.getMessage());
         log.warn("User-Agent : {}", request.getHeader("User-Agent"));
 
-        model.addAttribute("errMsg", e.getMessage());
+        redirectAttributes.addFlashAttribute("errMsg", e.getMessage());
 
-        return "company/login-form";
+        return "redirect:/company/login-form";
     }
 }

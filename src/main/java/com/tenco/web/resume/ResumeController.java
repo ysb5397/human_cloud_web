@@ -1,7 +1,6 @@
 package com.tenco.web.resume;
 
 import com.tenco.web.tags.SkillTagService;
-import com.tenco.web.tags.resume_tag.ResumeSkillTag;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagService;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
@@ -84,6 +83,7 @@ public class ResumeController {
         Resume resumeDetail = resumeService.findById(id);
         log.info("화면에 전달할 이력서: {}", resumeDetail);
         model.addAttribute("resumeList", resumeDetail);
+        model.addAttribute("resumeSkillTag", resumeSkillTagService.findByResumeId(id));
         return "user/resume-detail";
     }
 
@@ -106,7 +106,7 @@ public class ResumeController {
         resumeService.checkResumeOwner(resumeId, sessionResume.getId());
 
         model.addAttribute("resume", resumeService.findById(resumeId));
-        model.addAttribute("skillTagList", resumeSkillTagService.findByResumeId(resumeId));
+        model.addAttribute("skillTagList", skillTagService.findAll());
 
         return "user/resume-update";
     }

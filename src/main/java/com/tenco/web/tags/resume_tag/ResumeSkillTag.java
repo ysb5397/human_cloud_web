@@ -5,6 +5,7 @@ import com.tenco.web.tags.SkillTag;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Data
@@ -18,9 +19,11 @@ public class ResumeSkillTag {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id", nullable = false)
+    @ToString.Exclude
     private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_tag_id", nullable = false)
+    @ToString.Exclude
     private SkillTag skillTag;
 }

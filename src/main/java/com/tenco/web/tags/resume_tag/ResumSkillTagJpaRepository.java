@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ResumSkillTagJpaRepository extends JpaRepository<ResumeSkillTag, Integer> {
 
-    @Query("select r from ResumeSkillTag r join fetch r.skillTag where r.resume.id = :resumeId ")
+    @Query("select r.skillTag from ResumeSkillTag r where r.resume.id = :resumeId ")
     List<SkillTag> findByResumeId(@Param("resumeId") int resumeId);
 }

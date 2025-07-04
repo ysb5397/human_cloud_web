@@ -1,5 +1,6 @@
-package com.tenco.web.tag;
+package com.tenco.web.tags;
 
+import com.tenco.web.tags.resume_tag.ResumeSkillTag;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;

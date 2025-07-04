@@ -1,6 +1,8 @@
 package com.tenco.web.resume;
 
-import com.tenco.web.tag.SkillTagService;
+import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.tags.resume_tag.ResumeSkillTag;
+import com.tenco.web.tags.resume_tag.ResumeSkillTagService;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,14 +30,17 @@ public class ResumeController {
     private static final Logger log = LoggerFactory.getLogger(ResumeController.class);
     private final ResumeService resumeService;
     private final SkillTagService skillTagService;
+    private final ResumeSkillTagService resumeSkillTagService;
 
     // 이력서 등록 화면 요청
     @GetMapping("/user/resume-register")
-    public String resumeRegister(HttpSession session){
+    public String resumeRegister(HttpSession session, Model model){
         User sessionUser = (User)session.getAttribute(Define.DefineMessage.SESSION_USER);
         if(sessionUser == null) {
             return "redirect:/login-form";
         }
+
+        model.addAttribute("skillTagList", skillTagService.findAll());
         return "user/resume-register";
     }
 
@@ -96,12 +101,12 @@ public class ResumeController {
     // 이력서 수정하기 화면 요청
     @GetMapping("/user/{id}/resume-update")
     public String updateForm(@PathVariable(name = "id") int resumeId,
-                             HttpServletRequest request, HttpSession session) {
+                             Model model, HttpSession session) {
         User sessionResume = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         resumeService.checkResumeOwner(resumeId, sessionResume.getId());
 
-        request.setAttribute("resume", resumeService.findById(resumeId));
-        request.setAttribute("skillTagList", skillTagService.findAll());
+        model.addAttribute("resume", resumeService.findById(resumeId));
+        model.addAttribute("skillTagList", resumeSkillTagService.findByResumeId(resumeId));
 
         return "user/resume-update";
     }
@@ -109,11 +114,17 @@ public class ResumeController {
     // 이력서 수정 기능 처리
     @PostMapping("/user/{id}/resume-update")
     public String update(@PathVariable(name = "id") int resumeId,
-                         ResumeRequest.UpdateDTO reqDTO, HttpSession session){
+                         ResumeRequest.UpdateDTO reqDTO, HttpSession session, HttpServletRequest request){
 
         reqDTO.validate();
         User sessionResume = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         resumeService.UpdateById(resumeId,reqDTO,sessionResume);
+
+        String[] skillTags = request.getParameterValues("skill-tags");
+
+        for (int i = 0; i < skillTags.length; i++) {
+            System.out.println(skillTags[i]);
+        }
 
         return "redirect:/resume-detail/" + resumeId;
     }
@@ -123,5 +134,7 @@ public class ResumeController {
     public String resumeUpdateCancel() {
         return "redirect:/resume-list";
     }
+
+
 
 }

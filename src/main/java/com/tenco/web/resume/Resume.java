@@ -1,6 +1,6 @@
 package com.tenco.web.resume;
 
-import com.tenco.web.tag.ResumeSkillTag;
+import com.tenco.web.tags.resume_tag.ResumeSkillTag;
 import com.tenco.web.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.tenco.web.tag;
+package com.tenco.web.tags;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

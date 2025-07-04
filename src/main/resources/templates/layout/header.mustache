@@ -1,94 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>human cloud web</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Human Cloud Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/img/icon.png">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Added a light gray background to see the header clearly */
+        }
+        /* Simple transition for dropdowns */
+        .dropdown-menu {
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+    </style>
 </head>
-
 <body>
-    <header class="bg-white">
-        <div class="absolute inset-x-0 -top-40 z-0 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-1/2 -z-10 aspect-[1155/678] w-[72.0625rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
-                 style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
-            </div>
+<!-- Header Section -->
+<header class="bg-white border-b border-gray-200">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+
+        <!-- Logo -->
+        <div class="flex lg:flex-1">
+            <a href="/index" class="-m-1.5 p-1.5 flex items-center gap-2">
+                <!-- Replaced img with the styled SVG icon -->
+                <img class="h-16 w-16" src="/img/icon.png" alt="로고 이미지" />
+            </a>
         </div>
-        <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-            <div class="flex lg:flex-1 z-10">
-                <a href="/index" class="-m-1.5 p-1.5">
-                    <img class="h-16 w-16"
-                        src="/img/icon.png" alt="" />
+
+        <!-- Main Navigation -->
+        <div class="hidden lg:flex lg:gap-x-8">
+            <a href="/announceborderlist" class="text-sm font-semibold leading-6 text-gray-900">공고정보</a>
+            <a href="/companyinfo" class="text-sm font-semibold leading-6 text-gray-900">기업정보</a>
+            <div class="relative">
+                <!-- The onclick logic is preserved from your original code -->
+                <a href="#" onclick="event.preventDefault(); document.querySelector('.community--dropdown').classList.toggle('hidden')" class="text-sm font-semibold leading-6 text-gray-900 flex items-center gap-x-1">
+                    커뮤니티
+                    <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                    </svg>
                 </a>
-            </div>
-            <div class="hidden lg:flex lg:gap-x-12 z-1">
-                <a href="/announceborderlist" class="text-lg/6 font-semibold text-gray-900">공고정보</a>
-                <a href="/companyinfo" class="text-lg/6 font-semibold text-gray-900">기업정보</a>
-                <a href="#" onclick="document.querySelector('.community--dropdown').classList.toggle('hidden')" class="text-lg/6 font-semibold text-gray-900">커뮤니티</a>
-                <div class="community--dropdown absolute top-18 right-165 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <!-- Community Dropdown -->
+                <div class="community--dropdown dropdown-menu absolute -left-8 top-full z-10 mt-3 w-56 rounded-md bg-white shadow-lg ring-1 ring-gray-900/5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
-                        <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
-                        <a href="/community/job-seekers" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0" methods="GET">구직자</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">직장인</a>
+                        <a href="/community/job-seekers" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">구직자</a>
+                        <a href="#" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">직장인</a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- User Authentication Section -->
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-6">
             {{^sessionUser}}
-            <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-x-4 z-1">
-                <a href="/user/login-form" class="text-lg/6 font-semibold text-gray-900">로그인</a>
-                <a href="/user/signup-form" class="text-lg/6 font-semibold text-gray-900">회원가입</a>
-            </div>
+                <a href="/user/login-form" class="text-sm font-semibold leading-6 text-gray-900">로그인</a>
+                <a href="/user/signup-form" class="text-sm font-semibold leading-6 text-gray-900">회원가입</a>
             {{/sessionUser}}
+
             {{#sessionUser}}
-                <div class="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4 z-1">
+                <div class="text-sm text-gray-600">
                     {{#username}}
-                        <p>{{username}} 님 환영합니다!</p>
+                        <p>{{username}} 님</p>
                     {{/username}}
                     {{#companyName}}
-                        <p>{{companyName}} 관리자님 환영합니다!</p>
+                        <p>{{companyName}} 관리자님</p>
                     {{/companyName}}
-                    <a href="/user/logout" class="text-lg/6 font-semibold text-gray-900">로그아웃</a>
-                    <div class="relative inline-block text-left">
-                        <div>
-                            <button onclick="document.querySelector('.main--dropdown').classList.toggle('hidden')" type="button" class="inline-flex w-full justify-center gap-x-1.5 px-3 py-2 text-1xl font-semibold text-gray-900 cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                마이페이지
-                                <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                    <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
+                </div>
+                <a href="/user/logout" class="text-sm font-semibold leading-6 text-gray-900">로그아웃</a>
 
-                        <!--
-                            Dropdown menu, show/hide based on menu state.
+                <!-- Mypage Dropdown -->
+                <div class="relative">
+                    <button onclick="document.querySelector('.main--dropdown').classList.toggle('hidden')" type="button" class="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" aria-expanded="false" aria-haspopup="true">
+                        마이페이지
+                        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
 
-                            Entering: "transition ease-out duration-100"
-                            From: "transform opacity-0 scale-95"
-                            To: "transform opacity-100 scale-100"
-                            Leaving: "transition ease-in duration-75"
-                            From: "transform opacity-100 scale-100"
-                            To: "transform opacity-0 scale-95"
-                        -->
-                        <div class="main--dropdown absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="main--dropdown dropdown-menu absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-gray-900/5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                        <div class="py-1" role="none">
                             {{#username}}
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">회원 정보 수정</a>
-                                <a href="/resume-list" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">이력서 목록</a>
-                                <a href="/user/resume-register" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">이력서 등록</a>
-                            </div>
+                                <a href="#" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">회원 정보 수정</a>
+                                <a href="/resume-list" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">이력서 목록</a>
+                                <a href="/user/resume-register" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">이력서 등록</a>
                             {{/username}}
                             {{#companyName}}
-                            {{! 기업 사용자 메뉴 }}
-                            <div class="py-1" role="none">
-                                 <a href="/company/update-form" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1">회사 정보 수정</a>
-                                 <a href="/company/register-list" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1">공고 관리</a>
-                                 <a href="/company/applicants" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1">공고 등록</a>
-                            </div>
+                                <a href="/company/update-form" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">회사 정보 수정</a>
+                                <a href="/company/register-list" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">공고 관리</a>
+                                <a href="/company/applicants" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">공고 등록</a>
                             {{/companyName}}
                         </div>
                     </div>
                 </div>
             {{/sessionUser}}
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
+<script>
+    // Close dropdowns when clicking outside
+    window.addEventListener('click', function(e) {
+        // Close community dropdown
+        const communityButton = e.target.closest('a[onclick*="community--dropdown"]');
+        const communityDropdown = document.querySelector('.community--dropdown');
+        if (!communityButton && !communityDropdown.contains(e.target)) {
+            communityDropdown.classList.add('hidden');
+        }
+
+        // Close main dropdown
+        const mainButton = e.target.closest('button[onclick*="main--dropdown"]');
+        const mainDropdown = document.querySelector('.main--dropdown');
+        if (!mainButton && !mainDropdown.contains(e.target)) {
+            mainDropdown.classList.add('hidden');
+        }
+    });
+</script>
+</body>
+</html>

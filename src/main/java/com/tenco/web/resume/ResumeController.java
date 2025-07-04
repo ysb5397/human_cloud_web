@@ -1,5 +1,6 @@
 package com.tenco.web.resume;
 
+import com.tenco.web.tag.SkillTagService;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class ResumeController {
 
     private static final Logger log = LoggerFactory.getLogger(ResumeController.class);
     private final ResumeService resumeService;
+    private final SkillTagService skillTagService;
 
     // 이력서 등록 화면 요청
     @GetMapping("/user/resume-register")
@@ -98,9 +100,8 @@ public class ResumeController {
         User sessionResume = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         resumeService.checkResumeOwner(resumeId, sessionResume.getId());
 
-
-
         request.setAttribute("resume", resumeService.findById(resumeId));
+        request.setAttribute("skillTagList", skillTagService.findAll());
 
         return "user/resume-update";
     }

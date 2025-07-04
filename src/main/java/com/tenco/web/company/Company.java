@@ -1,6 +1,5 @@
 package com.tenco.web.company;
 
-import com.tenco.web.announce.Announce;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +17,6 @@ import java.sql.Timestamp;
 public class Company {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(nullable = false)
         private int id;
 
         private String companyName;

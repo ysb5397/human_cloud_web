@@ -29,21 +29,11 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 py-4 text-center">
-  <span class="inline-block rounded-full bg-gray-200 px-4 py-1 text-sm text-gray-700 font-medium hover:bg-gray-100">
-    CSS
-  </span>
+                {{#resumeTags}}
                 <span class="inline-block rounded-full bg-gray-200 px-4 py-1 text-sm text-gray-700 font-medium hover:bg-gray-100">
-    JAVA
-  </span>
-                <span class="inline-block rounded-full bg-gray-200 px-4 py-1 text-sm text-gray-700 font-medium hover:bg-gray-100">
-    C++
-  </span>
-                <span class="inline-block rounded-full bg-gray-200 px-4 py-1 text-sm text-gray-700 font-medium hover:bg-gray-100">
-    Python
-  </span>
-                <span class="inline-block rounded-full bg-gray-200 px-4 py-1 text-sm text-gray-700 font-medium hover:bg-gray-100">
-    JScript
-  </span>
+                    {{tag.tagName}}
+                </span>
+                {{/resumeTags}}
             </div>
 
             <div class="text-lg text-gray-800 gap">

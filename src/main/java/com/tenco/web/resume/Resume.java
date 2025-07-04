@@ -1,7 +1,7 @@
 package com.tenco.web.resume;
 
+import com.tenco.web.tag.ResumeSkillTag;
 import com.tenco.web.user.User;
-import com.tenco.web.utis.DateUtil;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @NoArgsConstructor
@@ -54,4 +56,8 @@ public class Resume {
         log.info("이력서 소유자 확인 요청 - 작성자 : {}", checkUserId);
         return this.user.getId() == checkUserId;
     }
+
+    @OrderBy("id desc")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resume", cascade = CascadeType.ALL)
+    private List<ResumeSkillTag> resumeSkillTags = new ArrayList<>();
 }

@@ -40,3 +40,37 @@ INSERT INTO resume_tb (user_id, title, portfolio_url, self_introduction, is_publ
 --(3, 4, NOW()),
 --(4, 3, NOW()),
 --(1, 5, NOW());
+
+INSERT INTO skill_tag_tb (skill_tag_name, skill_tag_no) VALUES
+('Java', '001'),
+('Spring', '002'),
+('React', '003'),
+('Vue.js', '004'),
+('SQL', '005'),
+('Python', '006'),
+('기획', '007'),
+('마케팅', '008'),
+('AWS', '009'),
+('Kubernetes', '010'),
+('Docker', '011'),
+('JavaScript', '012'),
+('HTML/CSS', '013'),
+('Node.js', '014'),
+('데이터분석', '015'),
+('머신러닝', '016'),
+('클라우드', '017'),
+('DevOps', '018'),
+('백엔드', '019'),
+('프론트엔드', '020');
+
+INSERT INTO resume_skill_tag_tb (resume_id, skill_tag_id) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(3, 6),
+(4, 7),
+(4, 8),
+(5, 9),
+(5, 10);

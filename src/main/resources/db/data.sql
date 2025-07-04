@@ -5,12 +5,12 @@ INSERT INTO user_tb (username, password, email, address, created_at) VALUES
 ('guest123', 'guestpass', 'guest123@yahoo.co.kr', '대전시 유성구 대학로', NOW()),
 ('admin', 'admin123', 'admin@mysite.com', '광주시 서구 상무대로', NOW());
 
-INSERT INTO company_tb (company_name, password, address, business_registration_number, email, created_at) VALUES
-('네이버', '1234', '경기도 성남시 분당구 불정로 61', '129-86-31394', 'naver@naver.com', NOW()),
-('카카오', '1234', '제주특별자치도 제주시 첨단로 242', '120-81-47521', 'kakao@kakao.com', NOW()),
-('라인', '1234', '경기도 성남시 분당구 황새울로240번길', '129-87-00203', 'line@lineplus.com', NOW()),
-('쿠팡', '1234', '서울특별시 송파구 송파대로 570', '120-88-00767', 'coupang@coupang.com', NOW()),
-('우아한형제들', '1234', '서울특별시 송파구 위례성대로 2', '120-87-65763', 'woowabros@woowahan.com', NOW());
+INSERT INTO company_tb (company_name, password, address, business_registration_number, email, created_at, website_url) VALUES
+('네이버', '1234', '경기도 성남시 분당구 불정로 61', '129-86-31394', 'naver@naver.com', NOW(), 'https://www.naver.com'),
+('카카오', '1234', '제주특별자치도 제주시 첨단로 242', '120-81-47521', 'kakao@kakao.com', NOW(), 'https://www.kakao.com'),
+('라인', '1234', '경기도 성남시 분당구 황새울로240번길', '129-87-00203', 'line@lineplus.com', NOW(), 'https://www.line.me'),
+('쿠팡', '1234', '서울특별시 송파구 송파대로 570', '120-88-00767', 'coupang@coupang.com', NOW(), 'https://www.coupang.com'),
+('우아한형제들', '1234', '서울특별시 송파구 위례성대로 2', '120-87-65763', 'woowabros@woowahan.com', NOW(), 'https://www.woowahan.com');
 
 INSERT INTO announce_tb (company_id, title, content, work_location, start_date, end_date, interest_count) VALUES
 (1, '[네이버] 2025년 신입 백엔드 서버 개발자 채용', '네이버의 다양한 서비스들을 함께 만들어나갈 열정적인 신입 개발자를 모집합니다. 최고의 동료들과 함께 성장할 기회를 잡으세요.', '경기도 성남시', NOW(), '2025-07-31', 0),

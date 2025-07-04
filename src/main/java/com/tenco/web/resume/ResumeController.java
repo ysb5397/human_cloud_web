@@ -116,4 +116,11 @@ public class ResumeController {
 
         return "redirect:/resume-detail/" + resumeId;
     }
+
+    //이력서 수정 취소
+    @GetMapping("/user/resume-update/cancel")
+    public String resumeUpdateCancel() {
+        return "redirect:/resume-list";
+    }
+
 }

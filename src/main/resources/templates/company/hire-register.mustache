@@ -1,53 +1,60 @@
 {{> layout/header}}
 
 <main class="relative z-10 mt-32 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-xl rounded-xl">
-        <form>
+    <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-xl rounded-xl relative z-10">
+        <form action="/company/hire-register" method="post">
             <div class="space-y-12">
                 <div class="border-b border-gray-900/10 pb-12">
                     <h2 class="text-2xl/7 font-bold text-gray-900 ">기업공고 등록</h2>
-                    <p class="mt-4 text-lg/6 text-gray-600">{{title}}</p>
-                    <div class=" mt-4col-span-full">
-                        <label for="photo" class="block text-sm/6 font-medium text-gray-900">Photo</label>
-                        <div class="mt-2 flex items-center gap-x-3">
-                            <svg class="size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
-                            </svg>
-                            <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">Change</button>
+                    <div class="sm:col-span-full">
+                        <label for="title" class="block text-sm/6 font-medium text-gray-900">제목</label>
+                        <div class="mt-2">
+                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                                <input type="text" name="title" id="title" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+                            </div>
                         </div>
+                        {{#message.title}}
+                            <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                                <div class="flex items-center gap-x-3">
+                                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                    </svg>
+                                    <p class="text-sm font-medium text-red-700">
+                                        {{message.title}}
+                                    </p>
+                                </div>
+                            </div>
+                        {{/message.title}}
                     </div>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-full">
-                            <label for="username" class="block text-sm/6 font-medium text-gray-900">{{companyName}}</label>
+                            <label for="companyname" class="block text-sm/6 font-medium text-gray-900">회사이름</label>
                             <div class="mt-2">
                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                    <input type="text" name="username" id="username" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+                                    <input type="text" name="companyname" id="companyname" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
                                 </div>
                             </div>
                         </div>
                         <div class="sm:col-span-full">
-                            <label for="email" class="block text-sm/6 font-medium text-gray-900">이메일</label>
+                            <label for="workLocation" class="block text-sm/6 font-medium text-gray-900">근무지역</label>
                             <div class="mt-2">
-                                <input id="email" name="email" type="email" autocomplete="email" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                                <input id="workLocation" name="workLocation" type="workLocation" autocomplete="workLocation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                            </div>
+                        </div>
+                        <div class="col-span-full">
+                            <label for="content" class="block text-sm/6 font-medium text-gray-900">공고내용</label>
+                            <div class="mt-2">
+                                <textarea name="content" id="content" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
                             </div>
                         </div>
                         <div class="sm:col-span-full">
-                            <label for="address" class="block text-sm/6 font-medium text-gray-900">{{address}}</label>
+                            <label for="endDateString" class="block text-sm font-medium text-gray-900">마감 날짜</label>
                             <div class="mt-2">
-                                <input id="address" name="address" type="address" autocomplete="address" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-                        <div class="col-span-full">
-                            <label for="street-address" class="block text-sm/6 font-medium text-gray-900">회사 URL</label>
-                            <div class="mt-2">
-                                <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-                        <div class="col-span-full">
-                            <label for="about" class="block text-sm/6 font-medium text-gray-900">{{content}}</label>
-                            <div class="mt-2">
-                                <textarea name="about" id="about" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                                <input id="endDateString" name="endDateString" type="datetime-local"
+                                       class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
+                  outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400
+                  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm" />
                             </div>
                         </div>
                     </div>

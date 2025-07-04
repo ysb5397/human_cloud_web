@@ -1,5 +1,6 @@
 package com.tenco.web.company;
 
+import com.tenco.web.announce.Announce;
 import com.tenco.web.utis.Define;
 import com.tenco.web.utis.Validate;
 import jakarta.servlet.http.HttpSession;
@@ -86,5 +87,7 @@ public class CompanyController {
         model.addAttribute("companyList",companyList);
         return "company/companyinfo";
     }
+
+
 
 }

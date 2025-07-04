@@ -36,6 +36,11 @@ public class ResumeService {
         return resumeList;
     }
 
+    public List<Resume> findByUserId(int id) {
+        List<Resume> resumeList = resumeJpaRepository.findByUserId(id);
+        return resumeList;
+    }
+
     // 이력서 상세조회
     public Resume findById(int id) {
         Resume resume = resumeJpaRepository.findByResumeList(id)

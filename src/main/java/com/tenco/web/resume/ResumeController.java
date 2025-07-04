@@ -71,8 +71,9 @@ public class ResumeController {
 
     // 이력서 목록 보기 화면 요청
     @GetMapping("/resume-list")
-    public String resumeList(Model model) {
-        List<Resume> resumeList = resumeService.findAll();
+    public String resumeList(Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        List<Resume> resumeList = resumeService.findByUserId(sessionUser.getId());
         model.addAttribute("resumeList", resumeList);
         return "user/resume-list";
     }
@@ -121,10 +122,6 @@ public class ResumeController {
         resumeService.UpdateById(resumeId,reqDTO,sessionResume);
 
         String[] skillTags = request.getParameterValues("skill-tags");
-
-        for (int i = 0; i < skillTags.length; i++) {
-            System.out.println(skillTags[i]);
-        }
 
         return "redirect:/resume-detail/" + resumeId;
     }

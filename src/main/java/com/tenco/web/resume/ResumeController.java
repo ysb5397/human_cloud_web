@@ -117,11 +117,8 @@ public class ResumeController {
     public String update(@PathVariable(name = "id") int resumeId,
                          ResumeRequest.UpdateDTO reqDTO, HttpSession session, HttpServletRequest request){
 
-        reqDTO.validate();
         User sessionResume = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         resumeService.UpdateById(resumeId,reqDTO,sessionResume);
-
-        String[] skillTags = request.getParameterValues("skill-tags");
 
         return "redirect:/resume-detail/" + resumeId;
     }

@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class ResumeRequest {
 
 
@@ -48,18 +50,6 @@ public class ResumeRequest {
         private String title;
         private String portfolioUrl;
         private String selfIntroduction;
-
-        public String validate() {
-            if(title == null || title.trim().isEmpty()){
-                return Define.ErrorMessage.REQUIRED_TITLE;
-            }
-            if(portfolioUrl == null || portfolioUrl.trim().isEmpty()) {
-                return Define.ErrorMessage.REQUIRED_PORTFOLIO_URL;
-            }
-            if(selfIntroduction == null || selfIntroduction.trim().isEmpty()){
-                return Define.ErrorMessage.REQUIRED_SELF_INTRODUCTION;
-            }
-            return null;
-        }
+        private List<Integer> skillTags;
     }
 }

@@ -3,6 +3,8 @@ package com.tenco.web.resume;
 import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
+import com.tenco.web.tags.resume_tag.ResumeSkillTagJpaRepository;
+import com.tenco.web.tags.resume_tag.ResumeSkillTagService;
 import com.tenco.web.user.User;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,6 +21,8 @@ public class ResumeService {
     private static final Logger log = LoggerFactory.getLogger(ResumeService.class);
 
     private final ResumeJpaRepository resumeJpaRepository;
+    private final ResumeSkillTagService resumeSkillTagService;
+    private final ResumeSkillTagJpaRepository resumeSkillTagJpaRepository;
 
     // 이력서 저장 기능
     @Transactional
@@ -89,6 +93,14 @@ public class ResumeService {
         resume.setTitle(updateDTO.getTitle());
         resume.setPortfolioUrl(updateDTO.getPortfolioUrl());
         resume.setSelfIntroduction(updateDTO.getSelfIntroduction());
+
+        resumeSkillTagJpaRepository.deleteByResumeId(id);
+
+        if (updateDTO.getSkillTags() != null && !updateDTO.getSkillTags().isEmpty()) {
+            updateDTO.getSkillTags().forEach(skillTag -> {
+                resumeSkillTagService.save(id, skillTag);
+            });
+        }
 
         log.info("이력서 수정 완료 - 이력서 ID {}, 이력서 제목 {}", id, resume.getTitle());
         return resume;

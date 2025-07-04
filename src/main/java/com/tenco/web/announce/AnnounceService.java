@@ -2,7 +2,9 @@ package com.tenco.web.announce;
 
 import com.sun.tools.javac.Main;
 import com.tenco.web._core.errors.exception.Exception400;
+import com.tenco.web._core.errors.exception.Exception401;
 import com.tenco.web._core.errors.exception.Exception403;
+import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.company.Company;
 import com.tenco.web.company.CompanyJpaRepository;
 import com.tenco.web.main.MainService;
@@ -44,8 +46,12 @@ public class AnnounceService {
     public void deleteById(int id, Company sessionCompany){
 
         log.info("게시글 삭제 서비스 시작 - 게시글 ID {}", id);
+        if (sessionCompany == null) {
+            throw new Exception401("로그인이 필요한 서비스입니다.");
+        }
+
         Announce announce = announceJpaRepository.findById(id).orElseThrow(() -> {
-           throw new Exception400("삭제할 게시글이 없습니다");
+           throw new Exception404("삭제할 게시글이 없습니다");
         });
         if(!announce.isCOwner(sessionCompany.getId())) {
             throw new Exception403("본인이 작성한 게시글만 삭제할 수 있습니다");

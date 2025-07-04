@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <header class="bg-white relative z-2">
+    <header class="bg-white relative z-8">
         <div class="absolute inset-x-0 -top-40 z-0 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-1/2 -z-10 aspect-[1155/678] w-[72.0625rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+            <div class="relative left-1/2 z-4 aspect-[1155/678] w-[72.0625rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
                  style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
             </div>
         </div>
@@ -26,8 +26,8 @@
                 <a href="/announceborderlist" class="text-lg/6 font-semibold text-gray-900">공고정보</a>
                 <a href="/companyinfo" class="text-lg/6 font-semibold text-gray-900">기업정보</a>
                 <a href="#" onclick="document.querySelector('.community--dropdown').classList.toggle('hidden')" class="text-lg/6 font-semibold text-gray-900">커뮤니티</a>
-                <div class="community--dropdown absolute top-18 right-165 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                    <div class="py-1" role="none">
+                <div class="community--dropdown absolute top-18 right-165 z-13 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="py-1 flex-row relative z-13" role="none">
                         <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
                         <a href="/community/job-seekers" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0" methods="GET">구직자</a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">직장인</a>

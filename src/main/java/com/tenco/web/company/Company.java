@@ -34,8 +34,10 @@ public class Company {
         @CreationTimestamp
         private Timestamp createdAt;
 
+        private String websiteUrl;
+
         @Builder
-        public Company(int id, String companyName, String password, String address, String businessRegistrationNumber, String email,  Timestamp createdAt) {
+        public Company(int id, String companyName, String password, String address, String businessRegistrationNumber, String email,  Timestamp createdAt, String websiteUrl) {
             this.id = id;
             this.companyName = companyName;
             this.password = password;
@@ -43,6 +45,7 @@ public class Company {
             this.address = address;
             this.businessRegistrationNumber = businessRegistrationNumber;
             this.createdAt = createdAt;
+            this.websiteUrl = websiteUrl;
         }
 
 }

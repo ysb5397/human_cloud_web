@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Slf4j
@@ -36,9 +38,15 @@ public class Announce {
 
     @CreationTimestamp
     private Timestamp startDate;
+
     private Timestamp endDate;
 
     private int interestCount;
+
+    public Announce(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
     public String getStartDate() {
         return DateUtil.timestampFormat(startDate);
@@ -46,6 +54,8 @@ public class Announce {
     public String getEndDate() {
         return DateUtil.timestampFormat(endDate);
     }
+
+
 
     // 게시글 소유자 확인하는 기능
     public boolean isCOwner(int checkCompanyId) {

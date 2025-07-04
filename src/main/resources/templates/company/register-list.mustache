@@ -1,0 +1,54 @@
+{{> layout/header}}
+
+<div class="container mx-auto p-8">
+    <div class="flex justify-between items-center mb-6 relative z-10" >
+        <h1 class="text-3xl font-bold">내가 등록한 공고</h1>
+        <a href="/company/hire-register" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+            새 공고 등록하기
+        </a>
+    </div>
+
+    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+        <ul role="list" class="divide-y divide-gray-200">
+            {{! 컨트롤러에서 전달받은 announceList를 반복해서 보여준다. }}
+            {{#announceList}}
+                <li>
+                    <a href="/announce/{{id}}" class="block hover:bg-gray-50">
+                        <div class="px-4 py-4 sm:px-6">
+                            <div class="flex items-center justify-between">
+                                <p class="text-lg font-medium text-indigo-600 truncate">{{title}}</p>
+                                <div class="ml-2 flex-shrink-0 flex">
+                                    {{! 여기에 상태(예: 진행중, 마감)를 표시할 수 있습니다. }}
+                                    <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        진행중
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-2 sm:flex sm:justify-between">
+                                <div class="sm:flex">
+                                    <p class="flex items-center text-sm text-gray-500">
+                                        마감일: {{endDate}}
+                                    </p>
+                                </div>
+                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                    {{! 각 공고의 상세 페이지로 이동하는 링크 }}
+                                    <a href="/announcedetail/{{id}}"></a>
+                                    <p>상세보기</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {{/announceList}}
+        </ul>
+    </div>
+
+    {{! 만약 등록된 공고가 하나도 없다면 메시지를 보여준다. }}
+    {{^announceList}}
+        <div class="text-center py-12">
+            <p class="text-gray-500">아직 등록한 공고가 없습니다.</p>
+        </div>
+    {{/announceList}}
+</div>
+
+{{> layout/footer}}

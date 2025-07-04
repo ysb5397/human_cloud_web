@@ -29,13 +29,17 @@ public class User {
     @CreationTimestamp
     private Timestamp createdAt;
 
+    @Enumerated(EnumType.STRING)
+    private UserCareerType careerType;
+
     @Builder
-    public User(int id, String username, String password, String email, String address, Timestamp createdAt) {
+    public User(int id, String username, String password, String email, String address, Timestamp createdAt, UserCareerType careerType) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
         this.createdAt = createdAt;
+        this.careerType = careerType;
     }
 }

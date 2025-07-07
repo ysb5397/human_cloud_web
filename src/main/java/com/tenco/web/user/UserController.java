@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class UserController {
         log.info("회원가입 시도...");
         model.addAttribute(Define.DefineMessage.JOIN_DTO, joinDTO);
 
-        Validate.UserValidate.checkPassword(joinDTO, result);
+        Validate.UserValidate.checkJoinDTO(joinDTO, result);
 
         Map<String, String> errorMap = new HashMap<>();
         User user = userService.findByUsername(joinDTO);
@@ -81,25 +82,54 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/user/update-form")
-    public String updateForm(Model model, HttpSession session) {
+    // 수정하기 화면 요청
+    @GetMapping("/user/{id}/user-update")
+    public String updateForm(@PathVariable(name = "id") int userId,
+                             Model model, HttpSession session) {
 
         User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        User user = userService.findById(sessionUser.getId());
+        userService.checkUserOwner(userId, sessionUser.getId());
 
-        model.addAttribute("user", user);
-        return "user/update-form";
+        UserRequest.UpdateDTO updateDTO = userService.getUserInfoById(sessionUser.getId());
+
+        model.addAttribute("user", userService.findById(userId));
+        model.addAttribute("updateDTO", updateDTO);
+
+        return "user/user-update";
     }
 
-    @PostMapping("/user/update")
-    public String update(UserRequest.UpdateDTO updateDTO, HttpSession session, Model model) {
+    // 수정하기 기능 요청
+    @PostMapping("/user/{id}/user-update")
+    public String update(@PathVariable(name = "id") int userId, @Valid UserRequest.UpdateDTO updateDTO,
+                         BindingResult result, HttpSession session, Model model) {
+        log.info("회원 정보 수정 기능 요청");
+        model.addAttribute(Define.DefineMessage.UPDATE_DTO, updateDTO);
 
-        updateDTO.validate();
+        Validate.UserValidate.checkUpdateDTO(updateDTO, result);
         User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        User updateUser = userService.updateById(sessionUser.getId(), updateDTO);
-        session.setAttribute(Define.DefineMessage.SESSION_USER, updateUser);
+        Map<String, String> errorMap = new HashMap<>();
+        User user = userService.findByUpdateUsername(updateDTO);
+        if (updateDTO.getUsername() != null && !updateDTO.getUsername().trim().isEmpty() && user == null) {
+            model.addAttribute(Define.DefineMessage.MESSAGE_USERNAME_CHECK, Define.NormalMessage.NOT_EXIST_USER);
+        } else if (updateDTO.getUsername() != null && !updateDTO.getUsername().trim().isEmpty() && user != null && !updateDTO.getUsername().equals(sessionUser.getUsername())) {
+            model.addAttribute(Define.DefineMessage.MESSAGE_USERNAME, Define.ErrorMessage.EXIST_USER);
+            return "user/user-update";
+        }
 
-        return "redirect:/user/mypage-form";
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
+
+            model.addAttribute("message", errorMap);
+            return "user/user-update";
+
     }
+
+        userService.updateById(userId,updateDTO, sessionUser);
+        log.info("회원정보 수정완료");
+        return "redirect:/index";
+    }
+
 
 }

@@ -1,64 +1,78 @@
 {{> layout/header}}
 
-
 {{#resume}}
-    <main class="flex justify-center items-start mt-10 px-4">
-        <article class="w-full max-w-4xl flex flex-col gap-4 border border-gray-300 shadow-md p-8 bg-white">
-            <div class="flex items-center gap-x-4 text-sm">
-                <time datetime="2025-05-16" class="text-gray-500">2025년 5월 16일</time>
+    <main class="flex justify-center mt-10 px-4">
+        <article class="w-full max-w-4xl border border-gray-200 shadow-lg rounded-xl p-8 bg-white">
+
+            <div class="flex justify-between items-center mb-6">
+                <time datetime="2025-05-16" class="text-sm text-gray-500">2025년 5월 16일</time>
+
+                <div class="flex items-center gap-x-3">
+                    <form action="/user/{{id}}/resume-update" method="get">
+                        <button type="submit" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                            수정
+                        </button>
+                    </form>
+                    <form action="/resume-list/{{id}}/delete-form" method="post">
+                        <button type="submit" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500">
+                            삭제
+                        </button>
+                    </form>
+                </div>
             </div>
 
-
-            <div class="group relative">
-                <h3 class="text-2xl font-semibold text-gray-900 group-hover:text-gray-600">
+            <div class="group relative mb-6">
+                <h1 class="text-3xl font-bold text-gray-900 group-hover:text-gray-700">
                     <a href="#">
                         <span class="absolute inset-0"></span>
                         {{title}}
                     </a>
-                </h3>
-                <p class="mt-4 text-base text-gray-600">
+                </h1>
+                <p class="mt-2 text-base text-indigo-600 truncate hover:underline">
                     {{portfolioUrl}}
                 </p>
             </div>
 
-            <div class="flex items-center gap-x-4 mt-6">
-                <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?..." alt="" class="w-12 h-12 rounded-full" />
-                <div class="text-sm">
+            <div class="flex items-center gap-x-4 mb-6">
+                <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?..." alt="{{user.username}}" class="w-12 h-12 rounded-full bg-gray-200" />
+                <div>
                     <p class="font-semibold text-gray-900">{{user.username}}</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 py-4 text-center">
-                {{#resumeSkillTags}}
-                <span class="inline-block rounded-full bg-gray-200 px-4 py-1 text-sm text-gray-700 font-medium hover:bg-gray-100">
-                    {{skillTag.skillTagName}}
-                </span>
-                {{/resumeSkillTags}}
+            <hr class="my-6 border-gray-200">
+
+            <div class="mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3">기술 스택</h2>
+                <div class="flex flex-wrap gap-2">
+                    {{#resumeSkillTags}}
+                        <span class="inline-block rounded-full bg-indigo-100 text-indigo-800 px-4 py-1.5 text-sm font-medium">
+                            {{skillTag.skillTagName}}
+                        </span>
+                    {{/resumeSkillTags}}
+                </div>
             </div>
 
-            <div class="text-lg text-gray-800 gap">
-                <p>이메일 : {{user.email}}  </p>
-                <p>주소 : {{user.address}}  </p>
-                <p>자기소개 : {{selfIntroduction}}</p>
+            <div>
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">상세 정보</h2>
+                <dl class="space-y-4 text-base text-gray-700">
+                    <div class="flex">
+                        <dt class="w-24 font-semibold text-gray-900 shrink-0">이메일</dt>
+                        <dd>{{user.email}}</dd>
+                    </div>
+                    <div class="flex">
+                        <dt class="w-24 font-semibold text-gray-900 shrink-0">주소</dt>
+                        <dd>{{user.address}}</dd>
+                    </div>
+                    <div class="flex items-start">
+                        <dt class="w-24 font-semibold text-gray-900 shrink-0">자기소개</dt>
+                        <dd class="flex-1">{{selfIntroduction}}</dd>
+                    </div>
+                </dl>
             </div>
 
         </article>
-        <div class="flex direction-col mt-10 relative z-10">
-            <form action="/user/{{id}}/resume-update" method= "get">
-                <button type="submit"
-                        class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    수정
-                </button>
-            </form>
-            <form action="/resume-list/{{id}}/delete-form" method="post">
-                <button type="submit"
-                        class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    삭제
-                </button>
-            </form>
-        </div>
     </main>
 {{/resume}}
-
 
 {{> layout/footer}}

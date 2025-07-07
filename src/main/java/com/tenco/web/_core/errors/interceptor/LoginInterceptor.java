@@ -2,6 +2,7 @@ package com.tenco.web._core.errors.interceptor;
 
 import com.tenco.web._core.errors.exception.Exception401;
 import com.tenco.web.user.User;
+import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -26,11 +27,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         HttpSession session = request.getSession();
-        log.info("");
-        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
 
         if (sessionUser == null) {
-            throw new Exception401("로그인이 필요한 서비스입니다.");
+            throw new Exception401(Define.ErrorMessage.REQUIRED_LOGIN);
         }
 
         return true;

@@ -3,6 +3,8 @@ package com.tenco.web.utis;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateUtil {
@@ -13,5 +15,14 @@ public class DateUtil {
 
         // 아파치 commons 라이브러리
         return DateFormatUtils.format(currentDate, "yyyy년 MM월 dd일 HH시 mm분");
+    }
+
+    public static String dateTimeFormat(Timestamp endDate) {
+        if (endDate == null) {
+            return "";
+        }
+
+        LocalDateTime localDateTime = endDate.toLocalDateTime();
+        return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
     }
 }

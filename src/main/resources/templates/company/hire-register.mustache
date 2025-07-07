@@ -10,7 +10,7 @@
                         <label for="title" class="block text-sm/6 font-medium text-gray-900">제목</label>
                         <div class="mt-2">
                             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                <input type="text" name="title" id="title" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+                                <input type="text" name="title" id="title" value="{{#saveJobDTO}}{{title}}{{/saveJobDTO}}" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
                             </div>
                         </div>
                         {{#message.title}}
@@ -32,30 +32,68 @@
                             <label for="companyname" class="block text-sm/6 font-medium text-gray-900">회사이름</label>
                             <div class="mt-2">
                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                    <input type="text" name="companyname" id="companyname" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+                                    <input type="text" name="companyname" id="companyname" value="{{sessionCompany.companyName}}" autocomplete="{{sessionCompany.companyName}}" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readOnly />
                                 </div>
                             </div>
                         </div>
                         <div class="sm:col-span-full">
                             <label for="workLocation" class="block text-sm/6 font-medium text-gray-900">근무지역</label>
                             <div class="mt-2">
-                                <input id="workLocation" name="workLocation" type="workLocation" autocomplete="workLocation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                                <input id="workLocation" name="workLocation" type="workLocation" value="{{#saveJobDTO}}{{workLocation}}{{/saveJobDTO}} autocomplete="workLocation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                             </div>
+                            {{#message.workLocation}}
+                                <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                                    <div class="flex items-center gap-x-3">
+                                        <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                        </svg>
+                                        <p class="text-sm font-medium text-red-700">
+                                            {{message.workLocation}}
+                                        </p>
+                                    </div>
+                                </div>
+                            {{/message.workLocation}}
                         </div>
+
                         <div class="col-span-full">
                             <label for="content" class="block text-sm/6 font-medium text-gray-900">공고내용</label>
                             <div class="mt-2">
-                                <textarea name="content" id="content" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                                <textarea name="content" id="content" rows="3" value="{{#saveJobDTO}}{{content}}{{/saveJobDTO}} class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
                             </div>
+                            {{#message.content}}
+                                <div class="w-full mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                                    <div class="w-full flex items-center gap-x-3">
+                                        <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                        </svg>
+                                        <p class="text-sm font-medium text-red-700">
+                                            {{message.content}}
+                                        </p>
+                                    </div>
+                                </div>
+                            {{/message.content}}
                         </div>
+
                         <div class="sm:col-span-full">
-                            <label for="endDateString" class="block text-sm font-medium text-gray-900">마감 날짜</label>
+                            <label for="endDate" class="block text-sm font-medium text-gray-900">마감 날짜</label>
                             <div class="mt-2">
-                                <input id="endDateString" name="endDateString" type="datetime-local"
+                                <input id="endDate" name="endDate" type="datetime-local" value="{{#saveJobDTO}}{{endDate}}{{/saveJobDTO}}"
                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
                   outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400
                   focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm" />
                             </div>
+                            {{#message.endDate}}
+                                <div class="w-full mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                                    <div class="w-full flex items-center gap-x-3">
+                                        <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                        </svg>
+                                        <p class="text-sm font-medium text-red-700">
+                                            {{message.endDate}}
+                                        </p>
+                                    </div>
+                                </div>
+                            {{/message.endDate}}
                         </div>
                     </div>
                 </div>

@@ -11,9 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 
 @Slf4j
@@ -41,7 +38,6 @@ public class Announce {
     private Timestamp startDate;
 
     private Timestamp endDate;
-
     private int interestCount;
 
     public Announce(String title, String content) {
@@ -52,29 +48,15 @@ public class Announce {
     public String getStartDate() {
         return DateUtil.timestampFormat(startDate);
     }
+
+    // 시간 변환하는 기능
     public String getEndDate() {
-        return DateUtil.timestampFormat(endDate);
+        return DateUtil.dateTimeFormat(endDate);
     }
-
-
 
     // 게시글 소유자 확인하는 기능
     public boolean isCOwner(int checkCompanyId) {
         log.info("게시글 소유자 확인 요청 - 작성자 : {}", checkCompanyId);
         return this.company.getId() == checkCompanyId;
     }
-
-    // 시간 변환하는 기능
-    public String getEndDateString() {
-        if (this.endDate == null) {
-            return "";
-        }
-
-        LocalDateTime localDateTime = this.endDate.toLocalDateTime();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        return localDateTime.format(formatter);
-    }
-
-
-
 }

@@ -1,14 +1,10 @@
 package com.tenco.web.announce;
 
-import com.sun.tools.javac.Main;
 import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception401;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.company.Company;
-import com.tenco.web.company.CompanyJpaRepository;
-import com.tenco.web.main.MainJpaRepository;
-import com.tenco.web.main.MainService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,16 +27,18 @@ public class AnnounceService {
     public void save(AnnounceRequest.SaveJobDTO saveJobDTO, Company sessionCompany) {
 //        log.info("공고 정보 저장 서비스 처리 시작 - 기업 id {}", saveJobDTO.getCompany().getId());
 
-        Announce announce = saveJobDTO.toEntity(sessionCompany);
+        Announce announce = new Announce();
+        announce.setTitle(saveJobDTO.getTitle());
+        announce.setContent(saveJobDTO.getContent());
+        announce.setWorkLocation(saveJobDTO.getWorkLocation());
+        announce.setEndDate(Timestamp.valueOf(saveJobDTO.getEndDate()));
+        announce.setCompany(sessionCompany);
 
         log.info("Jpa 전");
         announceJpaRepository.save(announce);
         log.info("Jpa 후");
 
     }
-
-
-
 
 
     // 상세보기에서 게시글 삭제
@@ -95,7 +91,7 @@ public class AnnounceService {
        Announce announce = announceJpaRepository.findById(id).orElseThrow(() -> {
            log.warn("공고 조회 실패 - ID {}", id);
            return new Exception404("해당 공고가 존재하지 않습니다");
-    });
+       });
 
        if(!announce.isCOwner(sessionCompany.getId())) {
            throw new Exception403("본인 공고만 수정 가능합니다.");
@@ -103,20 +99,12 @@ public class AnnounceService {
        announce.setTitle(reqDTO.getTitle());
        announce.setContent(reqDTO.getContent());
        announce.setWorkLocation(reqDTO.getWorkLocation());
-
-        String endDateString = reqDTO.getEndDateString();
-        if (endDateString != null && !endDateString.isEmpty()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            LocalDateTime dateTime = LocalDateTime.parse(endDateString, formatter);
-            announce.setEndDate(Timestamp.valueOf(dateTime)); // Timestamp로 변환하여 설정
-        } else {
-            announce.setEndDate(null);
-        }
+       announce.setEndDate(Timestamp.valueOf(reqDTO.getEndDate()));
+       announce.setCompany(sessionCompany);
 
 
         log.info("공고 수정 완료 - 공고 ID {}, 공고 제목 {}", id, announce.getTitle());
         return announce;
-
     }
 
     // 게시글 단건 조회하기

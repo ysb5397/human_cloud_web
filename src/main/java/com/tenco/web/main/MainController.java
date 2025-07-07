@@ -24,11 +24,11 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/announceborderlist")
-    public String setAnnounceBorderList (Model model) {
+    @GetMapping("/announceboardlist")
+    public String setAnnounceBoardList (Model model) {
         List <Announce> announceList = mainService.findAll();
         model.addAttribute("announceList", announceList);
-        return "announce/announceborderlist";
+        return "announce/announceboardlist";
 
     }
 

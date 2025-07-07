@@ -8,13 +8,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class AnnounceRequest {
 
     @Data
+    @Builder
     public static class SaveJobDTO {
 
         @NotBlank(message = Define.ErrorMessage.REQUIRED_TITLE)
@@ -27,18 +28,15 @@ public class AnnounceRequest {
         private String workLocation;
 
         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-        private Timestamp endDate;
+        private LocalDateTime endDate;
 
-        private String endDateString;
-
-        @Builder
         public Announce toEntity(Company sessionCompany) {
             return Announce.builder()
                     .title(this.title)
                     .content(this.content)
                     .workLocation(this.workLocation)
                     .company(sessionCompany)
-                    .endDate(this.endDate)
+                    .endDate(Timestamp.valueOf(this.endDate))
                     .build();
         }
 
@@ -47,13 +45,29 @@ public class AnnounceRequest {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class UpdateDTO {
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_TITLE)
         private String title;
-        private String content;
-        private String workLocation;
-        private Timestamp endDate;
-        private String endDateString;
 
+        @NotBlank(message = Define.ErrorMessage.REQUIRED_SELF_INTRODUCTION)
+        private String content;
+
+        @NotBlank(message = "근무지역을 입력해주세요")
+        private String workLocation;
+
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+        private LocalDateTime endDate;
+
+        public Announce toEntity(Company sessionCompany) {
+            return Announce.builder()
+                    .title(this.title)
+                    .content(this.content)
+                    .workLocation(this.workLocation)
+                    .company(sessionCompany)
+                    .endDate(Timestamp.valueOf(this.endDate))
+                    .build();
+        }
     }
 
 }

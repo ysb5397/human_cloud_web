@@ -1,6 +1,8 @@
 package com.tenco.web.announce;
 
+import com.sun.tools.javac.Main;
 import com.tenco.web.company.Company;
+import com.tenco.web.main.MainService;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -30,6 +32,7 @@ public class AnnounceController {
 
     //DI 처리
     private final AnnounceService announceService;
+    private final MainService mainService;
 
 
     // 게시글 삭제 액션 처리
@@ -123,7 +126,30 @@ public class AnnounceController {
 
     }
 
-    //
+    // 공고 수정하기 화면 요청
+    @GetMapping("/company/{id}/hire-update")
+    public String updateForm(@PathVariable(name = "id") int announceId,
+                             Model model, HttpSession session) {
+        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        announceService.checkCoBoardOwner(announceId, sessionCompany.getId());
+
+        model.addAttribute("announce",announceService.findAnnounceWithCompanyById(announceId));
+
+
+        return "company/hire-update";
+    }
+
+    // 공고 수정 기능 처리
+    @PostMapping("/company/{id}/hire-update")
+    public String update(@PathVariable(name = "id") int announceId,
+                         AnnounceRequest.UpdateDTO reqDTO, HttpSession session, Model model) {
+
+        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        announceService.checkCoBoardOwner(announceId, sessionCompany.getId());
+        announceService.UpdateById(announceId, reqDTO, sessionCompany);
+
+        return "redirect:/announcedetail/" + announceId;
+    }
 
 
 }

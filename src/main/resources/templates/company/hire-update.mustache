@@ -1,0 +1,185 @@
+{{> layout/header}}
+
+<main class="relative z-10 mt-32 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-xl rounded-xl relative z-8">
+        <form action="/company/{{id}}/hire-update" method="post">
+            <div class="space-y-12">
+                <div class="border-b border-gray-900/10 pb-12">
+                    <h2 class="flex justify-center text-2xl/7 font-bold text-gray-900 ">공고 수정하기</h2>
+                    <div class="sm:col-span-full">
+                        <label for="title" class="block text-sm/6 font-medium text-gray-900">제목</label>
+                        <div class="mt-2">
+                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                                <input type="text" name="title" id="title" value="{{announce.title}}" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+                            </div>
+                        </div>
+                        {{#message.title}}
+                            <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                                <div class="flex items-center gap-x-3">
+                                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                    </svg>
+                                    <p class="text-sm font-medium text-red-700">
+                                        {{message.title}}
+                                    </p>
+                                </div>
+                            </div>
+                        {{/message.title}}
+                    </div>
+
+                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                        <div class="sm:col-span-full">
+                            <label for="companyname" class="block text-sm/6 font-medium text-gray-900">회사이름</label>
+                            <div class="mt-2">
+                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                                    <input type="text" name="companyname" id="companyname" value="{{announce.company.companyName}}" readonly class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-full">
+                            <label for="workLocation" class="block text-sm/6 font-medium text-gray-900">근무지역</label>
+                            <div class="mt-2">
+                                <input id="workLocation" name="workLocation" type="workLocation" value="{{announce.workLocation}}" autocomplete="workLocation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                            </div>
+                        </div>
+                        <div class="col-span-full">
+                            <label for="content" class="block text-sm/6 font-medium text-gray-900">공고내용</label>
+                            <div class="mt-2">
+                                <textarea name="content" id="content" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">{{announce.content}}</textarea>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-full">
+                            <label for="endDateString" class="block text-sm font-medium text-gray-900">마감 날짜</label>
+                            <div class="mt-2">
+                                <input id="endDateString" name="endDateString" type="datetime-local" value="{{announce.endDateString}}"
+                                       class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
+                  outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400
+                  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-900/10 pb-12">
+                    <div class="mt-10 space-y-10">
+                        <fieldset>
+                            <legend class="text-sm/6 font-semibold text-gray-900">개발 직무</legend>
+                            <div class="flex flex-row items-center mt-6 gap-10">
+                                <div class="flex gap-3">
+                                    <div class="flex h-6 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="backend" aria-describedby="backend-description" name="backend" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm/6">
+                                        <label for="backend" class="font-medium text-gray-900">서버 백엔드 개발자</label>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex h-6 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="frontend" aria-describedby="frontend-description" name="frontend" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm/6">
+                                        <label for="frontend" class="font-medium text-gray-900">프론트엔드 개발자</label>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex h-6 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="fullstack" aria-describedby="fullstack-description" name="fullstack" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm/6">
+                                        <label for="fullstack" class="font-medium text-gray-900">웹 풀스택 개발자</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-sm/6 font-semibold text-gray-900">기술 스택</legend>
+                            <div class="flex flex-row items-center mt-6 gap-10">
+                                <div class="flex gap-3">
+                                    <div class="flex h-6 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="java" aria-describedby="java-description" name="java" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm/6">
+                                        <label for="java" class="font-medium text-gray-900">JAVA</label>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex h-6 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="html" aria-describedby="html-description" name="html" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm/6">
+                                        <label for="html" class="font-medium text-gray-900">HTML</label>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex h-6 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="Spring" aria-describedby="Spring-description" name="Spring" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm/6">
+                                        <label for="Spring" class="font-medium text-gray-900">Spring</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend class="text-sm/6 font-semibold text-gray-900">경력</legend>
+                            <div class="flex flex-row items-center mt-6 gap-10">
+                                <div class="flex items-center gap-x-3">
+                                    <input id="Entry" name="push-notifications" type="checkbox" checked class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
+                                    <label for="Entry" class="block text-sm/6 font-medium text-gray-900">신입</label>
+                                </div>
+                                <div class="flex items-center gap-x-3">
+                                    <input id="Experienced" name="push-notifications" type="checkbox" class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
+                                    <label for="Experienced" class="block text-sm/6 font-medium text-gray-900">경력</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-end gap-x-6">
+                <button onclick="history.back();" type="button" class="text-sm/6 font-semibold text-gray-900">취소</button>
+                <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">수정</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+{{> layout/footer}}

@@ -3,7 +3,9 @@ package com.tenco.web.resume;
 import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
-import com.tenco.web.tags.resume_tag.ResumeSkillTagJpaRepository;
+import com.tenco.web.tags.SkillTag;
+import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.tags.resume_tag.ResumeSkillTagRequest;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagService;
 import com.tenco.web.user.User;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,7 +25,7 @@ public class ResumeService {
 
     private final ResumeJpaRepository resumeJpaRepository;
     private final ResumeSkillTagService resumeSkillTagService;
-    private final ResumeSkillTagJpaRepository resumeSkillTagJpaRepository;
+    private final SkillTagService skillTagService;
 
     // 이력서 저장 기능
     @Transactional
@@ -76,6 +79,26 @@ public class ResumeService {
         }
     }
 
+    public List<ResumeSkillTagRequest.CheckDTO> getSkillTagsForUpdate(int resumeId) {
+        // 1. 모든 기술 스택 목록을 가져옵니다.
+        List<SkillTag> allSkills = skillTagService.findAll();
+
+        // 2. 현재 이력서에 이미 선택된 기술 스택 목록을 가져옵니다.
+        List<SkillTag> selectedSkills = resumeSkillTagService.findByResumeId(resumeId);
+
+        // 3. DTO 리스트를 생성합니다.
+        List<ResumeSkillTagRequest.CheckDTO> checkDTOs = allSkills.stream()
+                .map(skill -> {
+                    // 현재 스킬이 선택된 스킬 목록에 포함되어 있는지 확인합니다.
+                    boolean checked = selectedSkills.stream()
+                            .anyMatch(s -> s.getId() == skill.getId());
+                    return new ResumeSkillTagRequest.CheckDTO(skill.getId(), skill.getSkillTagName(), checked);
+                })
+                .collect(Collectors.toList());
+
+        return checkDTOs;
+    }
+
     // 이력서 수정
     @Transactional
     public Resume UpdateById(int id, ResumeRequest.UpdateDTO updateDTO,
@@ -94,7 +117,7 @@ public class ResumeService {
         resume.setPortfolioUrl(updateDTO.getPortfolioUrl());
         resume.setSelfIntroduction(updateDTO.getSelfIntroduction());
 
-        resumeSkillTagJpaRepository.deleteByResumeId(id);
+        resumeSkillTagService.deleteByResumeId(id);
 
         if (updateDTO.getSkillTags() != null && !updateDTO.getSkillTags().isEmpty()) {
             updateDTO.getSkillTags().forEach(skillTag -> {

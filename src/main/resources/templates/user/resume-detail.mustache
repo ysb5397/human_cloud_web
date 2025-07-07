@@ -1,7 +1,7 @@
 {{> layout/header}}
 
 
-{{#resumeList}}
+{{#resume}}
     <main class="flex justify-center items-start mt-10 px-4">
         <article class="w-full max-w-4xl flex flex-col gap-4 border border-gray-300 shadow-md p-8 bg-white">
             <div class="flex items-center gap-x-4 text-sm">
@@ -29,11 +29,11 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 py-4 text-center">
-                {{#resumeSkillTag}}
+                {{#resumeSkillTags}}
                 <span class="inline-block rounded-full bg-gray-200 px-4 py-1 text-sm text-gray-700 font-medium hover:bg-gray-100">
-                    {{skillTagName}}
+                    {{skillTag.skillTagName}}
                 </span>
-                {{/resumeSkillTag}}
+                {{/resumeSkillTags}}
             </div>
 
             <div class="text-lg text-gray-800 gap">
@@ -58,7 +58,7 @@
             </form>
         </div>
     </main>
-{{/resumeList}}
+{{/resume}}
 
 
 {{> layout/footer}}

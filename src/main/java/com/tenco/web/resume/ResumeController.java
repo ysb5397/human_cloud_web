@@ -1,10 +1,10 @@
 package com.tenco.web.resume;
 
 import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.tags.resume_tag.ResumeSkillTagRequest;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagService;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -83,8 +83,7 @@ public class ResumeController {
     public String detail(@PathVariable(name = "id") int id, Model model) {
         Resume resumeDetail = resumeService.findById(id);
         log.info("화면에 전달할 이력서: {}", resumeDetail);
-        model.addAttribute("resumeList", resumeDetail);
-        model.addAttribute("resumeSkillTag", resumeSkillTagService.findByResumeId(id));
+        model.addAttribute("resume", resumeDetail);
         return "user/resume-detail";
     }
 
@@ -106,8 +105,10 @@ public class ResumeController {
         User sessionResume = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         resumeService.checkResumeOwner(resumeId, sessionResume.getId());
 
+        List<ResumeSkillTagRequest.CheckDTO> skillTagList = resumeService.getSkillTagsForUpdate(resumeId);
+
         model.addAttribute("resume", resumeService.findById(resumeId));
-        model.addAttribute("skillTagList", skillTagService.findAll());
+        model.addAttribute("skillTagList", skillTagList);
 
         return "user/resume-update";
     }
@@ -115,10 +116,13 @@ public class ResumeController {
     // 이력서 수정 기능 처리
     @PostMapping("/user/{id}/resume-update")
     public String update(@PathVariable(name = "id") int resumeId,
-                         ResumeRequest.UpdateDTO reqDTO, HttpSession session, HttpServletRequest request){
+                         ResumeRequest.UpdateDTO reqDTO, HttpSession session, Model model){
+
+        System.out.println("수정할 태그: " + reqDTO.getSkillTags());
 
         User sessionResume = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        resumeService.UpdateById(resumeId,reqDTO,sessionResume);
+        Resume resume = resumeService.UpdateById(resumeId,reqDTO,sessionResume);
+        model.addAttribute("resume", resume);
 
         return "redirect:/resume-detail/" + resumeId;
     }

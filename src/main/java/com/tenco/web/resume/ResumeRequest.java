@@ -50,6 +50,6 @@ public class ResumeRequest {
         private String title;
         private String portfolioUrl;
         private String selfIntroduction;
-        private List<Integer> skillTags;
+        private List<String> skillTags;
     }
 }

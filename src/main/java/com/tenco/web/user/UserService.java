@@ -93,6 +93,7 @@ public class UserService {
             throw new Exception403("본인 정보만 수정 가능합니다.");
         }
 
+        user.setUsername(updateDTO.getUsername());
         user.setEmail(updateDTO.getEmail());
         user.setPassword(updateDTO.getPassword());
         user.setAddress(updateDTO.getAddress());

@@ -1,0 +1,125 @@
+{{> layout/header}}
+
+<div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+
+    <!-- 제목 -->
+    <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">회원정보수정</h2>
+        <p class="mt-2 text-lg text-gray-600">정보수정을 해주세요.</p>
+    </div>
+
+    <form id="userUpdate" action="/user/{{id}}/user-update" method="POST"enctype="application/x-www-form-urlencoded" class="mx-auto mt-10 max-w-xl">
+        <div class="grid grid-cols-1 gap-y-6">
+            <div>
+                <label for="username" class="block text-sm font-semibold text-gray-900">이름</label>
+                <div class="grid grid-cols-2 gap-x-52">
+                    <input type="text" name="username" id="username" value="{{updateDTO.username}}" autocomplete="username"
+                           class="mt-2.5 block w-90 rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
+                    <button class="mt-2.5 block h-10 w-46 rounded-md bg-indigo-600 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">중복 확인</button>
+                </div>
+                {{#message.usernameCheck}}
+                    <div class="mt-2 rounded-md border-l-4 border-green-500 bg-green-50 p-3">
+                        <div class="flex items-center gap-x-3">
+                            <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-sm font-medium text-green-700">
+                                {{message.usernameCheck}}
+                            </p>
+                        </div>
+                    </div>
+                {{/message.usernameCheck}}
+                {{#message.username}}
+                    <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                        <div class="flex items-center gap-x-3">
+                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-sm font-medium text-red-700">
+                                {{message.username}}
+                            </p>
+                        </div>
+                    </div>
+                {{/message.username}}
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-semibold text-gray-900">비밀번호</label>
+                <input type="password" name="password" id="password" value="{{updateDTO.password}}" autocomplete="password"
+                       class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
+                {{#message.password}}
+                    <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                        <div class="flex items-center gap-x-3">
+                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-sm font-medium text-red-700">
+                                {{message.password}}
+                            </p>
+                        </div>
+                    </div>
+                {{/message.password}}
+            </div>
+            <div>
+                <label for="repeatPW" class="block text-sm font-semibold text-gray-900">비밀번호 확인</label>
+                <input type="text" name="repeatPW" id="repeatPW" value="{{updateDTO.repeatPW}}" autocomplete="repeatPW"
+                       class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
+                {{#message.repeatPW}}
+                    <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                        <div class="flex items-center gap-x-3">
+                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-sm font-medium text-red-700">
+                                {{message.repeatPW}}
+                            </p>
+                        </div>
+                    </div>
+                {{/message.repeatPW}}
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-semibold text-gray-900">이메일</label>
+                <input type="text" name="email" id="email" value="{{updateDTO.email}}" autocomplete="email"
+                       class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
+                {{#message.email}}
+                    <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                        <div class="flex items-center gap-x-3">
+                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-sm font-medium text-red-700">
+                                {{message.email}}
+                            </p>s
+                        </div>
+                    </div>
+                {{/message.email}}
+            </div>
+            <div>
+                <label for="address" class="block text-sm font-semibold text-gray-900">주소</label>
+                <input type="text" name="address" id="address" value="{{updateDTO.address}}" autocomplete="address"
+                       class="mt-2.5 block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600" />
+                {{#message.address}}
+                    <div class="mt-2 rounded-md border-l-4 border-red-500 bg-red-50 p-3">
+                        <div class="flex items-center gap-x-3">
+                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-sm font-medium text-red-700">
+                                {{message.address}}
+                            </p>
+                        </div>
+                    </div>
+                {{/message.address}}
+            </div>
+        </div>
+        <div class="mt-10">
+            <button type="submit"
+                    class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                수정
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+
+
+{{> layout/footer}}

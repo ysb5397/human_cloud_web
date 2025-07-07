@@ -37,7 +37,7 @@ public class CompanyController {
         log.info("회원가입 시도");
         model.addAttribute(Define.DefineMessage.JOIN_DTO, joinDTO);
 
-        Validate.CompanyValidate.checkPassword(joinDTO, result);
+        Validate.CompanyValidate.checkJoinDTO(joinDTO, result);
 
         Map<String, String> errorMap = new HashMap<>();
         Company company = companyService.findByCompanyName(joinDTO);
@@ -88,7 +88,5 @@ public class CompanyController {
         model.addAttribute("companyList",companyList);
         return "company/companyinfo";
     }
-
-
 
 }

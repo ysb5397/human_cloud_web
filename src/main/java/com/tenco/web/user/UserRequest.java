@@ -69,6 +69,12 @@ public class UserRequest {
         }
     }
 
+    @Data
+    public static class NaverUserDTO {
+        private String name;
+        private String email;
+    }
+
     // 수정 DTO
     @Data
     @Builder

@@ -116,4 +116,26 @@ public class UserService {
                 user.getAddress()
         );
     }
+
+    @Transactional
+    public User findOrCreateUserByNaver(String email, String name) {
+        User user = userJpaRepository.findByEmail(email);
+
+        if (user == null) {
+            // 2. 사용자가 없으면 새로 생성
+            String username = (name != null && !name.trim().isEmpty()) ? name : email.split("@")[0];
+            user = User.builder()
+                    .email(email)
+                    .username(username) // username을 네이버 이름으로 설정
+                    // 소셜 로그인은 별도의 비밀번호가 필요 없으므로 임의의 값(UUID 등)을 저장하거나,
+                    // DB 컬럼에 nullable=true 설정을 합니다.
+                    .password("provided_by_naver")
+                    .build();
+
+            userJpaRepository.save(user); // DB에 저장
+        }
+
+        // 3. 사용자 정보 반환 (찾았거나, 새로 만들었거나)
+        return user;
+    }
 }

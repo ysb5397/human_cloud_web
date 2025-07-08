@@ -1,13 +1,21 @@
 package com.tenco.web.announce;
 
-import com.tenco.web._core.errors.exception.Exception400;
+import com.tenco.web._core.common.PageLink;
 import com.tenco.web.company.Company;
+import com.tenco.web.tags.SkillTag;
+import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
+import com.tenco.web.tags.announce_tag.AnnounceSKillTagService;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +23,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +38,8 @@ public class AnnounceController {
 
     //DI 처리
     private final AnnounceService announceService;
-
+    private final SkillTagService skillTagService;
+    private final AnnounceSKillTagService announceSKillTagService;
 
     // 공고 등록 화면 요청
     @GetMapping("/company/hire-register")
@@ -77,6 +87,58 @@ public class AnnounceController {
         announceService.save(saveJobDTO, sessionCompany);
         log.info("저장됨");
         return "redirect:/announceboardlist"; // 등록 후 공고 목록 페이지로 이동
+    }
+
+    // 키워드로 공고 검색하기
+    @GetMapping("/announce/search")
+    public String announceSearch(@RequestParam(name = "keyword") String keyword,
+                                 @RequestParam(name = "page", defaultValue = "1") int page,
+                                 @RequestParam(name = "size", defaultValue = "10") int size,
+                                 Model model) {
+
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
+        Page<Announce> announceList = announceService.findAnnounceWithKeyword(keyword, pageable);
+
+        // 페이지 네비게이션용 데이터 준비
+        List<PageLink> pageLinks = new ArrayList<>();
+
+        for (int i = 0; i < announceList.getTotalPages(); i++) {
+            pageLinks.add(new PageLink(i, i + 1, i == announceList.getNumber()));
+        }
+
+        Integer previousPageNumber = announceList.hasPrevious() ? announceList.getNumber() : null;
+        Integer nextPageNumber = announceList.hasNext() ? announceList.getNumber() + 2 : null;
+
+        // 뷰 화면에 데이터 전달
+        model.addAttribute("announceList", announceList);
+
+        // 페이지 네비게이션에 사용할 번호 링크 리스트
+        model.addAttribute("pageLinks", pageLinks);
+
+        // 이전 페이지 번호 전달
+        model.addAttribute("previousPageNumber", previousPageNumber);
+
+        // 다음 페이지 번호 전달
+        model.addAttribute("nextPageNumber", nextPageNumber);
+        model.addAttribute("keyword", keyword);
+
+        List<SkillTag> skillTagList = skillTagService.findAll();
+        model.addAttribute("skillTagList", skillTagList);
+        return "announce/announceboardlist";
+    }
+
+    @GetMapping("/announce/search/detail")
+    public String announceSearchDetail() {
+        return "announce/announceboardlist";
+    }
+
+    @GetMapping("/announcedetail/{id}")
+    public String detail(@PathVariable(name = "id") int id, Model model) {
+        Announce announcedetail = announceService.findById(id);
+        List<AnnounceSKillTag> announceSKillTagList = announceSKillTagService.findByAnnounceId(id);
+        log.info("화면에 전달할 공고: {}", announcedetail);
+        model.addAttribute("announcelist", announcedetail);
+        return "announce/announcedetail";
     }
 
     // 공고 관리 화면 요청

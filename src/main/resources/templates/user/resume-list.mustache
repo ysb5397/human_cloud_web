@@ -27,7 +27,7 @@
                             <div class="mt-6 border-t border-gray-200 pt-6 text-sm text-gray-600 space-y-3">
                                 <div>
                                     <p class="font-medium text-gray-800">주소:</p>
-                                    <p>{{user.address}}</p>
+                                    <p>{{#user.address}}{{user.address}}{{/user.address}}</p>
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-800">생성일:</p>

@@ -1,11 +1,12 @@
 package com.tenco.web.main;
 
-import com.sun.tools.javac.Main;
 import com.tenco.web.announce.Announce;
-import com.tenco.web.company.Company;
+import com.tenco.web.announce.AnnounceService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ public class MainService {
 
     private static final Logger log = LoggerFactory.getLogger(MainService.class);
     private final MainJpaRepository mainJpaRepository;
+    private final AnnounceService announceService;
 
     public List<Announce> findAll() {
         log.info("메인 페이지 불러오는 중");
@@ -38,4 +40,7 @@ public class MainService {
         return announce;
     }
 
+    public Page<Announce> findAll(Pageable pageable) {
+        return announceService.findAll(pageable);
+    }
 }

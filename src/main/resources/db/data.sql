@@ -82,3 +82,21 @@ INSERT INTO resume_skill_tag_tb (resume_id, skill_tag_id) VALUES
 (4, 8),
 (5, 9),
 (5, 10);
+
+INSERT INTO announce_skill_tag_tb (announce_id, skill_tag_id) VALUES
+(1, 1),
+(1, 2),
+(1, 19),
+(2, 3),
+(2, 4),
+(2, 12),
+(2, 20),
+(3, 7),
+(3, 8),
+(4, 5),
+(4, 6),
+(4, 15),
+(5, 9),
+(5, 10),
+(5, 11),
+(5, 18);

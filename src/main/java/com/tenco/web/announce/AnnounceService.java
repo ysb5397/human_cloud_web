@@ -8,6 +8,8 @@ import com.tenco.web.company.Company;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +39,7 @@ public class AnnounceService {
         if (saveJobDTO.getEndDate().isBefore(announce.getStartDateTime())) {
             throw new Exception400("마감일은 현재 시간보다 이후여야 합니다.");
         }
-
-
+        
         log.info("Jpa 전");
         announceJpaRepository.save(announce);
         log.info("Jpa 후");
@@ -125,7 +126,24 @@ public class AnnounceService {
     }
 
 
+    public Page<Announce> findAnnounceWithKeyword(String keyword, Pageable pageable) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return announceJpaRepository.findAll(pageable);
+        } else {
+            return announceJpaRepository.findAnnounceByKeyword(keyword, pageable);
+        }
+    }
+    
+    public Page<Announce> findAll(Pageable pageable) {
+        return announceJpaRepository.findAll(pageable);
+    }
 
+    public Announce findById(int id) {
+        Announce announce = announceJpaRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new Exception404("공고글을 찾을 수 없습니다.");
+                });
 
-
+        return announce;
+    }
 }

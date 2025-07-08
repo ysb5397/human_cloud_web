@@ -283,4 +283,7 @@ build/
 .idea/
 *.iml
 
+# .gitignore
+application-dev.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,intellij,eclipse,visualstudiocode

@@ -1,5 +1,6 @@
 package com.tenco.web.community;
 
+import com.tenco.web.reply.Reply;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.DateUtil;
 import jakarta.persistence.*;
@@ -56,8 +57,6 @@ public class Community {
 
 
     @OrderBy("id DESC")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
     List<Reply> replies = new ArrayList<>();
-
-
 }

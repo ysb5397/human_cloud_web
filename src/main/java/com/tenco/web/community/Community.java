@@ -56,7 +56,7 @@ public class Community {
     }
 
 
-    @OrderBy("id DESC")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
-    List<Reply> replies = new ArrayList<>();
+    // @OrderBy("id DESC")
+    // @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
+    // List<Reply> replies = new ArrayList<>();
 }

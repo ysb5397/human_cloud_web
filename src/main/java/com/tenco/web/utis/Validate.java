@@ -26,5 +26,10 @@ public class Validate {
                 result.rejectValue("repeatPW", "password.mismatch", Define.ErrorMessage.NOT_MATCH_REPEAT_PW);
             }
         }
+        public static void checkUpdateDTO(CompanyRequest.UpdateDTO updateDTO, BindingResult reuslt) {
+            if (!updateDTO.getPassword().equals(updateDTO.getRepeatPW())) {
+                reuslt.rejectValue("repeatPW", "password.mismatch", Define.ErrorMessage.NOT_MATCH_REPEAT_PW);
+            }
+        }
     }
 }

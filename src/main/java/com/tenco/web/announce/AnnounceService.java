@@ -34,6 +34,11 @@ public class AnnounceService {
         announce.setEndDate(Timestamp.valueOf(saveJobDTO.getEndDate()));
         announce.setCompany(sessionCompany);
 
+        if (saveJobDTO.getEndDate().isBefore(announce.getStartDateTime())) {
+            throw new Exception400("마감일은 현재 시간보다 이후여야 합니다.");
+        }
+
+
         log.info("Jpa 전");
         announceJpaRepository.save(announce);
         log.info("Jpa 후");
@@ -96,7 +101,12 @@ public class AnnounceService {
        if(!announce.isCOwner(sessionCompany.getId())) {
            throw new Exception403("본인 공고만 수정 가능합니다.");
        }
-       announce.setTitle(reqDTO.getTitle());
+
+        if (reqDTO.getEndDate().isBefore(announce.getStartDateTime())) {
+            throw new Exception400("마감일은 현재 시간보다 이후여야 합니다.");
+        }
+
+        announce.setTitle(reqDTO.getTitle());
        announce.setContent(reqDTO.getContent());
        announce.setWorkLocation(reqDTO.getWorkLocation());
        announce.setEndDate(Timestamp.valueOf(reqDTO.getEndDate()));
@@ -113,6 +123,8 @@ public class AnnounceService {
         return announceJpaRepository.findByIdJoinCompany(id)
                 .orElseThrow(() -> new Exception404("해당 공고를 찾을 수 없습니다. ID: " + id));
     }
+
+
 
 
 

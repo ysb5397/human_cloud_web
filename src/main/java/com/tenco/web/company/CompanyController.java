@@ -1,6 +1,8 @@
 package com.tenco.web.company;
 
 import com.tenco.web.announce.Announce;
+import com.tenco.web.user.User;
+import com.tenco.web.user.UserRequest;
 import com.tenco.web.utis.Define;
 import com.tenco.web.utis.Validate;
 import jakarta.servlet.http.HttpSession;
@@ -87,6 +89,58 @@ public class CompanyController {
         List<Company> companyList = companyService.findAll();
         model.addAttribute("companyList",companyList);
         return "company/companyinfo";
+    }
+
+    // 수정하기 화면 요청
+    @GetMapping("/company/{id}/company-update-form")
+    public String updateForm(@PathVariable(name = "id") int companyId,
+                             Model model, HttpSession session){
+        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
+
+        model.addAttribute("updateDTO", companyService.findById(companyId));
+
+        return "company/company-update-form";
+
+    }
+
+
+
+    // 수정하기 기능 요청
+    @PostMapping("/company/{id}/company-update-form")
+    public String update(@PathVariable(name = "id") int companyId, @Valid CompanyRequest.UpdateDTO updateDTO,
+                         BindingResult result, HttpSession session, Model model) {
+        log.info("회원 정보 수정 기능 요청");
+        model.addAttribute(Define.DefineMessage.UPDATE_DTO, updateDTO);
+
+        Validate.CompanyValidate.checkUpdateDTO(updateDTO, result);
+        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Map<String, String> errorMap = new HashMap<>();
+        Company company = companyService.findByUpdateCompanyName(updateDTO);
+        if (sessionCompany == null) {
+            log.warn("세션에 회사 정보 없음. 로그인 상태 확인 필요.");
+            return "redirect:/login-form";
+        }
+
+        if (updateDTO.getCompanyName() != null && !updateDTO.getCompanyName().trim().isEmpty() && company == null) {
+            model.addAttribute(Define.DefineMessage.MESSAGE_COMPANY_NAME_CHECK, Define.NormalMessage.NOT_EXIST_COMPANY);
+        } else if (updateDTO.getCompanyName() != null && !updateDTO.getCompanyName().trim().isEmpty() && company != null && !updateDTO.getCompanyName().equals(sessionCompany.getCompanyName())) {
+            model.addAttribute(Define.DefineMessage.MESSAGE_COMPANY_NAME, Define.ErrorMessage.EXIST_COMPANY);
+            return "company/company-update-form";
+        }
+
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
+
+            model.addAttribute("message", errorMap);
+            return "company/company-update-form";
+
+        }
+
+        companyService.updateById(companyId,updateDTO, sessionCompany);
+        log.info("회원정보 수정완료");
+        return "redirect:/index";
     }
 
 }

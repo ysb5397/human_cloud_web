@@ -46,4 +46,9 @@ public class Company {
             this.websiteUrl = websiteUrl;
         }
 
+    public boolean isOwner(int checkCompanyId) {
+        log.info("회원 소유자 확인 요청 - 작성자 : {}", checkCompanyId);
+        return this.id == checkCompanyId;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.tenco.web.announce;
 
+import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web.company.Company;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ public class AnnounceController {
 
     //DI 처리
     private final AnnounceService announceService;
+
 
     // 공고 등록 화면 요청
     @GetMapping("/company/hire-register")

@@ -1,8 +1,10 @@
 package com.tenco.web.company;
 
 import com.tenco.web._core.errors.exception.CompanyLoginException;
+import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.utis.Define;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +49,7 @@ public class CompanyService {
         return companyJpaRepository
                 .findByBusinessRegistrationNumberAndPassword(loginDTO.getBusinessRegistrationNumber(), loginDTO.getPassword())
                 .orElseThrow(() -> {
-                   return new CompanyLoginException(Define.ErrorMessage.NOT_MATCH_BUSINESSREGISTRATION_NO_OR_PASSWORD);
+                    return new CompanyLoginException(Define.ErrorMessage.NOT_MATCH_BUSINESSREGISTRATION_NO_OR_PASSWORD);
                 });
     }
 
@@ -76,4 +78,41 @@ public class CompanyService {
         Company company = companyJpaRepository.findByCompanyName(joinDTO.getCompanyName());
         return company;
     }
+
+    public Company findByUpdateCompanyName(CompanyRequest.UpdateDTO updateDTO) {
+        Company company = companyJpaRepository.findByCompanyName(updateDTO.getCompanyName());
+        return company;
+    }
+
+
+
+    /**
+     * 회사정보 수정
+     */
+    @Transactional
+    public Company updateById(int id, CompanyRequest.UpdateDTO updateDTO, Company sessionCompany) {
+        log.info("회사 정보 수정 서비스 시작 - 회사 ID {}", id);
+        Company company = companyJpaRepository.findByCompanyName(updateDTO.getCompanyName());
+        if (company == null) {
+            log.warn("기업 조회 실패 - ID {}", id);
+            throw new Exception404(Define.ErrorMessage.ERROR_404);
+        }
+
+
+        if (!company.isOwner(sessionCompany.getId())) {
+            throw new Exception403(Define.ErrorMessage.ERROR_403);
+        }
+
+        company.setCompanyName(updateDTO.getCompanyName());
+        company.setEmail(updateDTO.getEmail());
+        company.setPassword(updateDTO.getPassword());
+        company.setAddress(updateDTO.getAddress());
+
+        log.info("회사 정보 수정 완료 - 회사 ID {}, 회사 이메일 {} ", id, company.getEmail());
+
+        return company;
+
+    }
+
+
 }

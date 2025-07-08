@@ -43,6 +43,7 @@ public class ResumeService {
         return resumeList;
     }
 
+    // 특정 이력서 목록 조회
     public List<Resume> findByUserId(int id) {
         List<Resume> resumeList = resumeJpaRepository.findByUserId(id);
         return resumeList;
@@ -52,7 +53,6 @@ public class ResumeService {
     public Resume findById(int id) {
         Resume resume = resumeJpaRepository.findByResumeList(id)
                 .orElseThrow(() -> new IllegalArgumentException("이력서 없음: id = " + id));
-
 
         return resume;
     }

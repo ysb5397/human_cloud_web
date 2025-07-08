@@ -25,6 +25,14 @@ INSERT INTO resume_tb (user_id, title, portfolio_url, self_introduction, is_publ
 (3, '데이터로 말하는 데이터 분석가 이민준입니다.', 'https://linkedin.com/in/minjun', 'SQL과 Python을 활용하여 비즈니스 인사이트를 도출하고 문제 해결에 기여한 경험이 있습니다.', FALSE, NOW()),
 (4, '꼼꼼하고 창의적인 신입 기획자 최은하', 'https://notion.so/eunha-plan', '시장 조사와 사용자 분석을 통해 새로운 아이디어를 구체화하고 프로젝트를 성공으로 이끄는 기획자가 되고 싶습니다.', TRUE, NOW()),
 (5, '팀과 함께 성장하는 클라우드 엔지니어 정수빈', 'https://velog.io/@subin-jung', 'AWS와 Kubernetes 환경에서 안정적인 인프라를 구축하고 운영하는 데 관심이 많습니다.', FALSE, NOW());
+
+INSERT INTO community_tb (user_id, title, content, created_at, interest_count) VALUES
+(1, '첫 번째 글이에요', '안녕하세요! 여기는 커뮤니티 첫 글입니다.',NOW(), 0),
+(2, '자바 질문 있어요', 'static 키워드가 정확히 뭔가요?', NOW(), 0),
+(3, '스터디원 구해요', '스프링 부트 같이 공부하실 분?', NOW(), 0),
+(4, '오늘 날씨 좋네요', '산책하기 딱 좋은 날씨네요!', NOW(), 0),
+(5, '이직 준비 중입니다', '이력서 첨삭해주실 분 계신가요?', NOW(), 0);
+
 --
 --INSERT INTO user_bookmark_tb (user_id, announce_id) VALUES
 --(1, 2),

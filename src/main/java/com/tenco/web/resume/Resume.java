@@ -2,6 +2,7 @@ package com.tenco.web.resume;
 
 import com.tenco.web.tags.resume_tag.ResumeSkillTag;
 import com.tenco.web.user.User;
+import com.tenco.web.utis.DateUtil;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -55,6 +57,10 @@ public class Resume {
     public boolean isOwner(int checkUserId) {
         log.info("이력서 소유자 확인 요청 - 작성자 : {}", checkUserId);
         return this.user.getId() == checkUserId;
+    }
+
+    public String getTime(){
+        return DateUtil.timestampFormat(createdAt);
     }
 
     @OrderBy("id desc")

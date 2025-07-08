@@ -5,8 +5,17 @@
     <article class="w-full max-w-3xl flex flex-col gap-6 border border-gray-200 rounded-lg shadow-sm p-8 bg-white">
 
         <!-- Post Meta -->
-        <div>
+        <div class="flex justify-between items-center text-sm text-gray-500">
             <time datetime="2025-07-03" class="text-gray-500 text-sm">{{community.time}}</time>
+
+            {{#isOwner}}
+                <div class="flex items-center gap-x-3">
+                    <a href="/community/{{id}}/edit" class="font-medium text-gray-600 hover:text-indigo-600">수정</a>
+                    <form action="/community/{{id}}/delete" method="post">
+                        <button type="submit" onclick="return confirm('정말로 삭제하시겠습니까?');" class="font-medium text-gray-600 hover:text-red-600">삭제</button>
+                    </form>
+                </div>
+            {{/isOwner}}
         </div>
 
         <!-- Post Content -->
@@ -44,7 +53,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
                 <span class="ml-1 text-sm font-semibold">댓글</span>
-                <span id="comment-count" class="ml-1 text-sm font-semibold">2</span>
+                {{#community.replyCount}}
+                    <span id="comment-count" class="ml-1 text-sm font-semibold">{{replyCount}}</span>
+                {{/community.replyCount}}
+                {{^community.replyCount}}
+                    <span id="comment-count" class="ml-1 text-sm font-semibold">0</span>
+                {{/community.replyCount}}
             </div>
             <button onclick="likePost(this)" class="flex items-center text-gray-500 hover:text-pink-500 transition-colors duration-200">
                 <svg class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -56,8 +70,9 @@
 
         <!-- Comment Form -->
         <div class="pt-2">
-            <form>
-                <textarea class="resize-none block w-full rounded-md bg-white px-3.5 py-2.5 text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" rows="3" placeholder="댓글을 입력하세요."></textarea>
+            <form action="/reply/save" method="post">
+                <input name="id" type="hidden" value="{{community.id}}">
+                <textarea name="comment" class="resize-none block w-full rounded-md bg-white px-3.5 py-2.5 text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" rows="3" placeholder="댓글을 입력하세요."></textarea>
                 <button type="submit" class="mt-2 inline-flex justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">작성하기</button>
             </form>
         </div>
@@ -65,24 +80,29 @@
         <!-- Comments Section -->
         <div class="mt-6">
             <div class="border-t border-gray-200 pt-6 flex flex-col gap-6">
+                {{#community.replies}}
                 <!-- Comment 1 -->
                 <div class="flex items-start space-x-4">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=User';" alt="profile image" class="h-10 w-10 rounded-full object-cover bg-gray-100" />
                     <div>
-                        <p class="font-semibold text-sm text-gray-900">박영희</p>
-                        <p class="text-gray-500 text-xs mt-0.5">2025년 7월 3일</p>
-                        <p class="mt-2 text-sm text-gray-800">정말 유익한 정보 감사합니다!</p>
+                        <div>
+                            <p class="font-semibold text-sm text-gray-900">{{user.username}}</p>
+                            {{#communityOwner}}
+                                <span class="ml-2 rounded-md bg-orange-100 px-2 py-0.5 text-xs font-semibold text-orange-800">
+                                    작성자
+                                </span>
+                            {{/communityOwner}}
+                        </div>
+                        <p class="text-gray-500 text-xs mt-0.5">{{time}}</p>
+                        <p class="mt-2 text-sm text-gray-800">{{comment}}</p>
                     </div>
                 </div>
-                <!-- Comment 2 -->
-                <div class="flex items-start space-x-4">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=User';" alt="profile image" class="h-10 w-10 rounded-full object-cover bg-gray-100" />
-                    <div>
-                        <p class="font-semibold text-sm text-gray-900">이지혜</p>
-                        <p class="text-gray-500 text-xs mt-0.5">2025년 7월 4일</p>
-                        <p class="mt-2 text-sm text-gray-800">이해가 쏙쏙 됩니다!</p>
+                {{/community.replies}}
+                {{^community.replies}}
+                    <div class="text-center">
+                        <h5>댓글을 최초로 남겨보세요!</h5>
                     </div>
-                </div>
+                {{/community.replies}}
             </div>
         </div>
 
@@ -109,14 +129,7 @@
         }
 
         likeCountElement.textContent = currentLikes;
-    }
-
-    // Prevent form submission for this demo
-    document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Here you would typically handle the comment submission logic
-        alert('댓글 기능은 현재 데모 버전에서 비활성화되어 있습니다.');
-    });
+    };
 </script>
 </body>
 

@@ -2,8 +2,13 @@ package com.tenco.web.main;
 
 import com.tenco.web._core.common.PageLink;
 import com.tenco.web.announce.Announce;
+import com.tenco.web.community.Community;
+import com.tenco.web.community.CommunityService;
 import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.user.User;
+import com.tenco.web.utis.Define;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +30,7 @@ public class MainController {
     private final Logger log = LoggerFactory.getLogger(MainController.class);
     private final MainService mainService;
     private final SkillTagService skillTagService;
+    private final CommunityService communityService;
 
     @GetMapping({"/", "/index"})
     public String index(Model model) {
@@ -35,8 +41,15 @@ public class MainController {
 
     @GetMapping("/announceboardlist")
     public String setAnnounceBoardList (Model model,
+                                        HttpSession session,
                                         @RequestParam(name = "page", defaultValue = "1") int page,
                                         @RequestParam(name = "size", defaultValue = "10") int size) {
+
+        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        if(sessionUser == null){
+            return "redirect:/login-form";
+        }
+
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
         Page<Announce> announceList = mainService.findAll(pageable);
 
@@ -68,7 +81,35 @@ public class MainController {
     }
 
     @GetMapping("/community/job-seekers")
-    public String jobSeekersCommunity() {
+    public String jobSeekersCommunity(Model model,
+                                      @RequestParam(name = "page", defaultValue = "1") int page,
+                                      @RequestParam(name = "size", defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
+        Page<Community> communities = communityService.findAll(pageable);
+
+        // 페이지 네비게이션용 데이터 준비
+        List<PageLink> pageLinks = new ArrayList<>();
+
+        for (int i = 0; i < communities.getTotalPages(); i++) {
+            pageLinks.add(new PageLink(i, i + 1, i == communities.getNumber()));
+        }
+
+        Integer previousPageNumber = communities.hasPrevious() ? communities.getNumber() : null;
+        Integer nextPageNumber = communities.hasNext() ? communities.getNumber() + 2 : null;
+
+        // 뷰 화면에 데이터 전달
+        model.addAttribute("communities", communities);
+
+        // 페이지 네비게이션에 사용할 번호 링크 리스트
+        model.addAttribute("pageLinks", pageLinks);
+
+        // 이전 페이지 번호 전달
+        model.addAttribute("previousPageNumber", previousPageNumber);
+
+        // 다음 페이지 번호 전달
+        model.addAttribute("nextPageNumber", nextPageNumber);
+
         return "community/job-seeker";
     }
 }

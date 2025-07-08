@@ -100,3 +100,11 @@ INSERT INTO announce_skill_tag_tb (announce_id, skill_tag_id) VALUES
 (5, 10),
 (5, 11),
 (5, 18);
+
+INSERT INTO reply_tb (user_id, community_id, comment, created_at) VALUES
+(1, 2, "와 정말 유익해요!", now()),
+(2, 2, "오늘 날씨가 정말 더워요.", now()),
+(3, 1, "1:1 채팅 주세요.", now()),
+(4, 3, "질문 있어요.", now()),
+(5, 4, "혹시 어디로 갈 계획이신가요?", now()),
+(5, 5, "와 1등", now())

@@ -1,0 +1,35 @@
+{{> layout/header}}
+
+<div>
+    <h1 class="text-2xl font-bold text-gray-900">새 글 작성</h1>
+
+    <div>
+        <label for="category" class="block text-sm font-medium leading-6 text-gray-900">카테고리</label>
+        <select id="category" name="category" class="mt-2 block w-full rounded-md border-0 py-2 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
+            <option value="it_info">IT 정보</option>
+            <option value="free_talk">자유 게시판</option>
+            <option value="qna">질문/답변</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="title" class="block text-sm font-medium leading-6 text-gray-900">제목</label>
+        <input type="text" name="title" id="title" class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600" placeholder="제목을 입력하세요">
+    </div>
+
+    <div>
+        <label for="content" class="block text-sm font-medium leading-6 text-gray-900">내용</label>
+        <textarea id="content" name="content" rows="10" class="mt-2 block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600" placeholder="내용을 입력하세요..."></textarea>
+    </div>
+
+    <div class="flex justify-end gap-x-4 pt-4 border-t border-gray-200">
+        <a href="/community" class="rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            취소
+        </a>
+        <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
+            등록하기
+        </button>
+    </div>
+</div>
+
+{{> layout/footer}}

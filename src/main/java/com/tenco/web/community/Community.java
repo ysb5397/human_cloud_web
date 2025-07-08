@@ -7,8 +7,10 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import java.util.List;
 @Data
 @Table(name = "community_tb")
 @Entity
+@ToString(exclude = "replies")
 public class Community {
 
     @Id
@@ -35,6 +38,12 @@ public class Community {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Formula("(SELECT count(*) FROM reply_tb r WHERE r.community_id = id)")
+    private int replyCount;
+
+    @Transient
+    private boolean communityOwner;
 
     @Builder
     public Community(int id, String title, String content, Integer interestCount, User user, Timestamp createdAt) {
@@ -56,7 +65,7 @@ public class Community {
     }
 
 
-    // @OrderBy("id DESC")
-    // @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
-    // List<Reply> replies = new ArrayList<>();
+     @OrderBy("id DESC")
+     @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
+     List<Reply> replies = new ArrayList<>();
 }

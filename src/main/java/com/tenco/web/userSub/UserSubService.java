@@ -22,7 +22,6 @@ public class UserSubService {
     private final UserSubJpaRepository userSubJpaRepository;
     private final UserJpaRepository userJpaRepository;
     private final CompanyJpaRepository companyJpaRepository;
-    private final UserSub userSub;
 
     // 구독 저장 기능
     public  void Usersubscribe(int userId, int companyId) {

@@ -22,6 +22,8 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public static final QCommunity community = new QCommunity("community");
 
+    public final StringPath category = createString("category");
+
     public final StringPath content = createString("content");
 
     public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);

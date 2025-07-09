@@ -180,7 +180,7 @@ public class AnnounceService {
         }
         String selectedCareer = condition.getCareer();
 
-        // ✅ 제네릭 헬퍼 메서드 호출
+        // ✅ 제네릭 헬퍼 메서드 호출.
         return createTagOptions(
                 allCareers,
                 Collections.singletonList(selectedCareer), // 단일 선택이므로 하나의 요소만 있는 리스트로 전달

@@ -8,6 +8,7 @@ import com.tenco.web.user.User;
 import com.tenco.web.user.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +19,14 @@ public class ApplyService {
     private final AnnounceJpaRepository announceJpaRepository;
     private final UserJpaRepository userJpaRepository;
 
-    public void submitResume(int userId, int resumeId, int announceId){
-        User user = userJpaRepository.findById(userId)
+    // 이력서 제출
+    @Transactional
+    public void submitResume(int id, ApplyRequest.SaveDTO saveDTO, User sessionUser){
+        User user = userJpaRepository.findById(saveDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-        Resume resume = resumeJpaRepository.findById(resumeId)
+        Resume resume = resumeJpaRepository.findById(saveDTO.getResumeId())
                 .orElseThrow(() -> new IllegalArgumentException("이력서가 없습니다."));
-        Announce announce = announceJpaRepository.findById(announceId)
+        Announce announce = announceJpaRepository.findById(saveDTO.getAnnounceId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 공고입니다."));
 
         Apply apply = Apply.builder()

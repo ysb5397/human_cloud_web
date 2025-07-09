@@ -11,14 +11,14 @@ public class ApplyController {
     private ApplyService applyService;
 
     @PostMapping("/submit")
-    public String submitResume(@RequestParam("resumeId") int resumeId,
-                               @RequestParam("announceId") int announceId, HttpSession session){
+    public String submitResume(@RequestParam(name = "id") int id,
+                               ApplyRequest.SaveDTO saveDTO, HttpSession session){
 
         User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         if(sessionUser == null) {
             return "redirect:/user/login-form";
         }
-        applyService.submitResume(sessionUser.getId(), resumeId, announceId);
+        applyService.submitResume(id, saveDTO, sessionUser);
 
         return "redirect:/user/apply";
     }

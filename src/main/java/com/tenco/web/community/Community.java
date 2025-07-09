@@ -45,14 +45,17 @@ public class Community {
     @Transient
     private boolean communityOwner;
 
+    private String category;
+
     @Builder
-    public Community(int id, String title, String content, Integer interestCount, User user, Timestamp createdAt) {
+    public Community(int id, String title, String content, Integer interestCount, User user, Timestamp createdAt, String category) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.interestCount = interestCount;
         this.user = user;
         this.createdAt = createdAt;
+        this.category = category;
     }
 
     public boolean isOwner(int checkUserId){

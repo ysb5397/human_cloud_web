@@ -4,6 +4,7 @@ import com.tenco.web._core.common.PageLink;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,12 +13,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -36,6 +42,30 @@ public class CommunityController {
         }
 
         return "community/job-seeker-save-form";
+    }
+
+    // 커뮤니티 글 등록 기능 요청
+    @PostMapping("/community/job-seeker-save-form")
+    public String jobSeekerSaveForm(@Valid CommunityRequest.SaveDTO saveDTO, BindingResult result, HttpSession session, Model model){
+        log.info("커뮤니티 글 등록 기능 요청");
+        model.addAttribute(Define.DefineMessage.SAVE_DTO, saveDTO);
+        log.info("model 객체에 saveDTO 저장");
+
+        Map<String, String> errMap = new HashMap<>();
+        if(result.hasErrors()){
+            log.info("에러발견");
+            for(FieldError error : result.getFieldErrors()) {
+                errMap.put(error.getField(), error.getDefaultMessage());
+                log.info("필드명 : {} / 오류메세지 : {}", error.getField(), error.getDefaultMessage());
+            }
+            log.info("errMap에 값 담기 성공");
+            model.addAttribute("message", errMap);
+            log.info("model 객체에 errMap 저장");
+            return "community/job-seeker-save-form";
+        }
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        communityService.save(saveDTO, sessionUser);
+        return "redirect:/community/job-seeker";
     }
 
     // 커뮤니티 구직자 목록 화면 요청

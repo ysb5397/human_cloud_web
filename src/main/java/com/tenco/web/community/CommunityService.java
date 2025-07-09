@@ -4,17 +4,28 @@ import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.reply.Reply;
 import com.tenco.web.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CommunityService {
 
     private final CommunityJpaRepository communityJpaRepository;
+
+    // 게시글 저장 기능
+    @Transactional
+    public void save(CommunityRequest.SaveDTO saveDTO, User sessionuser) {
+        log.info("게시글 저장 서비스 처리 시작 - 유저 id {}", sessionuser.getId());
+        Community community = saveDTO.toEntity(sessionuser);
+        communityJpaRepository.save(community);
+    }
 
     // 게시글 목록 전체 조회
     public Page<Community> findAll(Pageable pageable) {

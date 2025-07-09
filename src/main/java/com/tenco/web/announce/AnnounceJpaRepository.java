@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface AnnounceJpaRepository extends JpaRepository<Announce, Integer> {
+public interface AnnounceJpaRepository extends JpaRepository<Announce, Integer>, AnnounceRepositoryCustom {
 
     @Query("SELECT a FROM Announce a JOIN FETCH a.company c WHERE a.id = :id ")
     Optional<Announce> findByIdJoinCompany(@Param("id") int id);

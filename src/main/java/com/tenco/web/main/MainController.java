@@ -4,11 +4,7 @@ import com.tenco.web._core.common.PageLink;
 import com.tenco.web.announce.Announce;
 import com.tenco.web.community.Community;
 import com.tenco.web.community.CommunityService;
-import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
-import com.tenco.web.user.User;
-import com.tenco.web.utis.Define;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,47 +33,6 @@ public class MainController {
         List<Announce> announceList = mainService.findAll();
         model.addAttribute("announceList", announceList);
         return "index";
-    }
-
-    @GetMapping("/announceboardlist")
-    public String setAnnounceBoardList (Model model,
-                                        HttpSession session,
-                                        @RequestParam(name = "page", defaultValue = "1") int page,
-                                        @RequestParam(name = "size", defaultValue = "10") int size) {
-
-        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        if(sessionUser == null){
-            return "redirect:/login-form";
-        }
-
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
-        Page<Announce> announceList = mainService.findAll(pageable);
-
-        // 페이지 네비게이션용 데이터 준비
-        List<PageLink> pageLinks = new ArrayList<>();
-
-        for (int i = 0; i < announceList.getTotalPages(); i++) {
-            pageLinks.add(new PageLink(i, i + 1, i == announceList.getNumber()));
-        }
-
-        Integer previousPageNumber = announceList.hasPrevious() ? announceList.getNumber() : null;
-        Integer nextPageNumber = announceList.hasNext() ? announceList.getNumber() + 2 : null;
-
-        // 뷰 화면에 데이터 전달
-        model.addAttribute("announceList", announceList);
-
-        // 페이지 네비게이션에 사용할 번호 링크 리스트
-        model.addAttribute("pageLinks", pageLinks);
-
-        // 이전 페이지 번호 전달
-        model.addAttribute("previousPageNumber", previousPageNumber);
-
-        // 다음 페이지 번호 전달
-        model.addAttribute("nextPageNumber", nextPageNumber);
-        List<SkillTag> skillTagList = skillTagService.findAll();
-        model.addAttribute("skillTagList", skillTagList);
-        return "announce/announceboardlist";
-
     }
 
     @GetMapping("/community/job-seekers")

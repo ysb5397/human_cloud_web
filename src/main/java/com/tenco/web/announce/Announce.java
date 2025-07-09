@@ -1,6 +1,8 @@
 package com.tenco.web.announce;
 
+import com.tenco.web._core.common.CareerType;
 import com.tenco.web.company.Company;
+import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
 import com.tenco.web.utis.DateUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Slf4j
@@ -39,6 +43,10 @@ public class Announce {
     private Timestamp startDate;
 
     private Timestamp endDate;
+
+    @Enumerated(EnumType.STRING)
+    private CareerType careerType;
+
     private int interestCount;
 
     public Announce(String title, String content) {
@@ -64,4 +72,8 @@ public class Announce {
         log.info("게시글 소유자 확인 요청 - 작성자 : {}", checkCompanyId);
         return this.company.getId() == checkCompanyId;
     }
+
+    @OrderBy("id desc")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "announce", cascade = CascadeType.ALL)
+    private List<AnnounceSKillTag> announceSkillTags = new ArrayList<>();
 }

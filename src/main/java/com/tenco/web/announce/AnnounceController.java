@@ -1,11 +1,13 @@
 package com.tenco.web.announce;
 
+import com.tenco.web._core.common.CareerType;
 import com.tenco.web._core.common.PageLink;
 import com.tenco.web.company.Company;
 import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
 import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
 import com.tenco.web.tags.announce_tag.AnnounceSKillTagService;
+import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -13,9 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +23,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +49,19 @@ public class AnnounceController {
             return "redirect:/company/login-form";
         }
 
+        List<CareerType> careerType = new ArrayList<>();
+
+        for (CareerType c : CareerType.values()) {
+            if (!c.equals(CareerType.무직)) {
+                careerType.add(c);
+            }
+        }
+
+        List<SkillTag> skillTagList = skillTagService.findAll();
+
         model.addAttribute(Define.DefineMessage.SESSION_COMPANY, sessionCompany);
+        model.addAttribute(Define.DefineMessage.CAREER_TYPE, careerType);
+        model.addAttribute(Define.DefineMessage.SKILL_TAG_LIST, skillTagList);
         return "company/hire-register";
     }
 
@@ -89,46 +100,43 @@ public class AnnounceController {
         return "redirect:/announceboardlist"; // 등록 후 공고 목록 페이지로 이동
     }
 
-    // 키워드로 공고 검색하기
-    @GetMapping("/announce/search")
-    public String announceSearch(@RequestParam(name = "keyword") String keyword,
-                                 @RequestParam(name = "page", defaultValue = "1") int page,
-                                 @RequestParam(name = "size", defaultValue = "10") int size,
-                                 Model model) {
+    @GetMapping("/announceboardlist")
+    public String announceBoardList(AnnounceRequest.SearchDTO condition, // 검색 조건 DTO
+                                    Pageable pageable,         // 페이징 정보 (page, size, sort)
+                                    Model model,
+                                    HttpSession session) {
 
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
-        Page<Announce> announceList = announceService.findAnnounceWithKeyword(keyword, pageable);
-
-        // 페이지 네비게이션용 데이터 준비
-        List<PageLink> pageLinks = new ArrayList<>();
-
-        for (int i = 0; i < announceList.getTotalPages(); i++) {
-            pageLinks.add(new PageLink(i, i + 1, i == announceList.getNumber()));
+        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        if (sessionUser == null) {
+            return "redirect:/login-form";
         }
 
-        Integer previousPageNumber = announceList.hasPrevious() ? announceList.getNumber() : null;
-        Integer nextPageNumber = announceList.hasNext() ? announceList.getNumber() + 2 : null;
+        // 1. 서비스 호출: condition 객체에 값이 있든 없든 search 메서드 하나만 호출합니다.
+        Page<Announce> announcePage = announceService.search(condition, pageable);
 
-        // 뷰 화면에 데이터 전달
-        model.addAttribute("announceList", announceList);
+        // 2. 페이지네이션 정보 준비 (announcePage 기준)
+        List<PageLink> pageLinks = new ArrayList<>();
+        for (int i = 0; i < announcePage.getTotalPages(); i++) {
+            pageLinks.add(new PageLink(i, i + 1, i == announcePage.getNumber()));
+        }
+        Integer previousPageNumber = announcePage.hasPrevious() ? announcePage.getNumber() : null;
+        Integer nextPageNumber = announcePage.hasNext() ? announcePage.getNumber() + 2 : null;
 
-        // 페이지 네비게이션에 사용할 번호 링크 리스트
+        // 3. 뷰에 데이터 전달
+        model.addAttribute("announceList", announcePage.getContent());
         model.addAttribute("pageLinks", pageLinks);
-
-        // 이전 페이지 번호 전달
         model.addAttribute("previousPageNumber", previousPageNumber);
-
-        // 다음 페이지 번호 전달
         model.addAttribute("nextPageNumber", nextPageNumber);
-        model.addAttribute("keyword", keyword);
 
-        List<SkillTag> skillTagList = skillTagService.findAll();
-        model.addAttribute("skillTagList", skillTagList);
-        return "announce/announceboardlist";
-    }
+        List<AnnounceRequest.FilterOptionDTO> skillTagOptions = announceService.getSkillTagOptions(condition);
+        model.addAttribute("skillTagOptions", skillTagOptions);
 
-    @GetMapping("/announce/search/detail")
-    public String announceSearchDetail() {
+        List<AnnounceRequest.FilterOptionDTO> careerOptions = announceService.getCareerOptions(condition);
+        model.addAttribute("careerOptions", careerOptions);
+
+        // 5. 검색 조건 유지를 위해 condition 객체를 다시 뷰로 전달
+        model.addAttribute("condition", condition);
+
         return "announce/announceboardlist";
     }
 
@@ -138,6 +146,7 @@ public class AnnounceController {
         List<AnnounceSKillTag> announceSKillTagList = announceSKillTagService.findByAnnounceId(id);
         log.info("화면에 전달할 공고: {}", announcedetail);
         model.addAttribute("announcelist", announcedetail);
+        model.addAttribute("announceSkillTag", announceSKillTagList);
         return "announce/announcedetail";
     }
 

@@ -2,7 +2,6 @@ package com.tenco.web.resume;
 
 import com.tenco.web.tags.SkillTagService;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagRequest;
-import com.tenco.web.tags.resume_tag.ResumeSkillTagService;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
@@ -29,7 +28,6 @@ public class ResumeController {
     private static final Logger log = LoggerFactory.getLogger(ResumeController.class);
     private final ResumeService resumeService;
     private final SkillTagService skillTagService;
-    private final ResumeSkillTagService resumeSkillTagService;
 
     // 이력서 등록 화면 요청
     @GetMapping("/user/resume-register")

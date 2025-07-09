@@ -62,5 +62,7 @@ public class Define {
         public static final String MESSAGE_USERNAME = "message.username";
         public static final String MESSAGE_COMPANY_NAME_CHECK = "message.companyNameCheck";
         public static final String MESSAGE_COMPANY_NAME = "message.companyName";
+        public static final String CAREER_TYPE = "careerType";
+        public static final String SKILL_TAG_LIST = "skillTagList";
     }
 }

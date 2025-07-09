@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AnnounceSkillTagJpaRepository extends JpaRepository<AnnounceSKillTag, Integer> {
 
-    @Query("select a.skillTag from AnnounceSKillTag a where a.announce.id = :announceId ")
+    @Query("select a from AnnounceSKillTag a where a.announce.id = :announceId ")
     List<AnnounceSKillTag> findByAnnounceId(@Param("announceId") int announceId);
 }

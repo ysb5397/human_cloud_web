@@ -1,5 +1,6 @@
 package com.tenco.web.user;
 
+import com.tenco.web._core.common.CareerType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -32,10 +33,10 @@ public class User {
     private Timestamp createdAt;
 
     @Enumerated(EnumType.STRING)
-    private UserCareerType careerType;
+    private CareerType careerType;
 
     @Builder
-    public User(int id, String username, String password, String email, String address, Timestamp createdAt, UserCareerType careerType) {
+    public User(int id, String username, String password, String email, String address, Timestamp createdAt, CareerType careerType) {
         this.id = id;
         this.username = username;
         this.password = password;

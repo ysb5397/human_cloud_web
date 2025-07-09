@@ -1,10 +1,13 @@
 package com.tenco.web.announce;
 
+import com.tenco.web._core.common.CareerType;
 import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception401;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.company.Company;
+import com.tenco.web.tags.SkillTag;
+import com.tenco.web.tags.SkillTagService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +28,7 @@ public class AnnounceService {
 
     private static final Logger log = LoggerFactory.getLogger(AnnounceService.class);
     private final AnnounceJpaRepository announceJpaRepository;
+    private final SkillTagService skillTagService;
 
     // 공고 정보 등록 기능
     @Transactional
@@ -145,5 +151,56 @@ public class AnnounceService {
                 });
 
         return announce;
+    }
+
+    public Page<Announce> search(AnnounceRequest.SearchDTO condition, Pageable pageable) {
+        return announceJpaRepository.search(condition, pageable);
+    }
+
+    public List<AnnounceRequest.FilterOptionDTO> getSkillTagOptions(AnnounceRequest.SearchDTO condition) {
+        List<SkillTag> allSkills = skillTagService.findAll();
+        List<String> selectedSkills = Optional.ofNullable(condition.getSkillTag()).orElse(Collections.emptyList());
+
+        // ✅ 제네릭 헬퍼 메서드 호출
+        return createTagOptions(
+                allSkills,                  // 전체 아이템 목록
+                selectedSkills,             // 선택된 아이템 이름 목록
+                SkillTag::getSkillTagName,  // 아이템에서 이름(String)을 추출하는 방법
+                AnnounceRequest.FilterOptionDTO::new // 이름(String)과 체크여부(boolean)로 DTO를 생성하는 방법
+        );
+    }
+
+    public List<AnnounceRequest.FilterOptionDTO> getCareerOptions(AnnounceRequest.SearchDTO condition) {
+        List<CareerType> allCareers = new ArrayList<>();
+
+        for (CareerType c : CareerType.values()) {
+            if (!c.equals(CareerType.무직)) {
+                allCareers.add(c);
+            }
+        }
+        String selectedCareer = condition.getCareer();
+
+        // ✅ 제네릭 헬퍼 메서드 호출
+        return createTagOptions(
+                allCareers,
+                Collections.singletonList(selectedCareer), // 단일 선택이므로 하나의 요소만 있는 리스트로 전달
+                CareerType::name,
+                AnnounceRequest.FilterOptionDTO::new
+        );
+    }
+
+    private <T> List<AnnounceRequest.FilterOptionDTO> createTagOptions(
+            List<T> allItems,
+            Collection<String> selectedItems,
+            Function<T, String> nameExtractor,
+            BiFunction<String, Boolean, AnnounceRequest.FilterOptionDTO> dtoConstructor
+    ) {
+        return allItems.stream()
+                .map(item -> {
+                    String itemName = nameExtractor.apply(item);
+                    boolean isChecked = selectedItems.contains(itemName);
+                    return dtoConstructor.apply(itemName, isChecked);
+                })
+                .toList();
     }
 }

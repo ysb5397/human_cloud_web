@@ -23,6 +23,7 @@ public class Define {
         public static final String REQUIRED_EMAIL = "이메일은 필수입니다.";
         public static final String ILLEGAL_FORMAT_EMAIL = "이메일을 똑바로 입력해주세요.";
         public static final String REQUIRED_LOGIN = "로그인이 필요한 서비스입니다.";
+        public static final String REQUIRED_CONTENT = "내용은 필수입니다.";
 
         // 유저
         public static final String REQUIRED_USERNAME = "이름은 필수입니다.";

@@ -70,3 +70,9 @@ spring:
     # data.sql 파일을 Hibernate 초기화 이후에 실행
     defer-datasource-initialization: true
     # 기본값 : 엔티티 - 카멜케이스 -> db 생성될 스네이크 케이스로 자동으로 설정 됨
+
+naver:
+  client:
+    id: ${NAVER_CLIENT_ID}
+    secret: ${NAVER_CLIENT_SECRET}
+  redirect-uri: http://localhost:8080/oauth/login

@@ -39,7 +39,7 @@ public class UserController {
         return "user/user-signup-form";
     }
 
-    @PostMapping("/user/signup")
+    @PostMapping("/user/signup-form")
     public String signUp(@Valid UserRequest.JoinDTO joinDTO, BindingResult result, Model model) {
         log.info("회원가입 시도...");
         model.addAttribute(Define.DefineMessage.JOIN_DTO, joinDTO);
@@ -75,10 +75,9 @@ public class UserController {
         return "user/login-form";
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/user/login-form")
     public String login(UserRequest.LoginDTO loginDTO, HttpSession session) {
         log.info("로그인 시도...");
-        loginDTO.validate();
         User user = userService.login(loginDTO);
         session.setAttribute(Define.DefineMessage.SESSION_USER, user);
         return "redirect:/";
@@ -216,8 +215,9 @@ public class UserController {
 
     }
 
-        userService.updateById(userId,updateDTO, sessionUser);
+        User updateUser = userService.updateById(userId,updateDTO, sessionUser);
         log.info("회원정보 수정완료");
-        return "redirect:/index";
+        session.setAttribute(Define.DefineMessage.SESSION_USER, updateUser);
+        return "redirect:/";
     }
 }

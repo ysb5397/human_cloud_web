@@ -1,6 +1,5 @@
 package com.tenco.web.company;
 
-import com.tenco.web._core.errors.exception.CompanyLoginException;
 import com.tenco.web.utis.Define;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -61,17 +60,6 @@ public class CompanyRequest {
     public static class LoginDTO {
         private String businessRegistrationNumber;
         private String password;
-
-        // 유효성 검사
-        public void validate() {
-            if (businessRegistrationNumber == null || businessRegistrationNumber.trim().isEmpty()) {
-                throw new CompanyLoginException(Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO);
-            }
-
-            if (password == null || password.trim().isEmpty()) {
-                throw new CompanyLoginException(Define.ErrorMessage.REQUIRED_PASSWORD);
-            }
-        }
     }
 
     // 기업 정보 수정 DTO
@@ -100,19 +88,6 @@ public class CompanyRequest {
         @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
                 flags = Pattern.Flag.CASE_INSENSITIVE)
         private String email;
-
-        //유효성검사
-        public void validate() {
-            if (businessRegistrationNumber == null || businessRegistrationNumber.trim().isEmpty()) {
-                throw new CompanyLoginException(Define.ErrorMessage.REQUIRED_BUSINESSREGISTRATION_NO);
-            }
-
-            if (password == null || password.trim().isEmpty()) {
-                throw new CompanyLoginException(Define.ErrorMessage.REQUIRED_PASSWORD);
-            }
-        }
-
-
 
         // UpdateDTO를 company object로 변환 하는 메서드 추가
         // 계층간 데이터 변환을 위해 명확하게 분리

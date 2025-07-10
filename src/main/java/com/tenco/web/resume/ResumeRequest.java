@@ -42,6 +42,9 @@ public class ResumeRequest {
 
         private Boolean isPublic;
 
+        private List<String> skillTags;
+        private String careerType;
+
         public Resume toEntity(User sessionuser) {
             return Resume.builder()
                     .title(this.title)
@@ -64,5 +67,6 @@ public class ResumeRequest {
         private String portfolioUrl;
         private String selfIntroduction;
         private List<String> skillTags;
+        private String careerType;
     }
 }

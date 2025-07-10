@@ -1,10 +1,8 @@
 package com.tenco.web.company;
 
-import com.tenco.web._core.errors.exception.CompanyLoginException;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.utis.Define;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +47,7 @@ public class CompanyService {
         return companyJpaRepository
                 .findByBusinessRegistrationNumberAndPassword(loginDTO.getBusinessRegistrationNumber(), loginDTO.getPassword())
                 .orElseThrow(() -> {
-                    return new CompanyLoginException(Define.ErrorMessage.NOT_MATCH_BUSINESSREGISTRATION_NO_OR_PASSWORD);
+                    return null;
                 });
     }
 

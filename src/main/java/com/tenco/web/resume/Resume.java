@@ -1,5 +1,6 @@
 package com.tenco.web.resume;
 
+import com.tenco.web._core.common.CareerType;
 import com.tenco.web.tags.resume_tag.ResumeSkillTag;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.DateUtil;
@@ -43,6 +44,9 @@ public class Resume {
     @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private CareerType careerType;
 
     @Builder
     public Resume(int id, User user, String title, String email, String address, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createdAt) {

@@ -1,6 +1,8 @@
 package com.tenco.web.community;
 
+import com.tenco.web._core.common.CareerType;
 import com.tenco.web._core.common.PageLink;
+import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
@@ -34,13 +36,7 @@ public class CommunityController {
 
     // 커뮤니티 글 작성
     @GetMapping("/community/job-seeker/write")
-    public String jobSeekerSave(HttpSession session) {
-        User user = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-
-        if (user == null) {
-            return "redirect:/user/login-form";
-        }
-
+    public String jobSeekerSave() {
         return "community/job-seeker-save-form";
     }
 
@@ -75,11 +71,17 @@ public class CommunityController {
                                 @RequestParam(name = "page", defaultValue = "1") int page,
                                 @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        if(sessionUser == null){
-            return "redirect:/login-form";
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User user = null;
+
+        if (sessionObj instanceof User && ((User) sessionObj).getCareerType().equals(CareerType.무직)) {
+            user = (User) sessionObj;
+        } else {
+            log.info("구직자만 접근이 가능한 서비스입니다.");
+            throw new Exception403("구직자만 접근이 가능한 서비스입니다.");
         }
-        log.info("목록화면요청 {}", sessionUser);
+
+        log.info("목록화면요청 {}", user);
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
         Page<Community> communities = communityService.findAll(pageable);
 
@@ -112,14 +114,38 @@ public class CommunityController {
     // 커뮤니티 구직자 목록 상세 보기 화면 요청
     @GetMapping("/job-seeker-detail/{id}")
     public String Detail(@PathVariable(name = "id") int id, Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        Community jobSeekerDetail = communityService.findByIdWithReplies(id, sessionUser);
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User user = null;
+
+        if (sessionObj instanceof User) {
+            user = (User) sessionObj;
+        } else {
+            log.warn("구직자만 접근 가능한 서비스입니다.");
+            throw new Exception403("구직자만 접근 가능한 서비스입니다.");
+        }
+
+        Community jobSeekerDetail = communityService.findByIdWithReplies(id, user);
         log.info("화면에 전달할 게시글: {}", jobSeekerDetail);
         model.addAttribute("community", jobSeekerDetail);
         model.addAttribute("replyCount", jobSeekerDetail.getReplies().size());
         return "community/job-seeker-detail";
     }
 
+    @PostMapping("/job-seeker/{id}/delete")
+    public String delete(@PathVariable(name = "id") int id, HttpSession session) {
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User user = null;
 
+        if (sessionObj instanceof User) {
+            user = (User) sessionObj;
+        } else {
+            log.warn("구직자만 접근 가능한 서비스입니다.");
+            throw new Exception403("구직자만 접근 가능한 서비스입니다.");
+        }
 
+        Community community = communityService.findById(id);
+        communityService.deleteById(community, user);
+
+        return "redirect:/community/job-seeker";
+    }
 }

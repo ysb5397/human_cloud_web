@@ -1,5 +1,7 @@
 package com.tenco.web.resume;
 
+import com.tenco.web._core.common.CareerType;
+import com.tenco.web.company.Company;
 import com.tenco.web.tags.SkillTagService;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagRequest;
 import com.tenco.web.user.User;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +35,26 @@ public class ResumeController {
     // 이력서 등록 화면 요청
     @GetMapping("/user/resume-register")
     public String resumeRegister(HttpSession session, Model model){
-        User sessionUser = (User)session.getAttribute(Define.DefineMessage.SESSION_USER);
-        if(sessionUser == null) {
-            return "redirect:/login-form";
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User user = null;
+        Company company = null;
+
+        if (sessionObj instanceof User) {
+            user = (User) sessionObj;
+        } else if (sessionObj instanceof Company) {
+            company = (Company) sessionObj;
+        }
+
+        List<String> careerType = new ArrayList<>();
+
+        for (CareerType c : CareerType.values()) {
+            if (!c.equals(CareerType.무직) && !c.equals(CareerType.경력무관)) {
+                careerType.add(String.valueOf(c));
+            }
         }
 
         model.addAttribute("skillTagList", skillTagService.findAll());
+        model.addAttribute("careerType", careerType);
         return "user/resume-register";
     }
 
@@ -61,17 +78,36 @@ public class ResumeController {
             return "user/resume-register";
         }
 
-        User sessionUser = (User) session.getAttribute("sessionUser");
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User user = null;
+        Company company = null;
+
+        if (sessionObj instanceof User) {
+            user = (User) sessionObj;
+        } else if (sessionObj instanceof Company) {
+            company = (Company) sessionObj;
+        }
+
         saveDTO.setIsPublic(true);
-        resumeService.save(saveDTO, sessionUser);
+        Resume resume = resumeService.save(saveDTO, user);
+        model.addAttribute("resume", resume);
         return "redirect:/resume-list";
     }
 
     // 이력서 목록 보기 화면 요청
     @GetMapping("/resume-list")
     public String resumeList(Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        List<Resume> resumeList = resumeService.findByUserId(sessionUser.getId());
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User user = null;
+        Company company = null;
+
+        if (sessionObj instanceof User) {
+            user = (User) sessionObj;
+        } else if (sessionObj instanceof  Company) {
+            company = (Company) sessionObj;
+        }
+
+        List<Resume> resumeList = resumeService.findByUserId(user.getId());
         model.addAttribute("resumeList", resumeList);
         return "user/resume-list";
     }
@@ -93,7 +129,7 @@ public class ResumeController {
         User sessionResume = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         resumeService.deleteById(id, sessionResume);
 
-        return "redirect:/";
+        return "redirect:/resume-list";
     }
 
     // 이력서 수정하기 화면 요청
@@ -107,6 +143,15 @@ public class ResumeController {
 
         model.addAttribute("resume", resumeService.findById(resumeId));
         model.addAttribute("skillTagList", skillTagList);
+
+        List<String> careerType = new ArrayList<>();
+
+        for (CareerType c : CareerType.values()) {
+            if (!c.equals(CareerType.무직) && !c.equals(CareerType.경력무관)) {
+                careerType.add(String.valueOf(c));
+            }
+        }
+        model.addAttribute("careerType", careerType);
 
         return "user/resume-update";
     }

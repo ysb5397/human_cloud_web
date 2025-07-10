@@ -29,12 +29,20 @@ public class ResumeService {
 
     // 이력서 저장 기능
     @Transactional
-    public void save(ResumeRequest.SaveDTO saveDTO, User sessionuser) {
+    public Resume save(ResumeRequest.SaveDTO saveDTO, User sessionuser) {
         log.info("이력서 저장 서비스 처리 시작 - 유저 id {}", saveDTO.getUserId());
 
         Resume resume = saveDTO.toEntity(sessionuser);
+        Resume savedResume = resumeJpaRepository.save(resume);
 
-        resumeJpaRepository.save(resume);
+        resumeSkillTagService.deleteByResumeId(savedResume.getId());
+
+        if (saveDTO.getSkillTags() != null && !saveDTO.getSkillTags().isEmpty()) {
+            saveDTO.getSkillTags().forEach(skillTag -> {
+                resumeSkillTagService.save(savedResume.getId(), skillTag);
+            });
+        }
+        return savedResume;
     }
 
     // 이력서 목록 조회

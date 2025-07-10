@@ -1,5 +1,6 @@
 package com.tenco.web.reply;
 
+import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web.community.Community;
 import com.tenco.web.community.CommunityService;
 import com.tenco.web.user.User;
@@ -31,5 +32,14 @@ public class ReplyService {
     }
 
     // 댓글 삭제 기능
+    public void deleteByUserId(int id, User user) {
+        Reply reply = replyJpaRepository.findById(id)
+                        .orElseThrow(() -> {
+                           throw new Exception400("댓글을 찾을 수 없습니다.");
+                        });
 
+        if (reply.getUser().getId() == user.getId()) {
+            replyJpaRepository.deleteById(id);
+        }
+    }
 }

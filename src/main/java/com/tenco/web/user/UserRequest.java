@@ -1,6 +1,5 @@
 package com.tenco.web.user;
 
-import com.tenco.web._core.errors.exception.UserLoginException;
 import com.tenco.web.utis.Define;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -56,17 +55,6 @@ public class UserRequest {
     public static class LoginDTO {
         private String username;
         private String password;
-
-        // 유효성 검사
-        public void validate() {
-            if (username == null || username.trim().isEmpty()) {
-                throw new UserLoginException(Define.ErrorMessage.REQUIRED_USERNAME);
-            }
-
-            if (password == null || password.trim().isEmpty()) {
-                throw new UserLoginException(Define.ErrorMessage.REQUIRED_PASSWORD);
-            }
-        }
     }
 
     @Data

@@ -66,11 +66,11 @@
                     </form>
                 </div>
                 {{/isOwner}}
-                {{#sessionUser}}
+                {{#sessionUser.username}}
                     <button type="button" onclick= "document.querySelector('.apply--modal').classList.toggle('hidden');" class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700">
                         이력서 제출
                     </button>
-                {{/sessionUser}}
+                {{/sessionUser.username}}
             </div>
 
             <div class="group relative">

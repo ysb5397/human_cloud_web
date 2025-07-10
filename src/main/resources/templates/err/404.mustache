@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang=ko class=h-full>
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content=width=device-width, initial-scale=1.0>
+    <title>404 - 페이지를 찾을 수 없습니다</title>
+    <script src=https://cdn.tailwindcss.com></script>
+</head>
+<body class=h-full>
+<main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div class=text-center>
+        <p class="text-base sm:text-7xl font-semibold text-indigo-600">404</p>
+        <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">페이지를 찾을 수 없습니다.</h1>
+        <p class="mt-6 text-base leading-7 text-gray-600">죄송합니다. 요청하신 페이지가 존재하지 않거나, 주소가 변경되었을 수 있습니다.</p>
+        {{#msg}}<p class="mt-6 text-base leading-7 text-red-600">{{msg}}</p>{{/msg}}
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+            <a href=/
+               class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">홈으로
+                돌아가기</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

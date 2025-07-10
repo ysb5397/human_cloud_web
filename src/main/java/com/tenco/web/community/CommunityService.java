@@ -1,5 +1,6 @@
 package com.tenco.web.community;
 
+import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.reply.Reply;
 import com.tenco.web.user.User;
@@ -59,6 +60,13 @@ public class CommunityService {
                 reply.setReplyOwner(isReplyOwner);
             });
         }
+
+        if (sessionUser != null) {
+            replies.forEach(reply -> {
+                boolean isSameOwner = reply.getUser() == community.getUser();
+                reply.setSameOwner(isSameOwner);
+            });
+        }
         return community;
     }
 
@@ -70,4 +78,11 @@ public class CommunityService {
         return community;
     }
 
+    public void deleteById(Community community, User user) {
+        if (community.getUser().getId() == user.getId()) {
+            communityJpaRepository.deleteById(community.getId());
+        } else {
+            throw new Exception403("삭제 권한이 없습니다.");
+        }
+    }
 }

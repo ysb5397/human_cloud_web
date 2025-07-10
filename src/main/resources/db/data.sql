@@ -1,5 +1,5 @@
 INSERT INTO user_tb (username, password, email, address, created_at, career_type) VALUES
-('ssar', '1234', 'ssar@nate.com', '부산시 진구 중앙대로', NOW(), '신입'),
+('ssar', '1234', 'ssar@nate.com', '부산시 진구 중앙대로', NOW(), '무직'),
 ('cos', '1234', 'cos@gmail.com', '서울시 강남구 테헤란로', NOW(), '경력'),
 ('love', '5678', 'love@example.com', '인천시 부평구 부평대로', NOW(), '신입'),
 ('guest123', 'guestpass', 'guest123@yahoo.co.kr', '대전시 유성구 대학로', NOW(), '신입'),
@@ -19,12 +19,12 @@ INSERT INTO announce_tb (company_id, title, content, work_location, start_date, 
 (4, '[쿠팡] 데이터 분석가 인턴십', '쿠팡의 방대한 데이터를 분석하여 물류, 커머스 혁신을 이끌어갈 데이터 분석가 인턴을 모집합니다. 통계적 지식과 분석 툴 활용 능력이 필요합니다.', '서울특별시 송파구', NOW(), '2025-07-10', '신입', 0),
 (5, '[배달의민족] DevOps 엔지니어 채용', '배달의민족 서비스의 안정적인 인프라를 책임질 DevOps 엔지니어를 모집합니다. 클라우드 환경과 자동화에 대한 경험이 있는 분을 환영합니다.', '서울특별시 송파구', NOW(), '2025-08-01', '경력', 0);
 
-INSERT INTO resume_tb (user_id, title, portfolio_url, self_introduction, is_public, created_at) VALUES
-(1, '성실하게 성장하는 백엔드 개발자, 김철수입니다.', 'https://github.com/kimcheolsu', '항상 배우는 자세로 빠르게 기술을 습득하고 팀에 기여하고 싶습니다. Java와 Spring에 자신 있습니다.', TRUE, NOW()),
-(2, '사용자 경험을 중요시하는 프론트엔드 개발자 박영희', 'https://younghee.dev', 'React와 Vue.js를 사용하여 직관적이고 아름다운 UI/UX를 만드는 것을 좋아합니다.', TRUE, NOW()),
-(3, '데이터로 말하는 데이터 분석가 이민준입니다.', 'https://linkedin.com/in/minjun', 'SQL과 Python을 활용하여 비즈니스 인사이트를 도출하고 문제 해결에 기여한 경험이 있습니다.', FALSE, NOW()),
-(4, '꼼꼼하고 창의적인 신입 기획자 최은하', 'https://notion.so/eunha-plan', '시장 조사와 사용자 분석을 통해 새로운 아이디어를 구체화하고 프로젝트를 성공으로 이끄는 기획자가 되고 싶습니다.', TRUE, NOW()),
-(5, '팀과 함께 성장하는 클라우드 엔지니어 정수빈', 'https://velog.io/@subin-jung', 'AWS와 Kubernetes 환경에서 안정적인 인프라를 구축하고 운영하는 데 관심이 많습니다.', FALSE, NOW());
+INSERT INTO resume_tb (user_id, title, portfolio_url, self_introduction, is_public, created_at, career_type) VALUES
+(1, '성실하게 성장하는 백엔드 개발자, 김철수입니다.', 'https://github.com/kimcheolsu', '항상 배우는 자세로 빠르게 기술을 습득하고 팀에 기여하고 싶습니다. Java와 Spring에 자신 있습니다.', TRUE, NOW(), '경력'),
+(2, '사용자 경험을 중요시하는 프론트엔드 개발자 박영희', 'https://younghee.dev', 'React와 Vue.js를 사용하여 직관적이고 아름다운 UI/UX를 만드는 것을 좋아합니다.', TRUE, NOW(), '경력'),
+(3, '데이터로 말하는 데이터 분석가 이민준입니다.', 'https://linkedin.com/in/minjun', 'SQL과 Python을 활용하여 비즈니스 인사이트를 도출하고 문제 해결에 기여한 경험이 있습니다.', FALSE, NOW(), '신입'),
+(4, '꼼꼼하고 창의적인 신입 기획자 최은하', 'https://notion.so/eunha-plan', '시장 조사와 사용자 분석을 통해 새로운 아이디어를 구체화하고 프로젝트를 성공으로 이끄는 기획자가 되고 싶습니다.', TRUE, NOW(), '경력'),
+(5, '팀과 함께 성장하는 클라우드 엔지니어 정수빈', 'https://velog.io/@subin-jung', 'AWS와 Kubernetes 환경에서 안정적인 인프라를 구축하고 운영하는 데 관심이 많습니다.', FALSE, NOW(), '신입');
 
 INSERT INTO community_tb (user_id, title, content, created_at, interest_count) VALUES
 (1, '첫 번째 글이에요', '안녕하세요! 여기는 커뮤니티 첫 글입니다.',NOW(), 0),

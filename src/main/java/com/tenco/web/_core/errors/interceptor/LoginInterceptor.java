@@ -1,6 +1,6 @@
 package com.tenco.web._core.errors.interceptor;
 
-import com.tenco.web._core.errors.exception.Exception401;
+import com.tenco.web.company.Company;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,20 +17,22 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private final Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
 
-    /**
-     * preHandle 메서드는 컨트롤러에 들어가기 전에 동작하는 메서드이다.
-     * return 타입이 boolean(논리값)
-     * true -> 컨트롤러에 정상 진입
-     * false -> 못들어감
-     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         HttpSession session = request.getSession();
-        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User user = null;
+        Company company = null;
 
-        if (sessionUser == null) {
-            throw new Exception401(Define.ErrorMessage.REQUIRED_LOGIN);
+        if (sessionObj instanceof User) {
+            user = (User) sessionObj;
+        } else if (sessionObj instanceof Company) {
+            company = (Company) sessionObj;
+        } else {
+            log.warn(Define.ErrorMessage.REQUIRED_LOGIN);
+            response.sendRedirect("/user/login-form");
+            return false;
         }
 
         return true;

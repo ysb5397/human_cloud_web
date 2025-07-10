@@ -40,6 +40,9 @@ public class Reply {
     @Transient
     public boolean replyOwner;
 
+    @Transient
+    private boolean sameOwner;
+
     @Builder
     public Reply(int id, String comment, User user, Community community, Timestamp createdAt) {
         this.id = id;

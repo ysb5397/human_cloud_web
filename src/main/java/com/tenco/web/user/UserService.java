@@ -2,6 +2,7 @@ package com.tenco.web.user;
 
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
+import com.tenco.web._core.errors.exception.Exception500;
 import com.tenco.web._core.errors.exception.UserLoginException;
 import com.tenco.web.utis.Define;
 import lombok.RequiredArgsConstructor;
@@ -37,25 +38,19 @@ public class UserService {
     public User join(UserRequest.JoinDTO joinDTO) {
         log.info("회원가입 서비스 시작");
         userJpaRepository.findByUsername(joinDTO.getUsername())
-                .ifPresent(user1 -> {
-                    throw new Exception404("a");
+                .orElseThrow(() -> {
+                    throw new Exception500("오류가 발생했습니다.");
                 });
 
         log.info("회원가입 서비스 완료");
         return userJpaRepository.save(joinDTO.toEntity());
     }
 
-    /**
-     * 로그인 처리
-     *
-     * @param loginDTO
-     * @return User
-     */
     public User login(UserRequest.LoginDTO loginDTO) {
         return userJpaRepository
                 .findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword())
                 .orElseThrow(() -> {
-                    return new UserLoginException(Define.ErrorMessage.NOT_MATCH_USERNAME_OR_PASSWORD);
+                    throw new UserLoginException(Define.ErrorMessage.NOT_MATCH_USERNAME_OR_PASSWORD);
                 });
     }
 
@@ -105,7 +100,7 @@ public class UserService {
     public UserRequest.UpdateDTO getUserInfoById(int userId) {
         User user = userJpaRepository.findById(userId)
                 .orElseThrow(() -> {
-                    throw new UserLoginException("로그인을 해주세요.");
+                    return null;
                 });
 
         return new UserRequest.UpdateDTO(

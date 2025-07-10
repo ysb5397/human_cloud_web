@@ -2,6 +2,7 @@ package com.tenco.web.announce;
 
 import com.tenco.web._core.common.CareerType;
 import com.tenco.web._core.common.PageLink;
+import com.tenco.web._core.errors.exception.Exception401;
 import com.tenco.web.company.Company;
 import com.tenco.web.resume.Resume;
 import com.tenco.web.resume.ResumeService;
@@ -47,9 +48,11 @@ public class AnnounceController {
     @GetMapping("/company/hire-register")
     public String save(HttpSession session, Model model) {
         log.info("공고 저장 기능 요청");
-        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        if (sessionCompany == null) {
-            return "redirect:/company/login-form";
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Company sessionCompany = null;
+
+        if (sessionObj instanceof Company) {
+            sessionCompany = (Company) sessionObj;
         }
 
         List<CareerType> careerType = new ArrayList<>();
@@ -80,7 +83,14 @@ public class AnnounceController {
         model.addAttribute(Define.DefineMessage.SAVE_JOB_DTO, saveJobDTO);
 
         Map<String, String> errorMap = new HashMap<>();
-        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Company sessionCompany = null;
+
+        if (sessionObj instanceof Company) {
+            sessionCompany = (Company) sessionObj;
+
+        }
+
         if (result.hasErrors()) {
             log.info("에러 발견");
             for (FieldError error : result.getFieldErrors()) {
@@ -90,12 +100,6 @@ public class AnnounceController {
             model.addAttribute("message", errorMap);
             model.addAttribute(Define.DefineMessage.SESSION_COMPANY, sessionCompany);
             return "company/hire-register";
-        }
-
-        if (sessionCompany == null) {
-            // 세션 만료 또는 미로그인 상태
-            log.info("로그인안됨");
-            return "redirect:/login";
         }
 
         announceService.save(saveJobDTO, sessionCompany);
@@ -109,9 +113,13 @@ public class AnnounceController {
                                     Model model,
                                     HttpSession session) {
 
-        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        if (sessionUser == null) {
-            return "redirect:/login-form";
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        if (sessionObj instanceof User) {
+            User user = (User) sessionObj;
+        } else if (sessionObj instanceof Company) {
+            Company company = (Company) sessionObj;
+        } else {
+            return "redirect:/user/login-form";
         }
 
         // 1. 서비스 호출: condition 객체에 값이 있든 없든 search 메서드 하나만 호출합니다.
@@ -151,13 +159,14 @@ public class AnnounceController {
         Company company = null;
 
         if (sessionObj instanceof User) {
-            // 객체가 User 타입일 경우
             user = (User) sessionObj;
+            List<Resume> resumeList = resumeService.findByUserId(user.getId());
+            model.addAttribute("resumeList", resumeList);
         } else if (sessionObj instanceof Company) {
-            // 객체가 Company 타입일 경우
             company = (Company) sessionObj;
         } else {
-            System.out.println("로그인 정보가 없습니다.");
+            log.warn("로그인 후 가능한 서비스입니다.");
+            throw new Exception401("로그인 후 가능한 서비스입니다.");
         }
 
         Announce announcedetail = announceService.findById(id, company);
@@ -167,8 +176,6 @@ public class AnnounceController {
         model.addAttribute("announcelist", announcedetail);
         model.addAttribute("announceSkillTag", announceSKillTagList);
 
-        List<Resume> resumeList = resumeService.findByUserId(user.getId());
-        model.addAttribute("resumeList", resumeList);
         return "announce/announcedetail";
     }
 
@@ -180,9 +187,11 @@ public class AnnounceController {
             // 3. 그리고 그 중에서 내 pk 아이디와 맞는 화면을 들고온다.
             // 4. List로 해서 다 보여준다.
             HttpSession session, Model model) {
-        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
-        if (sessionCompany == null) {
-            return "redirect:/login-form";
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Company sessionCompany = null;
+
+        if (sessionObj instanceof Company) {
+            sessionCompany = (Company) sessionObj;
         }
         List<Announce> announceList = announceService.findMyAnnounceList(sessionCompany.getId());
         model.addAttribute("announceList", announceList);
@@ -194,11 +203,14 @@ public class AnnounceController {
     @GetMapping("/company/{id}/hire-update")
     public String updateForm(@PathVariable(name = "id") int announceId,
                              Model model, HttpSession session) {
-        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Company sessionCompany = null;
+
+        if (sessionObj instanceof Company) {
+            sessionCompany = (Company) sessionObj;
+        }
         announceService.checkCoBoardOwner(announceId, sessionCompany.getId());
-
         model.addAttribute("announce",announceService.findAnnounceWithCompanyById(announceId));
-
 
         return "company/hire-update";
     }
@@ -208,7 +220,12 @@ public class AnnounceController {
     public String update(@PathVariable(name = "id") int announceId,
                          AnnounceRequest.UpdateDTO reqDTO, HttpSession session, Model model) {
 
-        Company sessionCompany = (Company) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        Company sessionCompany = null;
+
+        if (sessionObj instanceof Company) {
+            sessionCompany = (Company) sessionObj;
+        }
         announceService.checkCoBoardOwner(announceId, sessionCompany.getId());
         announceService.UpdateById(announceId, reqDTO, sessionCompany);
 

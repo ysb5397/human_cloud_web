@@ -52,15 +52,35 @@
                             </a>
 
                             <!-- Skill Tags -->
-                            <div class="mt-6 pt-6 border-t border-gray-200/60">
-                                <h4 class="text-sm font-medium text-gray-900">보유 기술</h4>
-                                <div class="mt-3 flex flex-wrap gap-2">
-                                    {{#resumeSkillTags}}
-                                        <span class="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                                            {{skillTag.skillTagName}}
-                                        </span>
-                                    {{/resumeSkillTags}}
-                                </div>
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <dl class="space-y-6">
+                                    <!-- "보유 기술" 섹션 -->
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-900">보유 기술</dt>
+                                        <dd class="mt-2 flex flex-wrap gap-2">
+                                            {{#resumeSkillTags}}
+                                                <span class="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
+                                                    {{skillTag.skillTagName}}
+                                                </span>
+                                            {{/resumeSkillTags}}
+                                            {{^resumeSkillTags}}
+                                                <p class="text-sm text-gray-500">등록된 보유 기술이 없습니다.</p>
+                                            {{/resumeSkillTags}}
+                                        </dd>
+                                    </div>
+
+                                    <!-- "경력" 섹션 -->
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-900">경력</dt>
+                                        <dd class="mt-2 flex flex-wrap gap-2">
+                                            {{#careerType}}
+                                                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                                    {{careerType}}
+                                                </span>
+                                            {{/careerType}}
+                                        </dd>
+                                    </div>
+                                </dl>
                             </div>
                         </div>
                     </div>

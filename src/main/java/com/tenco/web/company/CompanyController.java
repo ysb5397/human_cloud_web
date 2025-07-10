@@ -1,8 +1,5 @@
 package com.tenco.web.company;
 
-import com.tenco.web.announce.Announce;
-import com.tenco.web.user.User;
-import com.tenco.web.user.UserRequest;
 import com.tenco.web.utis.Define;
 import com.tenco.web.utis.Validate;
 import jakarta.servlet.http.HttpSession;
@@ -71,7 +68,6 @@ public class CompanyController {
 
     @PostMapping("/company/login")
     public String login(CompanyRequest.LoginDTO loginDTO, HttpSession session) {
-        loginDTO.validate();
         Company company = companyService.login(loginDTO);
         session.setAttribute(Define.DefineMessage.SESSION_USER, company);
         return "redirect:/";

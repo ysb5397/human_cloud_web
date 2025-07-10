@@ -41,5 +41,4 @@ public class ApplyService {
         List<Apply> applyList = applyJpaRepository.findByAnnounceId(id);
         return applyList;
     }
-
 }

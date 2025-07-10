@@ -1,0 +1,40 @@
+
+{{> layout/header}}
+
+<h2 class="text-2xl font-bold mb-6 mt-4 text-center text-gray-800">지원 현황</h2>
+
+<table class="table-auto w-full border border-gray-300">
+    <thead>
+    <tr class="bg-gray-100">
+        <th class="px-4 py-2 border">번호</th>
+        <th class="px-4 py-2 border">회사명</th>
+        <th class="px-4 py-2 border">공고 제목</th>
+        <th class="px-4 py-2 border">이력서 제목</th>
+        <th class="px-4 py-2 border">지원일자</th>
+        <th class="px-4 py-2 border">상태보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#applyList}}
+        <tr class="text-center">
+            <td class="px-4 py-2 border">{{index}}</td>
+            <td class="px-4 py-2 border">{{companyName}}</td>
+            <td class="px-4 py-2 border">{{apply.announce.title}}</td>
+            <td class="px-4 py-2 border">{{resumeTitle}}</td>
+            <td class="px-4 py-2 border">{{applyDate}}</td>
+            <td class="px-4 py-2 border">
+                <a href="/apply/{{id}}" class="text-blue-500 hover:underline">🔍</a>
+            </td>
+        </tr>
+    {{/applyList}}
+
+    {{^applyList}}
+        <tr>
+            <td colspan="6" class="px-4 py-4 text-center text-gray-500">지원한 이력서가 없습니다.</td>
+        </tr>
+    {{/applyList}}
+    </tbody>
+</table>
+
+
+{{> layout/footer}}

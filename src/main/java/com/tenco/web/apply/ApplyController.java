@@ -32,7 +32,7 @@ public class ApplyController {
     }
 
     // 특정 유저가 제출한 지원 목록 보기
-    @GetMapping("/my-apply-list")
+    @GetMapping("/user/my-apply-list")
     public String applyList(Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
         List<Apply> applyList = applyService.findByUserId(sessionUser.getId());

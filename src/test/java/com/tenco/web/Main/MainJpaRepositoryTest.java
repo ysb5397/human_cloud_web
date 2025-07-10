@@ -1,4 +1,4 @@
-package com.tenco.web.Main;
+package com.tenco.web.main;
 
 import com.tenco.web.announce.Announce;
 import com.tenco.web.main.MainJpaRepository;

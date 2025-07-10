@@ -3,6 +3,8 @@ package com.tenco.web.announce;
 import com.tenco.web._core.common.CareerType;
 import com.tenco.web._core.common.PageLink;
 import com.tenco.web.company.Company;
+import com.tenco.web.resume.Resume;
+import com.tenco.web.resume.ResumeService;
 import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
 import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
@@ -39,6 +41,7 @@ public class AnnounceController {
     private final AnnounceService announceService;
     private final SkillTagService skillTagService;
     private final AnnounceSKillTagService announceSKillTagService;
+    private final ResumeService resumeService;
 
     // 공고 등록 화면 요청
     @GetMapping("/company/hire-register")
@@ -141,12 +144,31 @@ public class AnnounceController {
     }
 
     @GetMapping("/announcedetail/{id}")
-    public String detail(@PathVariable(name = "id") int id, Model model) {
-        Announce announcedetail = announceService.findById(id);
+    public String detail(@PathVariable(name = "id") int id, Model model, HttpSession session) {
+        Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+
+        User user = null;
+        Company company = null;
+
+        if (sessionObj instanceof User) {
+            // 객체가 User 타입일 경우
+            user = (User) sessionObj;
+        } else if (sessionObj instanceof Company) {
+            // 객체가 Company 타입일 경우
+            company = (Company) sessionObj;
+        } else {
+            System.out.println("로그인 정보가 없습니다.");
+        }
+
+        Announce announcedetail = announceService.findById(id, company);
         List<AnnounceSKillTag> announceSKillTagList = announceSKillTagService.findByAnnounceId(id);
         log.info("화면에 전달할 공고: {}", announcedetail);
+        System.out.println(announcedetail);
         model.addAttribute("announcelist", announcedetail);
         model.addAttribute("announceSkillTag", announceSKillTagList);
+
+        List<Resume> resumeList = resumeService.findByUserId(user.getId());
+        model.addAttribute("resumeList", resumeList);
         return "announce/announcedetail";
     }
 

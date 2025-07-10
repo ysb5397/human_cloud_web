@@ -22,7 +22,11 @@ public class QResume extends EntityPathBase<Resume> {
 
     public static final QResume resume = new QResume("resume");
 
+    public final StringPath address = createString("address");
+
     public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+
+    public final StringPath email = createString("email");
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 

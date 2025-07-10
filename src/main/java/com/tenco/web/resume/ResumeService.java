@@ -114,8 +114,11 @@ public class ResumeService {
         }
 
         resume.setTitle(updateDTO.getTitle());
+        resume.setEmail(updateDTO.getEmail());
+        resume.setAddress(updateDTO.getAddress());
         resume.setPortfolioUrl(updateDTO.getPortfolioUrl());
         resume.setSelfIntroduction(updateDTO.getSelfIntroduction());
+        resumeJpaRepository.saveAndFlush(resume);
 
         resumeSkillTagService.deleteByResumeId(id);
 

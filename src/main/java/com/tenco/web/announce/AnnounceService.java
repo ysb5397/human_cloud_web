@@ -144,11 +144,15 @@ public class AnnounceService {
         return announceJpaRepository.findAll(pageable);
     }
 
-    public Announce findById(int id) {
+    public Announce findById(int id, Company sessionCompany) {
         Announce announce = announceJpaRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new Exception404("공고글을 찾을 수 없습니다.");
                 });
+
+        if (sessionCompany != null) {
+            announce.setIsOwner(announce.isCOwner(sessionCompany.getId()));
+        }
 
         return announce;
     }
@@ -161,12 +165,11 @@ public class AnnounceService {
         List<SkillTag> allSkills = skillTagService.findAll();
         List<String> selectedSkills = Optional.ofNullable(condition.getSkillTag()).orElse(Collections.emptyList());
 
-        // ✅ 제네릭 헬퍼 메서드 호출
         return createTagOptions(
-                allSkills,                  // 전체 아이템 목록
-                selectedSkills,             // 선택된 아이템 이름 목록
-                SkillTag::getSkillTagName,  // 아이템에서 이름(String)을 추출하는 방법
-                AnnounceRequest.FilterOptionDTO::new // 이름(String)과 체크여부(boolean)로 DTO를 생성하는 방법
+                allSkills,
+                selectedSkills,
+                SkillTag::getSkillTagName,
+                AnnounceRequest.FilterOptionDTO::new
         );
     }
 
@@ -180,10 +183,9 @@ public class AnnounceService {
         }
         String selectedCareer = condition.getCareer();
 
-        // ✅ 제네릭 헬퍼 메서드 호출.
         return createTagOptions(
                 allCareers,
-                Collections.singletonList(selectedCareer), // 단일 선택이므로 하나의 요소만 있는 리스트로 전달
+                Collections.singletonList(selectedCareer),
                 CareerType::name,
                 AnnounceRequest.FilterOptionDTO::new
         );

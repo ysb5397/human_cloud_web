@@ -10,7 +10,6 @@ public class ApplyRequest {
     @Data
     public static class SaveDTO {
 
-        private int userId;
         private int resumeId;
         private int announceId;
 

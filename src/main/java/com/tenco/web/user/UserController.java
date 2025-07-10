@@ -91,10 +91,16 @@ public class UserController {
         String state = UUID.randomUUID().toString();
         session.setAttribute("state", state);
 
+        NaverProperties.Client client = naverProperties.getClient();
+
+        if (client == null) {
+            throw new RuntimeException("네이버 클라이언트 정보가 설정되지 않았습니다. yml 설정이 올바른지 확인해주세요.");
+        }
+
         try {
             String authUrl = "https://nid.naver.com/oauth2.0/authorize"
                     + "?response_type=code"
-                    + "&client_id=" + naverProperties.getClient().getId()
+                    + "&client_id=" + client.getId()
                     + "&redirect_uri=" + URLEncoder.encode(naverProperties.getRedirectUri(), "UTF-8")
                     + "&state=" + state;
 

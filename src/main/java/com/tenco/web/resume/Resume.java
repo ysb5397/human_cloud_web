@@ -12,7 +12,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +30,8 @@ public class Resume {
     private User user;
 
     private String title;
+    private String email;
+    private String address;
     private String portfolioUrl;
 
     // @Column(nullable = false)
@@ -44,10 +45,12 @@ public class Resume {
     private Timestamp createdAt;
 
     @Builder
-    public Resume(int id, User user, String title, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createdAt) {
+    public Resume(int id, User user, String title, String email, String address, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.title = title;
+        this.email = email;
+        this.address = address;
         this.portfolioUrl = portfolioUrl;
         this.selfIntroduction = selfIntroduction;
         this.isPublic = isPublic;

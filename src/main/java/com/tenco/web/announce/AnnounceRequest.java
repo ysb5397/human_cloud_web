@@ -91,11 +91,6 @@ public class AnnounceRequest {
         }
     }
 
-    /**
-     * 2. ✅ 화면의 필터 옵션을 표현하는 통합 DTO
-     * - SkillTagDTO와 CareerDTO를 이 DTO 하나로 대체합니다.
-     * - 어떤 옵션이든 '이름'과 '체크 여부'를 가지므로 제네릭하게 사용할 수 있습니다.
-     */
     @Data
     @AllArgsConstructor
     public static class FilterOptionDTO {

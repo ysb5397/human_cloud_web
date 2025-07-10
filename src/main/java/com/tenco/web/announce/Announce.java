@@ -49,6 +49,9 @@ public class Announce {
 
     private int interestCount;
 
+    @Transient
+    private Boolean isOwner;
+
     public Announce(String title, String content) {
         this.title = title;
         this.content = content;

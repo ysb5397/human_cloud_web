@@ -30,7 +30,6 @@ public class Apply {
     @JoinColumn(name = "resume_id")
     private Resume resume;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "announce_id")
     private Announce announce;

@@ -5,6 +5,8 @@ import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
+import com.tenco.web.tags.announce_tag.AnnounceSkillTagJpaRepository;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagRequest;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagService;
 import com.tenco.web.user.User;
@@ -24,6 +26,7 @@ public class ResumeService {
     private static final Logger log = LoggerFactory.getLogger(ResumeService.class);
 
     private final ResumeJpaRepository resumeJpaRepository;
+    private final AnnounceSkillTagJpaRepository announceSkillTagJpaRepository;
     private final ResumeSkillTagService resumeSkillTagService;
     private final SkillTagService skillTagService;
 
@@ -57,6 +60,10 @@ public class ResumeService {
         return resumeList;
     }
 
+    public List<AnnounceSKillTag> findByAnnounceId(int announceId) {
+        return announceSkillTagJpaRepository.findByAnnounceId(announceId);
+    }
+
     // 이력서 상세조회
     public Resume findById(int id) {
         Resume resume = resumeJpaRepository.findByResumeList(id)
@@ -88,16 +95,12 @@ public class ResumeService {
     }
 
     public List<ResumeSkillTagRequest.CheckDTO> getSkillTagsForUpdate(int resumeId) {
-        // 1. 모든 기술 스택 목록을 가져옵니다.
         List<SkillTag> allSkills = skillTagService.findAll();
 
-        // 2. 현재 이력서에 이미 선택된 기술 스택 목록을 가져옵니다.
         List<SkillTag> selectedSkills = resumeSkillTagService.findByResumeId(resumeId);
 
-        // 3. DTO 리스트를 생성합니다.
         List<ResumeSkillTagRequest.CheckDTO> checkDTOs = allSkills.stream()
                 .map(skill -> {
-                    // 현재 스킬이 선택된 스킬 목록에 포함되어 있는지 확인합니다.
                     boolean checked = selectedSkills.stream()
                             .anyMatch(s -> s.getId() == skill.getId());
                     return new ResumeSkillTagRequest.CheckDTO(skill.getId(), skill.getSkillTagName(), checked);
@@ -126,6 +129,7 @@ public class ResumeService {
         resume.setAddress(updateDTO.getAddress());
         resume.setPortfolioUrl(updateDTO.getPortfolioUrl());
         resume.setSelfIntroduction(updateDTO.getSelfIntroduction());
+        resume.setCareerType(updateDTO.getCareerType());
         resumeJpaRepository.saveAndFlush(resume);
 
         resumeSkillTagService.deleteByResumeId(id);

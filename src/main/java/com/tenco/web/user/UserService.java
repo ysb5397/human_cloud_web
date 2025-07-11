@@ -2,7 +2,6 @@ package com.tenco.web.user;
 
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
-import com.tenco.web._core.errors.exception.Exception500;
 import com.tenco.web._core.errors.exception.UserLoginException;
 import com.tenco.web.utis.Define;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +37,8 @@ public class UserService {
     public User join(UserRequest.JoinDTO joinDTO) {
         log.info("회원가입 서비스 시작");
         userJpaRepository.findByUsername(joinDTO.getUsername())
-                .orElseThrow(() -> {
-                    throw new Exception500("오류가 발생했습니다.");
+                .ifPresent(user -> {
+                    throw new IllegalArgumentException(Define.ErrorMessage.EXIST_USER);
                 });
 
         log.info("회원가입 서비스 완료");

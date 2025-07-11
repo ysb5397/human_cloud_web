@@ -10,4 +10,6 @@ public interface AnnounceSkillTagJpaRepository extends JpaRepository<AnnounceSKi
 
     @Query("select a from AnnounceSKillTag a where a.announce.id = :announceId ")
     List<AnnounceSKillTag> findByAnnounceId(@Param("announceId") int announceId);
+
+    void deleteByAnnounceId(int announceId);
 }

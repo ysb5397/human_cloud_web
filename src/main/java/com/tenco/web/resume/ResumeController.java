@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,9 +61,9 @@ public class ResumeController {
 
     // 이력서 저장 기능 요청
     @PostMapping("/user/resume-register")
-    public String save(@Valid ResumeRequest.SaveDTO saveDTO, BindingResult result, HttpSession session, Model model) {
+    public String save(@Valid ResumeRequest.SaveDTO saveDTO, BindingResult result, HttpSession session, RedirectAttributes redirect) {
         log.info("이력서 저장 기능 요청");
-        model.addAttribute(Define.DefineMessage.SAVE_DTO, saveDTO);
+        redirect.addFlashAttribute(Define.DefineMessage.SAVE_DTO, saveDTO);
         log.info("model 객체에 saveDTO 저장");
 
         Map<String, String> errorMap = new HashMap<>();
@@ -73,9 +74,9 @@ public class ResumeController {
                 log.info("필드명 : {} / 오류 메시지 : {}", error.getField(), error.getDefaultMessage());
             }
             log.info("errorMap에 값 담기 성공");
-            model.addAttribute("message", errorMap);
+            redirect.addFlashAttribute("message", errorMap);
             log.info("model 객체에 errorMap 저장");
-            return "user/resume-register";
+            return "redirect:/user/resume-register";
         }
 
         Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
@@ -90,7 +91,7 @@ public class ResumeController {
 
         saveDTO.setIsPublic(true);
         Resume resume = resumeService.save(saveDTO, user);
-        model.addAttribute("resume", resume);
+        redirect.addFlashAttribute("resume", resume);
         return "redirect:/resume-list";
     }
 

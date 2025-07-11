@@ -49,7 +49,7 @@ public class Resume {
     private CareerType careerType;
 
     @Builder
-    public Resume(int id, User user, String title, String email, String address, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createdAt) {
+    public Resume(int id, User user, String title, String email, String address, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createdAt, CareerType careerType) {
         this.id = id;
         this.user = user;
         this.title = title;
@@ -59,6 +59,7 @@ public class Resume {
         this.selfIntroduction = selfIntroduction;
         this.isPublic = isPublic;
         this.createdAt = createdAt;
+        this.careerType = careerType;
     }
 
     public boolean isOwner(int checkUserId) {

@@ -38,7 +38,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -49,8 +48,4 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-tasks.withType(JavaCompile) {
-    options.compilerArgs = ['-parameters']
 }

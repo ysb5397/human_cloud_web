@@ -78,5 +78,6 @@ public class Announce {
 
     @OrderBy("id desc")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "announce", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<AnnounceSKillTag> announceSkillTags = new ArrayList<>();
 }

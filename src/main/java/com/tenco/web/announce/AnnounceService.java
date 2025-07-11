@@ -8,6 +8,9 @@ import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.company.Company;
 import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
+import com.tenco.web.tags.announce_tag.AnnounceSKillTagService;
+import com.tenco.web.tags.announce_tag.AnnounceSkillTagRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +23,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -28,28 +32,38 @@ public class AnnounceService {
 
     private static final Logger log = LoggerFactory.getLogger(AnnounceService.class);
     private final AnnounceJpaRepository announceJpaRepository;
+    private final AnnounceSKillTagService announceSKillTagService;
     private final SkillTagService skillTagService;
 
-    // 공고 정보 등록 기능
     @Transactional
-    public void save(AnnounceRequest.SaveJobDTO saveJobDTO, Company sessionCompany) {
-//        log.info("공고 정보 저장 서비스 처리 시작 - 기업 id {}", saveJobDTO.getCompany().getId());
+    public Announce save(AnnounceRequest.SaveJobDTO saveDTO, Company sessionCompany) {
 
-        Announce announce = new Announce();
-        announce.setTitle(saveJobDTO.getTitle());
-        announce.setContent(saveJobDTO.getContent());
-        announce.setWorkLocation(saveJobDTO.getWorkLocation());
-        announce.setEndDate(Timestamp.valueOf(saveJobDTO.getEndDate()));
-        announce.setCompany(sessionCompany);
+        Announce announce = Announce.builder()
+                .title(saveDTO.getTitle())
+                .content(saveDTO.getContent())
+                .company(sessionCompany)
+                .workLocation(saveDTO.getWorkLocation())
+                .careerType(saveDTO.getCareerType())
+                .endDate(Timestamp.valueOf(saveDTO.getEndDate()))
+                .build();
 
-        if (saveJobDTO.getEndDate().isBefore(announce.getStartDateTime())) {
-            throw new Exception400("마감일은 현재 시간보다 이후여야 합니다.");
+        List<Integer> skillIds = saveDTO.getAnnounceSkillTags();
+        if (skillIds != null && !skillIds.isEmpty()) {
+            for (Integer skillId : skillIds) {
+                SkillTag skill = skillTagService.findById(skillId);
+
+                AnnounceSKillTag announceSkillTag = AnnounceSKillTag.builder()
+                        .announce(announce)
+                        .skillTag(skill)
+                        .build();
+
+                announce.getAnnounceSkillTags().add(announceSkillTag);
+            }
         }
-        
-        log.info("Jpa 전");
-        announceJpaRepository.save(announce);
-        log.info("Jpa 후");
 
+        Announce savedAnnounce = announceJpaRepository.save(announce);
+
+        return savedAnnounce;
     }
 
 
@@ -114,14 +128,30 @@ public class AnnounceService {
         }
 
         announce.setTitle(reqDTO.getTitle());
-       announce.setContent(reqDTO.getContent());
-       announce.setWorkLocation(reqDTO.getWorkLocation());
-       announce.setEndDate(Timestamp.valueOf(reqDTO.getEndDate()));
-       announce.setCompany(sessionCompany);
+        announce.setContent(reqDTO.getContent());
+        announce.setWorkLocation(reqDTO.getWorkLocation());
+        announce.setEndDate(Timestamp.valueOf(reqDTO.getEndDate()));
+        announce.setCompany(sessionCompany);
+        announceSKillTagService.deleteByAnnounceId(announce.getId());
+        List<Integer> skillIds = reqDTO.getAnnounceSkillTags();
+        if (skillIds != null && !skillIds.isEmpty()) {
+            for (Integer skillId : skillIds) {
+                SkillTag skill = skillTagService.findById(skillId);
+
+                AnnounceSKillTag announceSkillTag = AnnounceSKillTag.builder()
+                        .announce(announce)
+                        .skillTag(skill)
+                        .build();
+
+                announce.getAnnounceSkillTags().add(announceSkillTag);
+            }
+        }
+
+        Announce savedAnnounce = announceJpaRepository.saveAndFlush(announce);
 
 
-        log.info("공고 수정 완료 - 공고 ID {}, 공고 제목 {}", id, announce.getTitle());
-        return announce;
+        log.info("공고 수정 완료 - {}", savedAnnounce);
+        return savedAnnounce;
     }
 
     // 게시글 단건 조회하기
@@ -204,5 +234,21 @@ public class AnnounceService {
                     return dtoConstructor.apply(itemName, isChecked);
                 })
                 .toList();
+    }
+
+    public List<AnnounceSkillTagRequest.CheckDTO> getSkillTagsForUpdate(int announceId) {
+        List<SkillTag> allSkills = skillTagService.findAll();
+
+        List<AnnounceSKillTag> selectedSkills = announceSKillTagService.findByAnnounceId(announceId);
+
+        List<AnnounceSkillTagRequest.CheckDTO> checkDTOs = allSkills.stream()
+                .map(skill -> {
+                    boolean checked = selectedSkills.stream()
+                            .anyMatch(s -> s.getSkillTag().getId() == skill.getId());
+                    return new AnnounceSkillTagRequest.CheckDTO(skill.getId(), skill.getSkillTagName(), checked);
+                })
+                .collect(Collectors.toList());
+
+        return checkDTOs;
     }
 }

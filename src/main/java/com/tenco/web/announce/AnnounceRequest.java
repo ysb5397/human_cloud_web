@@ -1,5 +1,6 @@
 package com.tenco.web.announce;
 
+import com.tenco.web._core.common.CareerType;
 import com.tenco.web.company.Company;
 import com.tenco.web.utis.Define;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,9 @@ public class AnnounceRequest {
         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
         private LocalDateTime endDate;
 
+        private List<Integer> announceSkillTags;
+        private CareerType careerType;
+
         public Announce toEntity(Company sessionCompany) {
             return Announce.builder()
                     .title(this.title)
@@ -38,6 +42,7 @@ public class AnnounceRequest {
                     .workLocation(this.workLocation)
                     .company(sessionCompany)
                     .endDate(Timestamp.valueOf(this.endDate))
+                    .careerType(this.careerType)
                     .build();
         }
 
@@ -59,6 +64,9 @@ public class AnnounceRequest {
 
         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
         private LocalDateTime endDate;
+
+        private List<Integer> announceSkillTags;
+        private CareerType careerType;
 
         public Announce toEntity(Company sessionCompany) {
             return Announce.builder()

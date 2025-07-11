@@ -3,13 +3,13 @@ package com.tenco.web.tags.announce_tag;
 import com.tenco.web.announce.Announce;
 import com.tenco.web.tags.SkillTag;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Table(name = "announce_skill_tag_tb")
+@Builder
 @Entity
 public class AnnounceSKillTag {
     @Id

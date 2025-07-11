@@ -10,6 +10,7 @@ import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
 import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
 import com.tenco.web.tags.announce_tag.AnnounceSKillTagService;
+import com.tenco.web.tags.announce_tag.AnnounceSkillTagRequest;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,11 +78,11 @@ public class AnnounceController {
     public String registerJob(@Valid AnnounceRequest.SaveJobDTO saveJobDTO,
                               BindingResult result,
                               HttpSession session,
-                              Model model) {
+                              RedirectAttributes redirect) {
 
         log.info("공고 등록 POST 요청");
         log.info("model 객체 값 확인 : {}", saveJobDTO.toString());
-        model.addAttribute(Define.DefineMessage.SAVE_JOB_DTO, saveJobDTO);
+        redirect.addFlashAttribute(Define.DefineMessage.SAVE_JOB_DTO, saveJobDTO);
 
         Map<String, String> errorMap = new HashMap<>();
         Object sessionObj = session.getAttribute(Define.DefineMessage.SESSION_USER);
@@ -97,9 +99,8 @@ public class AnnounceController {
                 errorMap.put(error.getField(), error.getDefaultMessage());
                 log.info("필드명 : {} / 오류메시지 : {}", error.getField(), error.getDefaultMessage());
             }
-            model.addAttribute("message", errorMap);
-            model.addAttribute(Define.DefineMessage.SESSION_COMPANY, sessionCompany);
-            return "company/hire-register";
+            redirect.addFlashAttribute("message", errorMap);
+            return "redirect:/company/hire-register";
         }
 
         announceService.save(saveJobDTO, sessionCompany);
@@ -211,6 +212,19 @@ public class AnnounceController {
         }
         announceService.checkCoBoardOwner(announceId, sessionCompany.getId());
         model.addAttribute("announce",announceService.findAnnounceWithCompanyById(announceId));
+
+        List<AnnounceSkillTagRequest.CheckDTO> skillTagList = announceService.getSkillTagsForUpdate(announceId);
+        model.addAttribute("skillTagList", skillTagList);
+
+        List<String> careerType = new ArrayList<>();
+
+        for (CareerType c : CareerType.values()) {
+            if (!c.equals(CareerType.무직)) {
+                careerType.add(String.valueOf(c));
+            }
+        }
+
+        model.addAttribute("careerType", careerType);
 
         return "company/hire-update";
     }

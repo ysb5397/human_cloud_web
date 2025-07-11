@@ -22,12 +22,19 @@
             </div>
 
             <div class="group relative mb-6">
-                <h1 class="text-3xl font-bold text-gray-900 group-hover:text-gray-700">
-                    <a href="#">
-                        <span class="absolute inset-0"></span>
-                        {{title}}
-                    </a>
-                </h1>
+                <div class="flex flex-row gap-4">
+                    <h1 class="text-3xl font-bold text-gray-900 group-hover:text-gray-700">
+                        <a href="#">
+                            <span class="absolute inset-0"></span>
+                            {{title}}
+                        </a>
+                    </h1>
+                    {{#careerType}}
+                        <span class="inline-flex items-center rounded-full bg-green-50 px-4 py-1 text-sm font-semibold text-green-700 ring-1 ring-inset ring-green-600/20">
+                            {{careerType}}
+                        </span>
+                    {{/careerType}}
+                </div>
                 <p class="mt-2 text-base text-indigo-600 truncate hover:underline">
                     {{portfolioUrl}}
                 </p>

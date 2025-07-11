@@ -1,5 +1,6 @@
 package com.tenco.web.resume;
 
+import com.tenco.web._core.common.CareerType;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import jakarta.validation.constraints.Email;
@@ -43,7 +44,7 @@ public class ResumeRequest {
         private Boolean isPublic;
 
         private List<String> skillTags;
-        private String careerType;
+        private CareerType careerType;
 
         public Resume toEntity(User sessionuser) {
             return Resume.builder()
@@ -53,6 +54,7 @@ public class ResumeRequest {
                     .portfolioUrl(this.portfolioUrl)
                     .selfIntroduction(this.selfIntroduction)
                     .user(sessionuser)
+                    .careerType(this.careerType)
                     .build();
         }
     }
@@ -67,6 +69,6 @@ public class ResumeRequest {
         private String portfolioUrl;
         private String selfIntroduction;
         private List<String> skillTags;
-        private String careerType;
+        private CareerType careerType;
     }
 }

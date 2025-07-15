@@ -1,6 +1,7 @@
 package com.tenco.web.user;
 
 import com.tenco.web._core.config.NaverProperties;
+import com.tenco.web.apply.ApplyService;
 import com.tenco.web.utis.Define;
 import com.tenco.web.utis.Validate;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +33,7 @@ public class UserController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final NaverProperties naverProperties;
+    private final ApplyService applyService;
 
     @GetMapping("/user/signup-form")
     public String signUpForm() {
@@ -219,5 +221,18 @@ public class UserController {
         log.info("회원정보 수정완료");
         session.setAttribute(Define.DefineMessage.SESSION_USER, updateUser);
         return "redirect:/";
+    }
+
+    // 이력서 지원
+    @PostMapping("/user/application")
+    public String application(@RequestParam(name = "resumeId") int id,
+                              @RequestParam(name = "announceId") int announceId,
+                              HttpSession session) {
+
+        log.info("이력서 지원 요청 - 이력서 ID : {}, 공고 ID : {}", id, announceId);
+        User sessionUser = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
+        applyService.submitResume(sessionUser, id, announceId);
+
+        return "redirect:/announcedetail/" + announceId;
     }
 }

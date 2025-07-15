@@ -1,6 +1,7 @@
 package com.tenco.web.resume;
 
 import com.tenco.web._core.common.CareerType;
+import com.tenco.web._core.errors.exception.Exception401;
 import com.tenco.web.company.Company;
 import com.tenco.web.tags.SkillTagService;
 import com.tenco.web.tags.resume_tag.ResumeSkillTagRequest;
@@ -106,6 +107,8 @@ public class ResumeController {
             user = (User) sessionObj;
         } else if (sessionObj instanceof  Company) {
             company = (Company) sessionObj;
+        } else {
+            throw new Exception401(Define.ErrorMessage.REQUIRED_LOGIN);
         }
 
         List<Resume> resumeList = resumeService.findByUserId(user.getId());

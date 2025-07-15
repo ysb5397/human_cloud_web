@@ -3,6 +3,7 @@ package com.tenco.web.apply;
 import com.tenco.web.announce.Announce;
 import com.tenco.web.resume.Resume;
 import com.tenco.web.user.User;
+import com.tenco.web.utis.DateUtil;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -44,5 +45,9 @@ public class Apply {
         this.resume = resume;
         this.announce = announce;
         this.createdAt = createdAt;
+    }
+
+    public String getApplyDate() {
+        return DateUtil.timestampFormat(createdAt);
     }
 }

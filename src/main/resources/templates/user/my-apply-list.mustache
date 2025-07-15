@@ -17,10 +17,10 @@
     <tbody>
     {{#applyList}}
         <tr class="text-center">
-            <td class="px-4 py-2 border">{{index}}</td>
-            <td class="px-4 py-2 border">{{companyName}}</td>
-            <td class="px-4 py-2 border">{{apply.announce.title}}</td>
-            <td class="px-4 py-2 border">{{resumeTitle}}</td>
+            <td class="px-4 py-2 border">{{id}}</td>
+            <td class="px-4 py-2 border">{{announce.company.companyName}}</td>
+            <td class="px-4 py-2 border">{{announce.title}}</td>
+            <td class="px-4 py-2 border">{{resume.title}}</td>
             <td class="px-4 py-2 border">{{applyDate}}</td>
             <td class="px-4 py-2 border">
                 <a href="/apply/{{id}}" class="text-blue-500 hover:underline">🔍</a>

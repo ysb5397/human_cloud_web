@@ -23,7 +23,9 @@
             <td class="px-4 py-2 border">{{resume.title}}</td>
             <td class="px-4 py-2 border">{{applyDate}}</td>
             <td class="px-4 py-2 border">
-                <a href="/apply/{{id}}" class="text-blue-500 hover:underline">🔍</a>
+                <div class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 cursor-pointer">
+                    <button type="button" onclick="confirm('정말로 회수 하시겠습니까? 진행 상황과 관계 없이 초기화 될 수 있습니다.')">이력서 회수하기</button>
+                </div>
             </td>
         </tr>
     {{/applyList}}

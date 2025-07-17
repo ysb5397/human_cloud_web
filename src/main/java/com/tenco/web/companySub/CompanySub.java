@@ -2,10 +2,15 @@ package com.tenco.web.companySub;
 
 import com.tenco.web.company.Company;
 import com.tenco.web.user.User;
+import com.tenco.web.utis.DateUtil;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringExclude;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -29,8 +34,18 @@ public class CompanySub {
     @ToStringExclude
     private Company company;
 
+    @CreationTimestamp
+    private Timestamp createdAt;
 
+    @Builder
+    public CompanySub(int id, User user, Company company, Timestamp createdAt) {
+        this.id = id;
+        this.user = user;
+        this.company = company;
+        this.createdAt = createdAt;
+    }
 
-
-
+    public String getTime() {
+        return DateUtil.timestampFormat(createdAt);
+    }
 }

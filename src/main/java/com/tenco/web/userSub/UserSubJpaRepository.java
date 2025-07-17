@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserSubJpaRepository extends JpaRepository<UserSub, Integer> {
 
     @Query("select s from UserSub s join fetch s.user u where u.id = :id")
-    List<UserSub> findByuUser(@Param("id") int id);
+    List<UserSub> findByUser(@Param("id") int id);
 
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END " +
             "FROM UserSub u WHERE u.user = :user AND u.company = :company")

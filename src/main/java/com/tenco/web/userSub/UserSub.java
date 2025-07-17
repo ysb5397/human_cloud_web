@@ -49,8 +49,4 @@ public class UserSub {
         return DateUtil.timestampFormat(createdAt);
     }
 
-
-
-
-
 }

@@ -28,7 +28,7 @@ public class UserSubService {
     private final AnnounceJpaRepository announceJpaRepository;
 
     // 구독 저장 기능
-    public  void Usersubscribe(int userId, int companyId) {
+    public  void userSubscribe(int userId, int companyId) {
         User user = userJpaRepository.findById(userId).orElseThrow(() -> {
             throw new Exception400(Define.ErrorMessage.ERROR_400);
         });
@@ -54,7 +54,7 @@ public class UserSubService {
         User user = userJpaRepository.findById(userId).orElseThrow(() -> {
             throw new Exception400(Define.ErrorMessage.ERROR_400);
         });
-        return  userSubJpaRepository.findByuUser(userId)
+        return  userSubJpaRepository.findByUser(userId)
                 .stream()
                 .map(UserSub::getCompany)
                 .toList();

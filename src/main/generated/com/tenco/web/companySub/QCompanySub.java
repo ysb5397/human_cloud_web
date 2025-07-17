@@ -24,6 +24,8 @@ public class QCompanySub extends EntityPathBase<CompanySub> {
 
     public final com.tenco.web.company.QCompany company;
 
+    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public final com.tenco.web.user.QUser user;

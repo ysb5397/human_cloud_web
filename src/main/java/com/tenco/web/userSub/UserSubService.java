@@ -75,4 +75,11 @@ public class UserSubService {
     }
 
 
+    public List<UserSub> findByUserId(int userId) {
+        return userSubJpaRepository.findByUser(userId);
+    }
+
+    public void userSubscribeCancel(int id, int companyId) {
+        userSubJpaRepository.deleteByUserIdAndCompanyId(id, companyId);
+    }
 }

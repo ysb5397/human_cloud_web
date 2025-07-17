@@ -117,13 +117,25 @@
 
     {{#companyList}}
         <div id="{{id}}" class="bg-white shadow-md rounded-xl p-6 mb-6 hover:shadow-lg transition-shadow cursor-pointer">
-            <h4 class="text-xl font-semibold mb-2">{{companyName}}</h4>
-            <p class="text-sm text-gray-500 mb-4">{{companyName}}&nbsp;{{address}}&nbsp;{{email}}</p>
+            <a href="{{websiteUrl}}" target="_blank" rel="noopener noreferrer">
+                <h4 class="text-xl font-semibold mb-2">{{companyName}}</h4>
+                <p class="text-sm text-gray-500 mb-4">{{companyName}}&nbsp;{{address}}&nbsp;{{email}}</p>
+            </a>
             <div class="flex flex-row gap-6">
-                <a href="{{websiteUrl}}" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500">
-                    상세보기
-                </a>
                 {{#sessionUser.username}}
+                    {{^isSub}}
+                    <form action="/user/usersub" method="POST" class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500">
+                        <input name="id" value="{{id}}" hidden>
+                        <button type="submit">구독하기</button>
+                    </form>
+                    {{/isSub}}
+                    {{#isSub}}
+                        <form action="/user/usersub/cancel" method="POST" class="inline-block px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-500">
+                            <input name="id" value="{{id}}" hidden>
+                            <input name="loc" value="/companyinfo" hidden>
+                            <button type="submit" onclick="return confirm('정말 취소하시겠습니까?');">구독 취소</button>
+                        </form>
+                    {{/isSub}}
                     {{^isRated}}
                         <button id="rating--btn" type="button" onclick="toggleModal(true); moveValue({{id}}); document.querySelector('html').classList.toggle('overflow-hidden');" class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500">평점 남기기</button>
                     {{/isRated}}
@@ -133,6 +145,7 @@
                 {{/sessionUser.username}}
             </div>
         </div>
+
     {{/companyList}}
 
     <!-- 페이지네이션 -->

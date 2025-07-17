@@ -92,6 +92,8 @@ public class CompanyController {
             companyList = companyService.findAll(sessionUser.getId());
         } else if (obj instanceof Company) {
             companyList = companyService.findAll();
+        } else {
+            return "redirect:/user/login-form";
         }
 
         model.addAttribute("companyList", companyList);

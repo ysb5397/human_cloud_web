@@ -25,7 +25,20 @@ public class UserSubController {
             return "redirect:/login-form";
         }
         userSubService.userSubscribe(user.getId(), companyId);
-        return "redirect:/companyinfo/" + companyId;
+        return "redirect:/companyinfo";
+    }
+
+    @PostMapping("/user/usersub/cancel")
+    public String subCancel(@RequestParam(name = "id") int companyId,
+                            @RequestParam(name = "loc") String loc,
+                            HttpSession session) {
+        User user = (User) session.getAttribute(Define.DefineMessage.SESSION_USER);
+
+        if (user == null) {
+            return "redirect:/login-form";
+        }
+        userSubService.userSubscribeCancel(user.getId(), companyId);
+        return "redirect:" + loc;
     }
 
     @GetMapping("/user/user-sub-list")

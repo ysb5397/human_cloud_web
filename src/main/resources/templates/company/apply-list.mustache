@@ -1,0 +1,43 @@
+
+{{> layout/header}}
+
+<h2 class="text-2xl font-bold mb-6 mt-4 text-center text-gray-800">지원 현황</h2>
+
+<table class="table-auto w-full border border-gray-300">
+    <thead>
+    <tr class="bg-gray-100">
+        <th class="px-4 py-2 border">번호</th>
+        <th class="px-4 py-2 border">이름</th>
+        <th class="px-4 py-2 border">공고 제목</th>
+        <th class="px-4 py-2 border">이력서 제목</th>
+        <th class="px-4 py-2 border">지원일자</th>
+        <th class="px-4 py-2 border">상태보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#applyList}}
+        <tr class="text-center">
+            <td class="px-4 py-2 border">{{id}}</td>
+            <td class="px-4 py-2 border">{{resume.user.username}}</td>
+            <td class="px-4 py-2 border">{{announce.title}}</td>
+            <td class="px-4 py-2 border">{{resume.title}}</td>
+            <td class="px-4 py-2 border">{{applyDate}}</td>
+            <td class="px-4 py-2 border">
+                <div>
+                    <button type="button" class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 cursor-pointer">승인</button>
+                    <button type="button" onclick="confirm('정말로 거절 하시겠습니까?)" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 cursor-pointer">거절</button>
+                </div>
+            </td>
+        </tr>
+    {{/applyList}}
+
+    {{^applyList}}
+        <tr>
+            <td colspan="6" class="px-4 py-4 text-center text-gray-500">지원한 이력서가 없습니다.</td>
+        </tr>
+    {{/applyList}}
+    </tbody>
+</table>
+
+
+{{> layout/footer}}

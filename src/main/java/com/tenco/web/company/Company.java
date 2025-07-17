@@ -1,6 +1,7 @@
 package com.tenco.web.company;
 
 import com.tenco.web.company.rate.Rate;
+import com.tenco.web.userSub.UserSub;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -41,6 +42,9 @@ public class Company {
     @Transient
     private boolean isRated;
 
+    @Transient
+    private boolean isSub;
+
     @Builder
     public Company(int id, String companyName, String password, String address, String businessRegistrationNumber, String email,  Timestamp createdAt, String websiteUrl) {
         this.id = id;
@@ -61,4 +65,8 @@ public class Company {
     @OrderBy("id DESC")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.REMOVE)
     List<Rate> rates = new ArrayList<>();
+
+    @OrderBy("id DESC")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.REMOVE)
+    List<UserSub> subs = new ArrayList<>();
 }

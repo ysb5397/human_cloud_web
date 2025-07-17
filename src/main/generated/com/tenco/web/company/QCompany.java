@@ -36,6 +36,8 @@ public class QCompany extends EntityPathBase<Company> {
 
     public final ListPath<com.tenco.web.company.rate.Rate, com.tenco.web.company.rate.QRate> rates = this.<com.tenco.web.company.rate.Rate, com.tenco.web.company.rate.QRate>createList("rates", com.tenco.web.company.rate.Rate.class, com.tenco.web.company.rate.QRate.class, PathInits.DIRECT2);
 
+    public final ListPath<com.tenco.web.userSub.UserSub, com.tenco.web.userSub.QUserSub> subs = this.<com.tenco.web.userSub.UserSub, com.tenco.web.userSub.QUserSub>createList("subs", com.tenco.web.userSub.UserSub.class, com.tenco.web.userSub.QUserSub.class, PathInits.DIRECT2);
+
     public final StringPath websiteUrl = createString("websiteUrl");
 
     public QCompany(String variable) {

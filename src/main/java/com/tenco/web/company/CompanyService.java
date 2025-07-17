@@ -4,6 +4,7 @@ import com.tenco.web._core.errors.exception.CompanyLoginException;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
 import com.tenco.web.company.rate.RateService;
+import com.tenco.web.userSub.UserSubService;
 import com.tenco.web.utis.Define;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class CompanyService {
     private static final Logger log = LoggerFactory.getLogger(CompanyService.class);
     private final CompanyJpaRepository companyJpaRepository;
     private final RateService rateService;
+    private final UserSubService userSubService;
 
     /**
      * 회원 가입 처리
@@ -84,9 +86,16 @@ public class CompanyService {
                 .map(rate -> rate.getCompany().getId())
                 .collect(Collectors.toSet());
 
+        Set<Integer> subsCompanyIds = userSubService.findByUserId(userId)
+                .stream()
+                .map(sub -> sub.getCompany().getId())
+                .collect(Collectors.toSet());
+
         companyList.forEach(company -> {
             boolean isRated = ratedCompanyIds.contains(company.getId());
+            boolean isSub = subsCompanyIds.contains(company.getId());
             company.setRated(isRated);
+            company.setSub(isSub);
         });
 
         return companyList;

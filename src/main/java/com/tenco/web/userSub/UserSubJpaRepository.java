@@ -5,6 +5,7 @@ import com.tenco.web.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface UserSubJpaRepository extends JpaRepository<UserSub, Integer> {
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END " +
             "FROM UserSub u WHERE u.user = :user AND u.company = :company")
     boolean existsByUserAndCompany(@Param("user") User user, @Param("company") Company company);
+
+    @Transactional
+    void deleteByUserIdAndCompanyId(int id, int companyId);
 }

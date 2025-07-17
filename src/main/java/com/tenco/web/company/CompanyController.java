@@ -1,5 +1,6 @@
 package com.tenco.web.company;
 
+import com.tenco.web.user.User;
 import com.tenco.web.utis.Define;
 import com.tenco.web.utis.Validate;
 import jakarta.servlet.http.HttpSession;
@@ -81,9 +82,20 @@ public class CompanyController {
     }
 
     @GetMapping({"/companyinfo"})
-    public String companyInfo(Model model) {
-        List<Company> companyList = companyService.findAll();
-        model.addAttribute("companyList",companyList);
+    public String companyInfo(Model model,
+                              HttpSession session) {
+
+        Object obj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        List<Company> companyList = null;
+
+        if (obj instanceof User sessionUser) {
+            companyList = companyService.findAll(sessionUser.getId());
+        } else if (obj instanceof Company) {
+            companyList = companyService.findAll();
+        }
+
+        model.addAttribute("companyList", companyList);
+        model.addAttribute(Define.DefineMessage.SESSION_USER);
         return "company/companyinfo";
     }
 

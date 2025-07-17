@@ -28,4 +28,14 @@ public class RateRequest {
                     .build();
         }
     }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class UpdateDTO {
+
+        private int rating;
+        private String comment;
+    }
 }

@@ -3,6 +3,7 @@ package com.tenco.web.company;
 import com.tenco.web._core.errors.exception.CompanyLoginException;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
+import com.tenco.web.company.rate.RateService;
 import com.tenco.web.utis.Define;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +22,7 @@ public class CompanyService {
 
     private static final Logger log = LoggerFactory.getLogger(CompanyService.class);
     private final CompanyJpaRepository companyJpaRepository;
+    private final RateService rateService;
 
     /**
      * 회원 가입 처리
@@ -65,11 +69,26 @@ public class CompanyService {
         });
     }
 
+    public List<Company> findAll() {
+        return companyJpaRepository.findAll();
+    }
+
     /**
      * 회사 리스트 조회
      */
-    public List<Company> findAll() {
+    public List<Company> findAll(int userId) {
         List<Company> companyList = companyJpaRepository.findAll();
+
+        Set<Integer> ratedCompanyIds = rateService.findByUserId(userId)
+                .stream()
+                .map(rate -> rate.getCompany().getId())
+                .collect(Collectors.toSet());
+
+        companyList.forEach(company -> {
+            boolean isRated = ratedCompanyIds.contains(company.getId());
+            company.setRated(isRated);
+        });
+
         return companyList;
     }
 
@@ -112,6 +131,4 @@ public class CompanyService {
         return company;
 
     }
-
-
 }

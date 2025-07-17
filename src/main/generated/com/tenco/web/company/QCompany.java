@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -32,6 +33,8 @@ public class QCompany extends EntityPathBase<Company> {
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public final StringPath password = createString("password");
+
+    public final ListPath<com.tenco.web.company.rate.Rate, com.tenco.web.company.rate.QRate> rates = this.<com.tenco.web.company.rate.Rate, com.tenco.web.company.rate.QRate>createList("rates", com.tenco.web.company.rate.Rate.class, com.tenco.web.company.rate.QRate.class, PathInits.DIRECT2);
 
     public final StringPath websiteUrl = createString("websiteUrl");
 

@@ -7,6 +7,9 @@ import com.tenco.web.company.CompanyJpaRepository;
 import com.tenco.web.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -29,5 +32,20 @@ public class RateService {
 
         rate = saveDTO.toEntity(company, sessionUser);
         rateJpaRepository.save(rate);
+    }
+
+    public List<Rate> findByUserId(int userId) {
+        return rateJpaRepository.findByUserId(userId);
+    }
+
+    @Transactional
+    public void update(RateRequest.UpdateDTO updateDTO, int userId, int companyId) {
+        Rate rate = rateJpaRepository.findByUserAndCompany(userId, companyId);
+
+        if (rate == null) {
+            throw new Exception400("삭제 되었거나 없는 평가입니다.");
+        }
+
+        rate.update(updateDTO);
     }
 }

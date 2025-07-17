@@ -39,10 +39,16 @@ public class Rate {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @Transient
-    private boolean isOwner;
-
     public String getTime() {
         return DateUtil.timestampFormat(createdAt);
+    }
+
+    public boolean isOwner(int checkUserId) {
+        return this.user.getId() == checkUserId;
+    }
+
+    public void update(RateRequest.UpdateDTO updateDTO) {
+        this.rating = updateDTO.getRating();
+        this.comment = updateDTO.getComment();
     }
 }

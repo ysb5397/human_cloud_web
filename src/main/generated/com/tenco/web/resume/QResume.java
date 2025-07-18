@@ -24,6 +24,8 @@ public class QResume extends EntityPathBase<Resume> {
 
     public final StringPath address = createString("address");
 
+    public final ListPath<com.tenco.web.apply.Apply, com.tenco.web.apply.QApply> applies = this.<com.tenco.web.apply.Apply, com.tenco.web.apply.QApply>createList("applies", com.tenco.web.apply.Apply.class, com.tenco.web.apply.QApply.class, PathInits.DIRECT2);
+
     public final EnumPath<com.tenco.web._core.common.CareerType> careerType = createEnum("careerType", com.tenco.web._core.common.CareerType.class);
 
     public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);

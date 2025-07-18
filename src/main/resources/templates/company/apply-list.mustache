@@ -23,9 +23,23 @@
             <td class="px-4 py-2 border">{{resume.title}}</td>
             <td class="px-4 py-2 border">{{applyDate}}</td>
             <td class="px-4 py-2 border">
-                <div>
+                <div class="flex flex-row justify-center gap-6">
                     <button type="button" class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 cursor-pointer">승인</button>
-                    <button type="button" onclick="confirm('정말로 거절 하시겠습니까?)" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 cursor-pointer">거절</button>
+                {{#announce.company.companyName}}
+                    {{^isApplied}}
+                    <form action="/company/apply/cancel" method="POST">
+                        <input name="id" value="{{id}}" hidden>
+                        <button type="submit" onclick="return confirm('정말로 거절 하시겠습니까?')" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 cursor-pointer">거절</button>
+                    </form>
+                    {{/isApplied}}
+                    {{#isApplied}}
+                        <form action="/company/apply" method="POST">
+                            <input name="id" value="{{id}}" hidden>
+                            <input name="loc" value="/apply-list" hidden>
+                            <button type="submit">거절 됨</button>
+                        </form>
+                    {{/isApplied}}
+                {{/announce.company.companyName}}
                 </div>
             </td>
         </tr>

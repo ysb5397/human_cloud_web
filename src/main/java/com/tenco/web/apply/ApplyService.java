@@ -38,4 +38,14 @@ public class ApplyService {
         List<Apply> applyList = applyJpaRepository.findByUserId(id);
         return applyList;
     }
+
+    // 특정 기업에 제출한 지원 목록
+    public List<Apply> findByCompanyId(int id) {
+        List<Apply> applyList = applyJpaRepository.findByCompanyId(id);
+        return applyList;
+    }
+
+    public void companyApplyCancel(int id, int userId) {
+        applyJpaRepository.deleteByCompanyIdAndUserId(id, userId);
+    }
 }

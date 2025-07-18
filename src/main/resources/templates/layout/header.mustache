@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Human Cloud Web</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -31,7 +31,7 @@
         <div class="flex lg:flex-1">
             <a href="/index" class="-m-1.5 p-1.5 flex items-center gap-2">
                 <!-- Replaced img with the styled SVG icon -->
-                <img class="h-16 w-16" src="/img/icon.png" alt="로고 이미지" />
+                <img class="h-16 w-16" src="/img/icon.png" alt="로고 이미지"/>
             </a>
         </div>
 
@@ -41,16 +41,24 @@
             <a href="/companyinfo" class="text-sm font-semibold leading-6 text-gray-900">기업정보</a>
             <div class="relative">
                 <!-- The onclick logic is preserved from your original code -->
-                <a href="#" onclick="event.preventDefault(); document.querySelector('.community--dropdown').classList.toggle('hidden')" class="text-sm font-semibold leading-6 text-gray-900 flex items-center gap-x-1">
+                <a href="#"
+                   onclick="event.preventDefault(); document.querySelector('.community--dropdown').classList.toggle('hidden')"
+                   class="text-sm font-semibold leading-6 text-gray-900 flex items-center gap-x-1">
                     커뮤니티
-                    <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                    <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                         aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                              clip-rule="evenodd"/>
                     </svg>
                 </a>
                 <!-- Community Dropdown -->
-                <div class="community--dropdown dropdown-menu absolute z-100 -left-8 top-full z-10 mt-3 w-56 rounded-md bg-white shadow-lg ring-1 ring-gray-900/5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <div class="community--dropdown dropdown-menu absolute z-100 -left-8 top-full z-10 mt-3 w-56 rounded-md bg-white shadow-lg ring-1 ring-gray-900/5 focus:outline-none hidden"
+                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
-                        <a href="/community/job-seeker" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">구직자</a>
+                        <a href="/community/job-seeker"
+                           class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem"
+                           tabindex="-1">구직자</a>
                     </div>
                 </div>
             </div>
@@ -76,27 +84,50 @@
 
                 <!-- Mypage Dropdown -->
                 <div class="relative">
-                    <button onclick="document.querySelector('.main--dropdown').classList.toggle('hidden')" type="button" class="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" aria-expanded="false" aria-haspopup="true">
+                    <button onclick="document.querySelector('.main--dropdown').classList.toggle('hidden')" type="button"
+                            class="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900"
+                            aria-expanded="false" aria-haspopup="true">
                         마이페이지
                         <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd"
+                                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                  clip-rule="evenodd"/>
                         </svg>
                     </button>
 
-                    <div class="main--dropdown dropdown-menu absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-gray-900/5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="main--dropdown dropdown-menu absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-gray-900/5 focus:outline-none hidden"
+                         role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                         <div class="py-1" role="none">
                             {{#username}}
-                                <a href="/user/{{id}}/user-update" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">회원 정보 수정</a>
-                                <a href="/resume-list" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">이력서 목록</a>
-                                <a href="/user/resume-register" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">이력서 등록</a>
-                                <a href="/user/my-apply-list" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">지원 현황</a>
-                                <a href="/user/user-sub-list" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">구독 목록</a>
+                                <a href="/user/{{id}}/user-update"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">회원 정보 수정</a>
+                                <a href="/resume-list"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">이력서 목록</a>
+                                <a href="/user/resume-register"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">이력서 등록</a>
+                                <a href="/user/my-apply-list"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">지원 현황</a>
+                                <a href="/user/user-sub-list"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">구독 목록</a>
                             {{/username}}
                             {{#companyName}}
-                                <a href="/company/{{id}}/company-update-form" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">회사 정보 수정</a>
-                                <a href="/company/register-list" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">공고 관리</a>
-                                <a href="/company/hire-register" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">공고 등록</a>
-                                <a href="/company/apply-list" class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">지원 현황</a>
+                                <a href="/company/{{id}}/company-update-form"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">회사 정보 수정</a>
+                                <a href="/company/register-list"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">공고 관리</a>
+                                <a href="/company/hire-register"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">공고 등록</a>
+                                <a href="/company/apply-list"
+                                   class="block px-4 py-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                   role="menuitem" tabindex="-1">지원 현황</a>
                             {{/companyName}}
                         </div>
                     </div>
@@ -104,6 +135,24 @@
             {{/sessionUser}}
         </div>
     </nav>
+
+    {{#sessionUser}}
+    <div class="fixed bottom-10 right-10 cursor-pointer">
+        <div class="relative flex size-16 items-center justify-center rounded-full bg-white shadow-lg border border-gray-200 ">
+            <div class="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-9" fill="none" viewBox="0 0 24 24"
+                     stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.076 6.165 5 8.388 5 11v3.159c0 .538-.214 1.055-.595 1.436L3 17h5m7 0v1a3 3 0 11-6 0v-1h6z" />
+                </svg>
+
+                <span class="absolute right-1 top-0 flex size-3">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex size-3 rounded-full bg-red-500"></span>
+            </span>
+            </div>
+        </div>
+    </div>
+    {{/sessionUser}}
 </header>
 
 <script>
@@ -123,6 +172,10 @@
             mainDropdown.classList.add('hidden');
         }
     });
+
+    function openNotification() {
+        document.querySelector('.notification').classList.toggle('hidden');
+    }
 </script>
 </body>
 </html>

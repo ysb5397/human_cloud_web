@@ -1,10 +1,14 @@
 package com.tenco.web.main;
 
 import com.tenco.web._core.common.PageLink;
+import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web.announce.Announce;
 import com.tenco.web.community.Community;
 import com.tenco.web.community.CommunityService;
 import com.tenco.web.tags.SkillTagService;
+import com.tenco.web.user.User;
+import com.tenco.web.utis.Define;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +42,18 @@ public class MainController {
     @GetMapping("/community/job-seekers")
     public String jobSeekersCommunity(Model model,
                                       @RequestParam(name = "page", defaultValue = "1") int page,
-                                      @RequestParam(name = "size", defaultValue = "10") int size) {
+                                      @RequestParam(name = "size", defaultValue = "10") int size,
+                                      HttpSession session) {
+
+        Object obj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        if (obj instanceof User sessionUser) {
+            sessionUser = (User) obj;
+        } else {
+            throw new Exception403("접근 권한이 없습니다.");
+        }
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
-        Page<Community> communities = communityService.findAll(pageable);
+        Page<Community> communities = communityService.findAll(pageable, sessionUser);
 
         // 페이지 네비게이션용 데이터 준비
         List<PageLink> pageLinks = new ArrayList<>();

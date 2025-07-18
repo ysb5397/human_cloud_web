@@ -1,5 +1,6 @@
 package com.tenco.web.community;
 
+import com.tenco.web.community.liked_post.LikedPost;
 import com.tenco.web.reply.Reply;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.DateUtil;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 
@@ -47,18 +49,20 @@ public class Community {
 
     private String category;
 
+    @Transient
+    private boolean isLiked;
+
     @Builder
-    public Community(int id, String title, String content, Integer interestCount, User user, Timestamp createdAt, String category) {
+    public Community(int id, String title, String content, User user, Timestamp createdAt, String category) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.interestCount = interestCount;
         this.user = user;
         this.createdAt = createdAt;
         this.category = category;
     }
 
-    public boolean isOwner(int checkUserId){
+    public boolean isOwner(int checkUserId) {
         log.info("게시글 소유자 확인 요청 - 작성자 {}", checkUserId);
         return this.user.getId() == checkUserId;
     }
@@ -68,7 +72,12 @@ public class Community {
     }
 
 
-     @OrderBy("id DESC")
-     @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
-     List<Reply> replies = new ArrayList<>();
+    @OrderBy("id DESC")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
+    List<Reply> replies = new ArrayList<>();
+
+    @OrderBy("id DESC")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "community", cascade = CascadeType.REMOVE)
+    @ToStringExclude
+    List<LikedPost> likes = new ArrayList<>();
 }

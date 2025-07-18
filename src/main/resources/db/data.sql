@@ -1,7 +1,7 @@
 INSERT INTO user_tb (username, password, email, address, created_at, career_type) VALUES
 ('ssar', '1234', 'ssar@nate.com', '부산시 진구 중앙대로', NOW(), '무직'),
-('cos', '1234', 'cos@gmail.com', '서울시 강남구 테헤란로', NOW(), '경력'),
-('love', '5678', 'love@example.com', '인천시 부평구 부평대로', NOW(), '신입'),
+('cos', '1234', 'cos@gmail.com', '서울시 강남구 테헤란로', NOW(), '무직'),
+('love', '5678', 'love@example.com', '인천시 부평구 부평대로', NOW(), '무직'),
 ('guest123', 'guestpass', 'guest123@yahoo.co.kr', '대전시 유성구 대학로', NOW(), '신입'),
 ('admin', 'admin123', 'admin@mysite.com', '광주시 서구 상무대로', NOW(), '경력');
 

@@ -60,12 +60,36 @@
                     <span id="comment-count" class="ml-1 text-sm font-semibold">0</span>
                 {{/community.replyCount}}
             </div>
-            <button onclick="likePost(this)" class="flex items-center text-gray-500 hover:text-pink-500 transition-colors duration-200">
-                <svg class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-                </svg>
-                <span class="like-count ml-1 text-sm font-semibold">0</span>
-            </button>
+            <form action="/like/post" method="POST">
+                <input id="interest--count" name="interestCount" value="" hidden>
+                <input name="id" value="{{id}}" hidden>
+                {{#community.isLiked}}
+                    <button type="submit" onclick="likePost(this)" class="interest flex items-center text-pink-500 hover:text-pink-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                        </svg>
+                        {{#community.interestCount}}
+                            <span class="interest--count ml-1 text-sm font-semibold">{{community.interestCount}}</span>
+                        {{/community.interestCount}}
+                        {{^community.interestCount}}
+                            <span class="interest--count ml-1 text-sm font-semibold">0</span>
+                        {{/community.interestCount}}
+                    </button>
+                {{/community.isLiked}}
+                {{^community.isLiked}}
+                    <button type="submit" onclick="likePost(this)" class="interest flex items-center text-gray-500 hover:text-pink-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                        </svg>
+                        {{#community.interestCount}}
+                            <span class="interest--count ml-1 text-sm font-semibold">{{community.interestCount}}</span>
+                        {{/community.interestCount}}
+                        {{^community.interestCount}}
+                            <span class="interest--count ml-1 text-sm font-semibold">0</span>
+                        {{/community.interestCount}}
+                    </button>
+                {{/community.isLiked}}
+            </form>
         </div>
 
         <!-- Comment Form -->
@@ -133,7 +157,7 @@
 <script>
     // Simple script for the like button functionality
     function likePost(buttonElement) {
-        const likeCountElement = buttonElement.querySelector('.like-count');
+        const likeCountElement = buttonElement.querySelector('.interest--count');
         let currentLikes = parseInt(likeCountElement.textContent, 10);
 
         // Toggle liked state

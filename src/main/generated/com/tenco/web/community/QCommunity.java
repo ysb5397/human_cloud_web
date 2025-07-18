@@ -32,6 +32,8 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public final NumberPath<Integer> interestCount = createNumber("interestCount", Integer.class);
 
+    public final ListPath<com.tenco.web.community.liked_post.LikedPost, com.tenco.web.community.liked_post.QLikedPost> likes = this.<com.tenco.web.community.liked_post.LikedPost, com.tenco.web.community.liked_post.QLikedPost>createList("likes", com.tenco.web.community.liked_post.LikedPost.class, com.tenco.web.community.liked_post.QLikedPost.class, PathInits.DIRECT2);
+
     public final ListPath<com.tenco.web.reply.Reply, com.tenco.web.reply.QReply> replies = this.<com.tenco.web.reply.Reply, com.tenco.web.reply.QReply>createList("replies", com.tenco.web.reply.Reply.class, com.tenco.web.reply.QReply.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> replyCount = createNumber("replyCount", Integer.class);

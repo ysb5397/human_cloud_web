@@ -83,7 +83,7 @@ public class CommunityController {
 
         log.info("목록화면요청 {}", user);
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
-        Page<Community> communities = communityService.findAll(pageable);
+        Page<Community> communities = communityService.findAll(pageable, user);
 
         // 페이지 네비게이션용 데이터 준비
         List<PageLink> pageLinks = new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.tenco.web.resume;
 
 import com.tenco.web._core.common.CareerType;
+import com.tenco.web.apply.Apply;
 import com.tenco.web.tags.resume_tag.ResumeSkillTag;
 import com.tenco.web.user.User;
 import com.tenco.web.utis.DateUtil;
@@ -48,6 +49,9 @@ public class Resume {
     @Enumerated(EnumType.STRING)
     private CareerType careerType;
 
+    @Transient
+    private boolean isApplied;
+
     @Builder
     public Resume(int id, User user, String title, String email, String address, String portfolioUrl, String selfIntroduction, Boolean isPublic, Timestamp createdAt, CareerType careerType) {
         this.id = id;
@@ -74,4 +78,8 @@ public class Resume {
     @OrderBy("id desc")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "resume", cascade = CascadeType.ALL)
     private List<ResumeSkillTag> resumeSkillTags = new ArrayList<>();
+
+    @OrderBy("id desc")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resume", cascade = CascadeType.REMOVE)
+    List<Apply> applies = new ArrayList<>();
 }

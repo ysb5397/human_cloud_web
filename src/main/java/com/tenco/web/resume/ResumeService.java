@@ -3,6 +3,7 @@ package com.tenco.web.resume;
 import com.tenco.web._core.errors.exception.Exception400;
 import com.tenco.web._core.errors.exception.Exception403;
 import com.tenco.web._core.errors.exception.Exception404;
+import com.tenco.web.apply.ApplyService;
 import com.tenco.web.tags.SkillTag;
 import com.tenco.web.tags.SkillTagService;
 import com.tenco.web.tags.announce_tag.AnnounceSKillTag;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class ResumeService {
     private final AnnounceSkillTagJpaRepository announceSkillTagJpaRepository;
     private final ResumeSkillTagService resumeSkillTagService;
     private final SkillTagService skillTagService;
+    private final ApplyService applyService;
 
     // 이력서 저장 기능
     @Transactional
@@ -49,8 +52,18 @@ public class ResumeService {
     }
 
     // 이력서 목록 조회
-    public List<Resume> findAll() {
+    public List<Resume> findAll(int companyId) {
         List<Resume> resumeList = resumeJpaRepository.findAll();
+
+        Set<Integer> appliedCompanyIds = applyService.findByCompanyId(companyId)
+                .stream()
+                .map(apply -> apply.getAnnounce().getCompany().getId())
+                .collect(Collectors.toSet());
+
+        resumeList.forEach(resume -> {
+            boolean isApplied = appliedCompanyIds.contains(resume.getId());
+            resume.setApplied(isApplied);
+        });
         return resumeList;
     }
 

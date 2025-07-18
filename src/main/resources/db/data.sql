@@ -107,4 +107,11 @@ INSERT INTO reply_tb (user_id, community_id, comment, created_at) VALUES
 (3, 1, "1:1 채팅 주세요.", now()),
 (4, 3, "질문 있어요.", now()),
 (5, 4, "혹시 어디로 갈 계획이신가요?", now()),
-(5, 5, "와 1등", now())
+(5, 5, "와 1등", now());
+
+INSERT INTO apply_tb (user_id, resume_id, announce_id, created_at) VALUES
+(1, 1, 1, NOW()),
+(2, 2, 1, NOW()),
+(3, 3, 1, NOW()),
+(4, 4, 1, NOW()),
+(5, 5, 1, NOW());

@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @Data
 @Table(name = "resume_tb")
 @Entity
+@ToString(exclude = {"resumeSkillTags", "applies"})
 public class Resume {
 
     @Id

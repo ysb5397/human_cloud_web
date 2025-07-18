@@ -42,10 +42,10 @@ public class ApplyController {
                               HttpSession session) {
         Object obj = session.getAttribute(Define.DefineMessage.SESSION_USER);
 
-        if(!(obj instanceof Company company)) {
-            return "redirect:/login-from";
+        if(obj instanceof Company company) {
+            applyService.companyApplyCancel(company.getId(), userId);
+            return "redirect:/company/apply-list";
         }
-        applyService.companyApplyCancel(company.getId(), userId);
-        return "redirect:/company/apply-list";
+        return "redirect:/login-from";
     }
 }

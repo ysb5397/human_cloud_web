@@ -48,4 +48,9 @@ public class RateService {
 
         rate.update(updateDTO);
     }
+
+    @Transactional
+    public void delete(int userId, int companyId) {
+        rateJpaRepository.deleteByUserIdAndCompanyId(userId, companyId);
+    }
 }

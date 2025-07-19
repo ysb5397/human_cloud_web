@@ -1,7 +1,8 @@
 {{> layout/header}}
 
 <div class="container mx-auto px-4 py-8 max-w-3xl relative z-10">
-    <div id="modal" class="rating--modal fixed inset-0 z-10 flex items-center justify-center transition-all duration-300 ease-out opacity-0 scale-95 pointer-events-none">
+    <div id="modal"
+         class="rating--modal fixed inset-0 z-10 flex items-center justify-center transition-all duration-300 ease-out opacity-0 scale-95 pointer-events-none">
         <div class="fixed -inset-50 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
 
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -18,37 +19,54 @@
                                 <div class="flex flex-row w-full gap-4 ml-2">
                                     <input id="rate--input" name="rating" value="1" hidden>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="1" fill="#FFD700" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="1"
+                                             fill="#FFD700" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="2" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="2"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="3" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="3"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="4" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="4"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="5" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="5"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                 </div>
                                 <div class="mt-4">
-                                    <textarea name="comment" id="comment" rows="3" placeholder="의견을 남겨주세요." class="resize-none block w-full rounded-md bg-white px-3.5 py-2.5 text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                    <textarea name="comment" id="comment" rows="3" placeholder="의견을 남겨주세요."
+                                              class="resize-none block w-full rounded-md bg-white px-3.5 py-2.5 text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                                 </div>
                                 <div class="mt-4 flex flex-row justify-end w-full gap-4">
-                                    <button type="button" onclick="toggleModal(false); document.querySelector('html').classList.toggle('overflow-hidden');" class="px-4 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200">취소</button>
-                                    <button type="submit" id="send--rating--btn" value="" onclick="toggleButton(this)" class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500">평점 보내기</button>
+                                    <button type="button"
+                                            onclick="toggleModal(false); document.querySelector('html').classList.toggle('overflow-hidden');"
+                                            class="px-4 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200">취소
+                                    </button>
+                                    <button type="submit" id="send--rating--btn" value="" onclick="toggleButton(this)"
+                                            class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500">
+                                        평점 보내기
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -58,7 +76,8 @@
         </div>
     </div>
 
-    <div id="update--modal" class="rating--modal fixed inset-0 z-10 flex items-center justify-center transition-all duration-300 ease-out opacity-0 scale-95 pointer-events-none">
+    <div id="update--modal"
+         class="rating--modal fixed inset-0 z-10 flex items-center justify-center transition-all duration-300 ease-out opacity-0 scale-95 pointer-events-none">
         <div class="fixed -inset-50 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
 
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -66,8 +85,21 @@
                 <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                     <div class="bg-white px-6 pt-5 pb-4">
                         <div class="flex flex-col sm:flex sm:items-start">
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-lg font-semibold leading-6 text-gray-900" id="dialog-title">평점 수정하기</h3>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-112">
+                                <div class="flex flex-row justify-between w-full">
+                                    <h3 class="text-lg font-semibold leading-6 text-gray-900" id="dialog-title">평점
+                                        수정하기</h3>
+                                    <button type="button"
+                                            onclick="toggleUpdateModal(false);">
+                                        <svg fill="#000000" class="h-6 w-6" version="1.1" id="Capa_1"
+                                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             viewBox="0 0 460.775 460.775" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                               stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier"> <path
+                                                    d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55 c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55 c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505 c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55 l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719 c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"></path> </g></svg>
+                                    </button>
+                                </div>
                                 <p class="mt-1 text-sm text-gray-500">평점을 수정해주세요.</p>
                             </div>
                             <form action="/user/rating/edit" method="POST" class="flex flex-col w-full mt-4">
@@ -75,37 +107,59 @@
                                 <div class="flex flex-row w-full gap-4 ml-2">
                                     <input id="rate--input2" name="rating" value="1" hidden>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="1" fill="#FFD700" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="edit--star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="1"
+                                             fill="#FFD700" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="edit--star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="2" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="edit--star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="2"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="edit--star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="3" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="edit--star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="3"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="edit--star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="4" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="edit--star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="4"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="edit--star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                     <button type="button" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="5" fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24" width="36" height="36" class="edit--star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="rating(this)" data-rate="5"
+                                             fill="none" stroke="#FFD700" stroke-width="2" viewBox="0 0 24 24"
+                                             width="36" height="36" class="edit--star">
                                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
                                         </svg>
                                     </button>
                                 </div>
                                 <div class="mt-4">
-                                    <textarea name="comment" id="comment" rows="3" placeholder="의견을 남겨주세요." class="resize-none block w-full rounded-md bg-white px-3.5 py-2.5 text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                    <textarea name="comment" id="comment" rows="3" placeholder="의견을 남겨주세요."
+                                              class="resize-none block w-full rounded-md bg-white px-3.5 py-2.5 text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                                 </div>
                                 <div class="mt-4 flex flex-row justify-end w-full gap-4">
-                                    <button type="button" onclick="toggleUpdateModal(false); document.querySelector('html').classList.toggle('overflow-hidden');" class="px-4 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200">취소</button>
-                                    <button type="submit" id="send--rating--btn2" value="" onclick="toggleButton(this)" class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500">평점 수정하기</button>
+                                    <form id="delete--rate" action="/user/rating/delete" method="POST">
+                                        <input id="companyId3" name="companyId" value="" hidden>
+                                        <button
+                                            type="submit"
+                                            form="delete--rate"
+                                            onclick="return confirm('정말 삭제하시겠습니까?');"
+                                            class="inline-block px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-500">평점 삭제
+                                        </button>
+                                    </form>
+                                    <button type="submit" id="send--rating--btn2" value="" onclick="toggleButton(this)"
+                                            class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500">
+                                        평점 수정하기
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -116,7 +170,8 @@
     </div>
 
     {{#companyList}}
-        <div id="{{id}}" class="bg-white shadow-md rounded-xl p-6 mb-6 hover:shadow-lg transition-shadow cursor-pointer">
+        <div id="{{id}}"
+             class="bg-white shadow-md rounded-xl p-6 mb-6 hover:shadow-lg transition-shadow cursor-pointer">
             <a href="{{websiteUrl}}" target="_blank" rel="noopener noreferrer">
                 <h4 class="text-xl font-semibold mb-2">{{companyName}}</h4>
                 <p class="text-sm text-gray-500 mb-4">{{companyName}}&nbsp;{{address}}&nbsp;{{email}}</p>
@@ -124,23 +179,33 @@
             <div class="flex flex-row gap-6">
                 {{#sessionUser.username}}
                     {{^isSub}}
-                    <form action="/user/usersub" method="POST" class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500">
-                        <input name="id" value="{{id}}" hidden>
-                        <button type="submit">구독하기</button>
-                    </form>
+                        <form action="/user/usersub" method="POST"
+                              class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500">
+                            <input name="id" value="{{id}}" hidden>
+                            <button type="submit">구독하기</button>
+                        </form>
                     {{/isSub}}
                     {{#isSub}}
-                        <form action="/user/usersub/cancel" method="POST" class="inline-block px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-500">
+                        <form action="/user/usersub/cancel" method="POST"
+                              class="inline-block px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-500">
                             <input name="id" value="{{id}}" hidden>
                             <input name="loc" value="/companyinfo" hidden>
                             <button type="submit" onclick="return confirm('정말 취소하시겠습니까?');">구독 취소</button>
                         </form>
                     {{/isSub}}
                     {{^isRated}}
-                        <button id="rating--btn" type="button" onclick="toggleModal(true); moveValue({{id}}); document.querySelector('html').classList.toggle('overflow-hidden');" class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500">평점 남기기</button>
+                        <button id="rating--btn" type="button"
+                                onclick="toggleModal(true); moveValue({{id}}); document.querySelector('html').classList.toggle('overflow-hidden');"
+                                class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500">
+                            평점 남기기
+                        </button>
                     {{/isRated}}
                     {{#isRated}}
-                        <button id="rating--btn" type="button" onclick="toggleUpdateModal(true); moveValue({{id}}); document.querySelector('html').classList.toggle('overflow-hidden');" class="inline-block px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded hover:bg-orange-500">평점 수정</button>
+                        <button id="rating--btn" type="button"
+                                onclick="toggleUpdateModal(true); moveValue({{id}}); document.querySelector('html').classList.toggle('overflow-hidden');"
+                                class="inline-block px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded hover:bg-orange-500">
+                            평점 수정
+                        </button>
                     {{/isRated}}
                 {{/sessionUser.username}}
             </div>
@@ -199,6 +264,7 @@
     function moveValue(companyId) {
         document.getElementById('companyId').setAttribute('value', companyId);
         document.getElementById('companyId2').setAttribute('value', companyId);
+        document.getElementById('companyId3').setAttribute('value', companyId);
         document.getElementById('send--rating--btn').setAttribute('value', companyId);
         document.getElementById('send--rating--btn2').setAttribute('value', companyId);
     }

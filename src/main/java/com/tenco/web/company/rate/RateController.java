@@ -43,4 +43,18 @@ public class RateController {
         rateService.update(updateDTO, sessionUser.getId(), companyId);
         return "redirect:/companyinfo";
     }
+
+    @PostMapping("/user/rating/delete")
+    public String delete(@RequestParam(name = "companyId") int companyId,
+                         HttpSession session) {
+        log.info("평점 삭제 기능 요청 - 회사 아이디 : {}", companyId);
+        Object obj = session.getAttribute(Define.DefineMessage.SESSION_USER);
+        User sessionUser = null;
+        if (obj instanceof User) {
+            sessionUser = (User) obj;
+        }
+
+        rateService.delete(sessionUser.getId(), companyId);
+        return "redirect:/companyinfo";
+    }
 }
